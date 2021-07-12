@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.start.mapper.MemberMapper">
+
+<insert id="registerAcc">
+	INSERT INTO member
+	(
+	userId, userPw, userName, mobileNum, email, address, birth
+	)
+	VALUES
+	(
+	#{userId}, #{userPw}, #{userName}, #{mobileNum}, #{email}, #{address}, #{birth}  
+	)
+</insert>
+
+<insert id="insertAuth">
+	INSERT INTO member_auth
+	(userId, auth)
+	VALUES
+	(#{userId}, #{auth})
+</insert>
+
+<select id="read" resultMap="memberMap">
+	SELECT 
+	m.userId userId,
+	m.userPw userPw,
+	m.userName userName,
+	m.userNickName userNickName,
+	m.mobileNum mobileNum,
+	m.email email,
+	m.address address,
+	m.birth birth,
+	m.enabled enabled,
+	m.regdate regdate,
+	m.updateDate updateDate,
+	a.auth auth
+	FROM member m LEFT JOIN member_auth a ON m.userid = a.userid
+	WHERE m.userId = #{userId}
+</select>
+
+<resultMap type="org.zerock.start.domain.MemberVO" id="memberMap">
+	<id property="userId" column="userId"></id>
+	<result property="userPw" column="userPw"></result>
+	<result property="userName" column="userName"></result>
+	<result property="userNickName" column="userNickName"></result>
+	<result property="mobileNum" column="mobileNum"></result>
+	<result property="email" column="email"></result>
+	<result property="address" column="address"></result>
+	<result property="birth" column="birth"></result>
+	<result property="regdate" column="regdate"></result>
+	<result property="updateDate" column="updateDate"></result>
+	<result property="enabled" column="enabled"/>
+	<collection property="authList" resultMap="authMap"></collection>
+</resultMap>
+<resultMap type="org.zerock.start.domain.AuthVO" id="authMap">
+	<result property="userId" column="userId"/>
+	<result property="auth" column="auth"/>
+</resultMap>
+</mapper>
