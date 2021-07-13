@@ -24,8 +24,17 @@ regdate TIMESTAMP DEFAULT now(),
 updateDate TIMESTAMP DEFAULT now(),
 enabled TINYINT(1) DEFAULT 1
 );
+ALTER TABLE member
+CHANGE userPw userPw VARCHAR(100) NOT NULL;
+
 DROP TABLE member;
 use spr1;
 
 SELECT * FROM member;
-DESC tbl_member_auth; 
+DESC member; 
+
+SELECT * FROM member_auth;
+
+insert into member_auth
+(userId, auth)
+values ('bbb', 'ROLE_USER');
