@@ -3,6 +3,8 @@ package org.zerock.start.domain;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 
@@ -15,6 +17,8 @@ public class MemberVO {
 	private String userNickName;
 	private String mobileNum;
 	private String email;
+	private String address;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
 	private Date regdate;
 	private Date updateDate;

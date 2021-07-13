@@ -10,4 +10,6 @@ public interface MemberMapper {
 	public void insertAuth(AuthVO avo);
 
 	public MemberVO read(String userId);
+
+	public int checkId(String userId);
 }

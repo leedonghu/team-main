@@ -3,6 +3,7 @@ package org.zerock.start.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
 import org.zerock.start.mapper.MemberMapper;
@@ -19,6 +20,7 @@ public class MemberServiceImpl implements MemberService {
 	private PasswordEncoder encoder;
 	
 	@Override
+	@Transactional
 	public boolean registerAcc(MemberVO vo) {
 		
 		//비밀번호를 암호화해서 넣어줌
@@ -38,5 +40,13 @@ public class MemberServiceImpl implements MemberService {
 		
 		return cnt == 1;
 	}
+
+	@Override
+	public boolean checkId(String userId) {
+		return mapper.checkId(userId) == 1;
+		
+	}
+
+
 
 }

@@ -9,7 +9,9 @@ import org.zerock.start.domain.MemberVO;
 import org.zerock.start.mapper.MemberMapper;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Setter(onMethod_ = @Autowired)
@@ -17,6 +19,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		log.info("user");
+		
 		MemberVO vo = mapper.read(username);
 		
 		if(vo == null) {

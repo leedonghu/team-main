@@ -17,13 +17,13 @@
 <div class="container">
 	<script>
 // 아이디 패턴과 중복을 확인하는 버튼
-var url = "${pageContext.request.contextPath}"+"/acc/checkId";
+var url = "${pageContext.request.contextPath}"+"/start/checkId";
 
 $(document).ready(function() {
 	$("#button1").click(function() {
-		var id = $("#input2").val();
+		var userId = $("#input2").val();
 		
-		$.post(url, {id: id}, function(data) {
+		$.post(url, {userId: userId}, function(data) {
 			if (data == 'ok') {
 				// 가입 가능 메세지
 				// console.log("ok");
@@ -42,13 +42,13 @@ $(document).ready(function() {
 });
 
 //비밀번호 패턴을 확인하는 버튼
-var url2 = "${pageContext.request.contextPath}"+"/practice02/checkPassword";
+var url2 = "${pageContext.request.contextPath}"+"/start/checkPassword";
 
 $(document).ready(function(){
 	$("#button2").click(function(){
-		var password = $("#input3").val();
+		var userPw = $("#input3").val();
 		
-		$.post(url2, {password: password}, function(data){
+		$.post(url2, {userPw: userPw}, function(data){
 			if(data == 'good'){
 				alert("사용 가능합니다.")
 			} else{

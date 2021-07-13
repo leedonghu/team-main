@@ -42,11 +42,12 @@
 					</div>
 
 					<form action="<%=request.getContextPath() %>/login" method="post">
+						<!-- 아이디와 비밀번호를 넘기는 input의 name을 username 과  password로 해놓아야함 -->
 						<div class="form-group row">
 							<div class="col-3"></div>
 							<div class="col">
 								<label for="id" class="col-form-label">아이디:</label> <input
-									type="text" class="form-control" id="id" size="40" name="id">
+									type="text" class="form-control" id="id" size="40" name="username">
 							</div>
 							<div class="col-3"></div>
 						</div>

@@ -37,7 +37,7 @@
 	m.regdate regdate,
 	m.updateDate updateDate,
 	a.auth auth
-	FROM member m LEFT JOIN member_auth a ON m.userid = a.userid
+	FROM member m LEFT JOIN member_auth a ON m.userId = a.userId
 	WHERE m.userId = #{userId}
 </select>
 
@@ -59,4 +59,9 @@
 	<result property="userId" column="userId"/>
 	<result property="auth" column="auth"/>
 </resultMap>
+
+<select id="checkId" resultType="int">
+	SELECT COUNT(*) FROM member
+	WHERE userId = #{userId}
+</select>
 </mapper>

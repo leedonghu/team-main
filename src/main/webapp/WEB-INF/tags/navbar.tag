@@ -1,6 +1,7 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
@@ -31,6 +32,13 @@
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
       </li>
     </ul>
+    
+    <sec:authorize  access="isAuthenticated()">
+     <form class="form-inline my-2 my-lg-0" action="${appRoot }/logout" method="post"> 
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">로그아웃</button>
+    </form>
+    </sec:authorize>
+    
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
