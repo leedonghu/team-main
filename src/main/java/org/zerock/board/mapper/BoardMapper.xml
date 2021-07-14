@@ -5,7 +5,28 @@
   
 <mapper namespace="org.zerock.board.mapper.BoardMapper">
 
-<insert id="register">
+<sql id="criteria">
+    <where>
+    
+    <foreach collection="typeArr" item="type" separator="OR">
+       <choose>
+          <when test='type == "T"'>
+             b.title LIKE CONCAT('%', #{keyword}, '%')
+          </when>
+          <when test='type == "W"'>
+             b.writer LIKE CONCAT('%', #{keyword}, '%') 
+          </when>
+          <when test='type == "C"'>
+             b.content LIKE CONCAT('%', #{keyword}, '%')
+          </when>
+       </choose>
+    </foreach>
+    
+    </where>
+</sql>
+
+
+<insert id="register" useGeneratedKeys="true" keyProperty="bno" keyColumn="bno">
 	INSERT INTO board
 	(title, content, writer)
 	VALUES
@@ -16,5 +37,44 @@
 	SELECT * FROM board
 	WHERE bno > 0 ORDER BY bno DESC
 </select>
+
+  <select id="getTotal" resultType="int">
+  SELECT COUNT(*) FROM board b
+  <include refid="criteria"></include>
+  </select>
+  
+ 	<select id="getListWithPaging" resultType="org.zerock.board.domain.BoardVO">
+	
+	
+	SELECT
+        b.bno bno,
+        b.title title,
+        b.content content,
+        b.writer writer,
+        b.regdate regdate,
+        b.updatedate updateDate,
+        b.cnt cnt,
+        m.userName userName,
+    	count(r.rno) replyCnt
+    FROM board b LEFT JOIN reply r ON b.bno = r.bno
+	                      JOIN member m ON b.writer = m.userId
+    <include refid="criteria"></include>
+    
+    GROUP BY b.bno
+    ORDER BY b.bno DESC
+    
+    LIMIT #{from}, #{amount}
+	</select>
+	
+	<select id="getDetail" resultType="org.zerock.board.domain.BoardVO">
+	SELECT * FROM board
+	WHERE bno = #{bno}
+	</select>
+	
+	<update id="updateCnt">
+	UPDATE board
+	SET cnt = #{cnt}
+	WHERE bno = #{bno}
+	</update>
 
 </mapper>
