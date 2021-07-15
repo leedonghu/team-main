@@ -19,4 +19,6 @@ public interface BoardMapper {
 
 	public void updateCnt(BoardVO vo);
 
+	public int modify(BoardVO vo);
+
 }

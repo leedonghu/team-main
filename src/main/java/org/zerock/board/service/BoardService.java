@@ -17,4 +17,6 @@ public interface BoardService {
 
 	public void updateCnt(BoardVO vo);
 
+	public boolean modify(BoardVO vo);
+
 }

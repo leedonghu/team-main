@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.board.mapper.ReplyMapper">
+
+<insert id="register">
+	INSERT INTO reply
+	(bno, content, replyer)
+	VALUES
+	(#{bno}, #{content}, #{replyer})
+</insert>
+
+<select id="getList" resultType="org.zerock.board.domain.ReplyVO">
+	SELECT * FROM reply
+	WHERE bno = #{bno}
+</select>
+</mapper>

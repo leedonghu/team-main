@@ -81,4 +81,27 @@ public class BoardController {
 		model.addAttribute("board", vo);
 		
 	}
+	
+	@PostMapping("/modify")
+	public String modify(BoardVO vo, Criteria cri, RedirectAttributes rttr) {
+		log.info("modify");
+		
+		//service에게 수정하라는 일 시킴
+		boolean ok = service.modify(vo);
+		
+		if(ok) {
+			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("messageTitle", "수정성공");
+			rttr.addFlashAttribute("messageBody", "수정되었습니다.");
+		}
+		
+		return "redirect:/board/list";
+	}
+	
+//	@PostMapping("/remove")
+//	public void remove() {
+//		log.info("board remove");
+//		
+//		boolean ok = service.remove();
+//	}
 }

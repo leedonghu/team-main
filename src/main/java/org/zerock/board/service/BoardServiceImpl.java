@@ -45,6 +45,13 @@ public class BoardServiceImpl implements BoardService{
 		mapper.updateCnt(vo);
 		
 	}
+
+	@Override
+	public boolean modify(BoardVO vo) {
+		
+		return mapper.modify(vo) == 1;
+		
+	}
 	
 
 }

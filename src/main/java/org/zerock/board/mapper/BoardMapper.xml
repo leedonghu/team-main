@@ -76,5 +76,12 @@
 	SET cnt = #{cnt}
 	WHERE bno = #{bno}
 	</update>
+	
+	<update id="modify">
+	UPDATE board
+	SET title = #{title},
+		content = #{content}
+	WHERE bno = #{bno}
+	</update>
 
 </mapper>
