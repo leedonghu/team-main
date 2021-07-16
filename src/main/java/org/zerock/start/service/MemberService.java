@@ -9,4 +9,8 @@ public interface MemberService {
 	
 
 	public boolean checkId(String userId);
+
+
+
+	public MemberVO getInfo(String userId);
 }

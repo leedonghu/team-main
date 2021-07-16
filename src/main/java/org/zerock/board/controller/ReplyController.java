@@ -36,4 +36,15 @@ public class ReplyController {
 		
 		service.register(vo);
 	}
+	
+	@PostMapping("/good/{rno}")
+	public void good(@PathVariable("rno") int rno) {
+		log.info("reply good");
+		
+		ReplyVO vo = service.getReply(rno);
+		int good = vo.getGood() + 1;
+		vo.setGood(good);
+		
+		service.goodUpdate(vo);
+	}
 }

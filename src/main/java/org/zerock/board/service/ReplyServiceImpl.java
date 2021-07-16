@@ -27,4 +27,16 @@ public class ReplyServiceImpl implements ReplyService{
 		
 	}
 
+	@Override
+	public void goodUpdate(ReplyVO vo) {
+		mapper.goodUpdate(vo);
+		
+	}
+
+	@Override
+	public ReplyVO getReply(int rno) {
+		return mapper.getReply(rno);
+		
+	}
+
 }

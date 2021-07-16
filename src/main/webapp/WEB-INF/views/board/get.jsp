@@ -113,70 +113,7 @@ $(function(){
 
 
 <!-- 댓글 스크립트 -->
-<!-- 
-<script>
 
-$(function(){
-	var appRoot = "${appRoot}";
-	var boardBno = "${board.bno}";
-	var userId = "${pinfo.member.userId}";
-	
-	/* 댓글 가져오는 함수*/
-	function getReplyList(){
-		$.ajax({
-			type: "get",
-			url: appRoot + "/reply/list/" + boardBno,
-			success: function(list){
-				showReplyList(list);
-			},
-			error: function(){
-				console.log("댓글 가져오기 실패");
-			}
-		});
-	}
-	
-	//댓글 리스트 가져오기 실행
-	getReplyList();
-	
-	function showReplyList(list) {
-		var container = $("#reply-list-container").empty();
-		
-		for (var reply of list) {
-			var replyHTML = `
-				<li class="media" id="reply${reply.rno}" data-rno="${reply.rno}">
-					<div class="media-body">
-						<div class="my-4 replyer">
-							<span>${reply.replyer}</span>
-							<span>(${reply.replyer})</span>
-						</div>
-						<div class="reply">
-							<span>${reply.reply}<span>
-						</div>
-						<div class="date">
-							<small>${reply.replyDate}</small>
-						</div>
-						<div class="tool">
-							<a href="#"><span>답글</span></a>
-							<div>
-								<a href="#"><i class="fas fa-thumbs-up"></i></a>
-								<a href="#"><i class="fas fa-thumbs-down"></i></a>
-							</div>
-						</div>
-						<hr>
-					</div>
-				</li>`;
-				/*
-			var replyComponent = $(replyHTML).click(function() {
-				showModifyModal($(this).attr("data-rno"));
-				*/
-			});
-			container.append(replyComponent);
-		}
-	}
-});
-
-</script>
- -->
  <script>
  /* 댓글 입력 버튼 처리 */
  $(function(){
@@ -199,13 +136,11 @@ $(function(){
 			contentType: "application/json",
 			success: function() {
 				console.log("입력 성공");
-				// 모달창 닫고
-				$("#reply-insert-modal").modal("hide");
+				
 				// 댓글리스트 가져오고
 				getReplyList();
 				
-				// 안내 메세지 보여주기
-				$("#alert1").text("새 댓글 입력하였습니다.").addClass("show");
+				
 			},
 			error: function() {
 				console.log("입력 실패");
@@ -218,6 +153,7 @@ $(function(){
 			type: "get",
 			url:  "${appRoot}/reply/list/${board.bno}",
 			success: function(list){
+				console.log(list);
 				showReplyList(list);
 			},
 			error: function(){
@@ -227,41 +163,57 @@ $(function(){
 	}
 	
 	function showReplyList(list) {
-		var container = $("#reply-list-container");
+		var container = $("#reply-list-container").empty();
 		
 		for (var reply of list) {
 			var replyHTML = `
-				<li class="media" id="reply${reply.rno}" data-rno="${reply.rno}">
+				<li class="media"  id="reply\${reply.rno}" data-rno="\${reply.rno}">
 					<div class="media-body">
 						<div class="my-4 replyer">
-							<span>${reply.replyer}</span>
-							<span>(${reply.replyer})</span>
+							<span>\${reply.replyer}</span>
+							<span>(\${reply.replyerName})</span>
 						</div>
 						<div class="reply">
-							<span>${reply.reply}<span>
+							<span>\${reply.content}<span>
 						</div>
 						<div class="date">
-							<small>${reply.replyDate}</small>
+							<small>\${reply.replyDate}</small>
 						</div>
 						<div class="tool">
-							<a href="#"><span>답글</span></a>
+							<span><a href="#">답글</a></span>
 							<div>
-								<a href="#"><i class="fas fa-thumbs-up"></i></a>
-								<a href="#"><i class="fas fa-thumbs-down"></i></a>
+								<button type="button" class="reply-good"><i class="fas fa-thumbs-up"></i></button><span>\${reply.good}</span>
+								<button type="button" class="reply-bad"><i class="fas fa-thumbs-down"></i></button><span>\${reply.bad}</span>
 							</div>
 						</div>
 						<hr>
 					</div>
 				</li>`;
-				/*
-			var replyComponent = $(replyHTML).click(function() {
-				showModifyModal($(this).attr("data-rno"));
-				
-			});
-				*/
+
 			container.append(replyHTML);
 		}
 	}
+	
+	/* 댓글 리스트 보여주기*/
+	getReplyList();
+	
+	//good, bad 버튼
+	$(".reply-good").click(function(){
+		var rno = $(this).closest("li").attr("data-rno");
+		console.log("버튼 클릭")
+		
+		$.ajax({
+			type: "post",
+			url:"${appRoot}/reply/good/" + rno,
+			success: function(){
+				console.log("수정 성공");
+				getReplyList();
+			},
+			error: function(){
+				console.log("수정 실패")
+			}
+		});
+	});
  });
  </script>
 </body>

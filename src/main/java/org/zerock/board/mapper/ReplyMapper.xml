@@ -13,7 +13,27 @@
 </insert>
 
 <select id="getList" resultType="org.zerock.board.domain.ReplyVO">
+	SELECT r.rno,
+		   r.bno,
+		   r.content,
+		   r.replyer,
+		   r.replyDate,
+		   r.updateDate,
+		   r.good,
+		   r.bad,
+		   m.userName replyerName 
+	FROM reply r JOIN member m ON r.replyer = m.userId
+	WHERE r.bno = #{bno}
+</select>
+
+<update id="goodUpdate">
+	UPDATE reply
+	SET good = #{good}
+	WHERE rno = #{rno}
+</update>
+
+<select id="getReply" resultType="org.zerock.board.domain.ReplyVO">
 	SELECT * FROM reply
-	WHERE bno = #{bno}
+	WHERE rno = {rno}
 </select>
 </mapper>
