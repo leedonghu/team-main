@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.codec.Encoder;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,9 @@ public class StartController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private PasswordEncoder encoder;
 	
 	@GetMapping("/login")
 	public void login() {
@@ -107,6 +112,28 @@ public class StartController {
 		MemberVO vo = service.getInfo(userId);
 		
 		model.addAttribute("member", vo);
+	}
+	
+	@PostMapping("/info")
+	public String modifyInfo(MemberVO vo, RedirectAttributes rttr) {
+		
+		vo.setUserPw(encoder.encode(vo.getUserPw()));
+		
+		boolean ok = service.updateInfo(vo);
+		
+		if(ok) {
+			rttr.addAttribute("result", vo.getUserId());
+			rttr.addAttribute("messageTitle", "수정성공");
+			rttr.addAttribute("messageBody", "개인정보를 수정하였습니다.");
+			
+			return "redirect:/start/info";
+		}else {
+			rttr.addAttribute("result", vo.getUserId());
+			rttr.addAttribute("messageTitle", "수정실패");
+			rttr.addAttribute("messageBody", "개인정보를 수정하지 못했습니다.");
+			
+			return "redirect:/start/info";
+		}
 	}
 	
 //	@PostMapping("/acc")

@@ -53,6 +53,12 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.read(userId);
 	}
 
+	@Override
+	public boolean updateInfo(MemberVO vo) {
+		
+		return mapper.updateInfo(vo) == 1;
+	}
+
 
 
 }

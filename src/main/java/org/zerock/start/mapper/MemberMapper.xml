@@ -65,5 +65,15 @@
 	WHERE userId = #{userId}
 </select>
 
+<update id="updateInfo">
+	UPDATE member
+	SET userPw = #{userPw},
+		mobileNum = #{mobileNum},
+		email = #{email},
+		address = #{address},
+		userNickName = #{userNickName}
+	WHERE userId = userId
+
+</update>
 
 </mapper>

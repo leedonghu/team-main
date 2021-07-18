@@ -13,5 +13,7 @@ public interface MemberMapper {
 
 	public int checkId(String userId);
 
+	public int updateInfo(MemberVO vo);
+
 
 }

@@ -13,4 +13,8 @@ public interface MemberService {
 
 
 	public MemberVO getInfo(String userId);
+
+
+
+	public boolean updateInfo(MemberVO vo);
 }
