@@ -126,13 +126,13 @@ public class StartController {
 			rttr.addAttribute("messageTitle", "수정성공");
 			rttr.addAttribute("messageBody", "개인정보를 수정하였습니다.");
 			
-			return "redirect:/start/info";
+			return "redirect:/start/info?userId=" + vo.getUserId();
 		}else {
 			rttr.addAttribute("result", vo.getUserId());
 			rttr.addAttribute("messageTitle", "수정실패");
 			rttr.addAttribute("messageBody", "개인정보를 수정하지 못했습니다.");
 			
-			return "redirect:/start/info";
+			return "redirect:/start/info?userId=" + vo.getUserId();
 		}
 	}
 	

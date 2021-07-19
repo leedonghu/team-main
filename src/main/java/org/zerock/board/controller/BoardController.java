@@ -98,10 +98,18 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-//	@PostMapping("/remove")
-//	public void remove() {
-//		log.info("board remove");
-//		
-//		boolean ok = service.remove();
-//	}
+	@PostMapping("/remove")
+	public String remove(BoardVO vo, Criteria cri, RedirectAttributes rttr) {
+		log.info("board remove");
+		
+		boolean ok = service.remove(vo);
+		
+		if(ok) {
+			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("messageTitle", "삭제성공");
+			rttr.addFlashAttribute("messageBody", "삭제되었습니다.");
+		}
+		
+		return "redirect:/board/list";
+	}
 }

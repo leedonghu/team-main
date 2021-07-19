@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.domain.BoardVO;
 import org.zerock.board.domain.Criteria;
 import org.zerock.board.mapper.BoardMapper;
+import org.zerock.board.mapper.ReplyMapper;
 
 import lombok.Setter;
 
@@ -15,6 +17,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ReplyMapper replyMapper;
 	
 	@Override
 	public boolean register(BoardVO vo) {
@@ -51,6 +56,19 @@ public class BoardServiceImpl implements BoardService{
 		
 		return mapper.modify(vo) == 1;
 		
+	}
+
+	@Override
+	@Transactional
+	public boolean remove(BoardVO vo) {
+		
+		replyMapper.removeReplyReply(vo);
+		
+		replyMapper.removeReply(vo);
+		
+		int cnt = mapper.remove(vo);
+		
+		return cnt == 1;
 	}
 	
 

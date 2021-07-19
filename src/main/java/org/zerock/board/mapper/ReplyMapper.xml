@@ -24,6 +24,7 @@
 		   m.userName replyerName 
 	FROM reply r JOIN member m ON r.replyer = m.userId
 	WHERE r.bno = #{bno}
+	ORDER BY r.good DESC
 </select>
 
 <update id="goodUpdate">
@@ -32,8 +33,36 @@
 	WHERE rno = #{rno}
 </update>
 
+<update id="badUpdate">
+	UPDATE reply
+	SET bad = #{bad}
+	WHERE rno = #{rno}
+</update>
+
 <select id="getReply" resultType="org.zerock.board.domain.ReplyVO">
 	SELECT * FROM reply
-	WHERE rno = {rno}
+	WHERE rno = #{rno}
 </select>
+
+<select id="getReply_ReplyList" resultType="org.zerock.board.domain.Reply_ReplyVO">
+	SELECT * FROM reply_reply
+	WHERE rno = #{rno}
+</select>
+
+<insert id="reply_register">
+	INSERT INTO reply_reply
+	(rno, r_content, r_replyer)
+	VALUES
+	(#{rno}, #{r_content}, #{r_replyer})
+</insert>
+
+<delete id="removeReplyReply">
+	DELETE FROM reply_reply
+	WHERE rno IN (SELECT rno FROM reply WHERE bno = #{bno})
+</delete>
+
+<delete id="removeReply">
+	DELETE FROM reply
+	WHERE bno = #{bno}
+</delete>
 </mapper>

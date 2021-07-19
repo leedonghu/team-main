@@ -21,4 +21,6 @@ public interface BoardMapper {
 
 	public int modify(BoardVO vo);
 
+	public int remove(BoardVO vo);
+
 }

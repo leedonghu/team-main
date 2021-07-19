@@ -83,5 +83,10 @@
 		content = #{content}
 	WHERE bno = #{bno}
 	</update>
+	
+	<delete id="remove">
+		DELETE FROM board
+		WHERE bno = #{bno}
+	</delete>
 
 </mapper>
