@@ -28,11 +28,8 @@ FOREIGN KEY (writer) REFERENCES member(userId)
 );
 DESC member;
 SELECT * from member;
-SELECT * from reply_reply;
-SELECT * from reply;
 SELECT * from board ORDER BY bno DESC;
 
 
 
 
-DROP TABLE board;
