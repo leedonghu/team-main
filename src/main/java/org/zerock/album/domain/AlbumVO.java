@@ -15,5 +15,5 @@ public class AlbumVO {
 	private Date regdate;
 	private Date updateDate;
 	
-	private List<FileVO> files;
+	private String fileName;
 }

@@ -11,10 +11,7 @@
 
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
 <style>
-#album-input1 {
-  apperance: none;
-  -webkit-apperance: none;
-}
+
 
 </style>
 
@@ -40,18 +37,19 @@
 	<div class="col-10 border">
 			<h1>사진첩 등록</h1>
 <form method="post" id="album-form1" action="${appRoot }/album/register" enctype="multipart/form-data">
+  
   <div class="form-group">
     <label for="album-title1">제목</label>
     <input type="text" class="form-control" id="album-title1" placeholder="" name="title">
   </div>
   
 
-  <div class="form-group">
+  <div class="form-group" id="album-input-div1">
     <label for="album-input1">사진 선택</label>
-    <input type="file" class="form-control-file" id="album-input1" multiple accept="image/*" name="file">
+    <input type="file" class="form-control-file" id="album-input1" multiple files accept="image/*" name="files">
   </div>
 
-  
+  <!-- 
   <div class="form-group">
     <label for="exampleFormControlSelect2">Example multiple select</label>
     <select multiple class="form-control" id="exampleFormControlSelect2">
@@ -62,9 +60,16 @@
       <option>5</option>
     </select>
   </div>
+   -->
   <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <label for="album-textarea1">comment</label>
+    <textarea class="form-control" id="album-textarea1" rows="3" name="comment"></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label for="input2">작성자</label>
+	<input  hidden name="writer" class="form-control" id="album-input2" value="${pinfo.member.userId }" readonly>
+	<input class="form-control" value="${pinfo.member.userName }" readonly>
   </div>
   
   <button class="btn btn-primary" type="submit">등록</button>
@@ -79,11 +84,6 @@
 <script>
 /* 파일이 선택되고 나서 */
  
-$(function(){
-	$("#album-input1").change(function(){
-		
-	});
-});
 
 </script>
 </body>

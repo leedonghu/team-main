@@ -1,12 +1,17 @@
 package org.zerock.album.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.album.domain.AlbumVO;
+import org.zerock.album.service.AlbumService;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -14,6 +19,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class AlbumController {
 	
+	
+	@Setter(onMethod_ = @Autowired)
+	private AlbumService service;
 	
 	@GetMapping("/list")
 	public void getList() {
@@ -26,11 +34,16 @@ public class AlbumController {
 	}
 	
 	@PostMapping("/register")
-	public void albumRegister(AlbumVO vo, MultipartFile[] file) {
+	public void albumRegister(AlbumVO vo, @RequestParam("files") MultipartFile[] files) {
 		log.info("album post register");
 		
-		for(MultipartFile files : file) {
-			log.info(files.getOriginalFilename());
+		service.register(vo, files);
+		for(MultipartFile file : files) {
+			log.info(file.getOriginalFilename());
 		}
 	}
+	
+//	@PostMapping("/getFileName")
+//	@ResponseBody
+//	public void 
 }

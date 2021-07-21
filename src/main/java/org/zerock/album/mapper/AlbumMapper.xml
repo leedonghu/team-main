@@ -5,4 +5,18 @@
   
 <mapper namespace="org.zerock.album.mapper.AlbumMapper">
 
+
+	
+	  <!-- keyColumn 의 값이 keyProperty의 값으로 들어감 -->
+  <insert id="registerAlbum" useGeneratedKeys="true" keyProperty="ano" keyColumn="ano">
+     INSERT INTO album (title, comment, writer)
+     VALUES (#{title}, #{comment}, #{writer})
+  </insert>
+  
+  <insert id="registerFile" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+	INSERT INTO file (ano, fileName)
+	VALUES (#{ano}, #{fileName})
+  </insert>
+  
+  
 </mapper>
