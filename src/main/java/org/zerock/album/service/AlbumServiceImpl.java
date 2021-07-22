@@ -3,6 +3,7 @@ package org.zerock.album.service;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.zerock.album.domain.AlbumVO;
 import org.zerock.album.domain.FileVO;
 import org.zerock.album.mapper.AlbumMapper;
-import org.zerock.board.domain.BoardVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -96,5 +96,13 @@ public class AlbumServiceImpl implements AlbumService {
 		}catch(Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public List<AlbumVO> getList() {
+		log.info("album service list");
+		
+		return mapper.getList();
+		
 	}
 }

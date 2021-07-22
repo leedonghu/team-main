@@ -34,46 +34,22 @@
 	
 	<div class="col-10 border">
 			<h1>글 목록</h1>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>조회수</th>
-				<th>작성일</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${list }" var="board" varStatus="status">
-				<tr>
-					<td>${board.bno }</td>
-					<td>
-						<c:url value="/board/get" var="getUrl">
-	           				<c:param name="bno" value="${board.bno }"></c:param>
-	           				<c:param name="pageNum" value="${pageMaker.cri.pageNum }"></c:param>
-	           				<c:param name="amount" value="${pageMaker.cri.amount }"></c:param>
-	           				<c:param name="type" value="${cri.type }"/>
-	           				<c:param name="keyword" value="${cri.keyword }"/>
-	        			</c:url>
-	        
-	        			<a href="${getUrl}">
-						${board.title } 
-							<c:if test="${board.replyCnt > 0 }">
-								[${board.replyCnt }]
-							</c:if>
-						
-						</a>
-					
-					</td>
-					<td>${board.writer }</td>
-					<td>${board.cnt }</td>
-					<td><fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd"/></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-		
-	</table>	
+
+<div class="row row-cols-1 row-cols-md-4">
+  
+  <c:forEach items="${list }" var="album">
+  <div class="col mb-4">
+    <div class="card">
+      <img src="${imgRoot}${album.ano }/${album.fileName[0].fileName}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">${album.title }</h5>
+        <p class="card-text">${album.comment }</p>
+      </div>
+    </div>
+  </div>
+  </c:forEach>
+ 
+</div>
 		
 	</div>
 </div>
