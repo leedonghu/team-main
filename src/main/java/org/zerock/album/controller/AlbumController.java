@@ -1,16 +1,20 @@
 package org.zerock.album.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.album.domain.AlbumVO;
+import org.zerock.album.domain.FileVO;
 import org.zerock.album.service.AlbumService;
 
 import lombok.Setter;
@@ -47,6 +51,22 @@ public class AlbumController {
 		for(MultipartFile file : files) {
 			log.info(file.getOriginalFilename());
 		}
+	}
+	
+	@PostMapping("/get/{ano}")
+	@ResponseBody
+	public List<String> getAlbum(@PathVariable("ano") int ano) {
+		log.info("album get method");
+		
+		List<FileVO> lists = service.get(ano).getFileName();
+		List<String> list = new ArrayList<>();
+		
+		for(FileVO vo : lists) {
+			list.add(vo.getFileName());
+		}
+		
+		return list;
+				
 	}
 	
 //	@PostMapping("/getFileName")

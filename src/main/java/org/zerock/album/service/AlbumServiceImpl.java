@@ -105,4 +105,10 @@ public class AlbumServiceImpl implements AlbumService {
 		return mapper.getList();
 		
 	}
+
+	@Override
+	public AlbumVO get(int ano) {
+		
+		return mapper.get(ano);
+	}
 }

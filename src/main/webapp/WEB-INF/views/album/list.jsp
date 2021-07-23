@@ -33,18 +33,20 @@
 	<!--          본문 영역            -->
 	
 	<div class="col-10 border">
-			<h1>글 목록</h1>
+			<h2>앨범</h2>
 
-<div class="row row-cols-1 row-cols-md-4">
+<div class="row row-cols-1 row-cols-md-4" id="album-card-container1">
   
   <c:forEach items="${list }" var="album">
-  <div class="col mb-4">
+  <div class="col mb-4" data-ano="${album.ano }">
     <div class="card">
-      <img src="${imgRoot}${album.ano }/${album.fileName[0].fileName}" class="card-img-top" alt="...">
+      <img src="${imgRoot}${album.ano }/${album.fileName[0].fileName}" class="card-img-top" alt="..." width="169.5" height="225.33">
+      <!-- 
       <div class="card-body">
         <h5 class="card-title">${album.title }</h5>
         <p class="card-text">${album.comment }</p>
       </div>
+       -->
     </div>
   </div>
   </c:forEach>
@@ -55,5 +57,117 @@
 </div>
 	
 </div>
+
+<!-- 사진 보여주는 모달 -->
+
+<div class="modal fade bd-example-modal-lg" id="album-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">ALBUM</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-6 border-right">
+					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+ 						 <div class="carousel-inner">
+
+  						</div>
+  						<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Previous</span>
+  						</a>
+  						<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Next</span>
+  						</a>
+					</div>
+				</div>
+				
+				<div class="col-6">
+					<div>${list[0].writer }</div>
+					<br>
+					<div>${list[0].comment }</div>
+				</div>
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 모달 스크립트 -->
+
+<script>
+	$(function(){
+		
+		var albumComponent = $("#album-card-container1").on("click", ".col.mb-4", function(e){showModal(e, this);} );
+		
+		function showModal(e, elem){
+			e.preventDefault();
+			console.log("click");
+			var ano = $(elem).attr("data-ano");
+			
+			//var ano = parseInt(anoStr);
+			
+			$("#album-modal").modal("show");
+			$.ajax({
+				type: "post",
+				url: "${appRoot}/album/get/" + ano,
+				success: function(data){
+					//file 이름을 list로 받아옴
+					console.log("성공");
+					console.log(data);
+					carousel(data, ano);
+					
+				},
+				error: function(){
+					console.log("실패하였습니다.");
+				}
+			});
+			
+			$(".carousel").carousel({interval: 2000});
+		}
+		
+		
+		function carousel(data, ano){
+			var container = $(".carousel-inner").empty();
+			var address = "https://choongang-donghu.s3.ap-northeast-2.amazonaws.com/"+ ano +"/";
+			
+			for(var i = 0 ; i < data.length; i++){
+				//받아온 fileName list를 for문을 돌림
+				console.log(data[i]);
+				
+				//active는 아이템이 되는 div들 중에 하나에만 있어야 함
+				var carouselHTML = `
+					<div class="carousel-item `
+					
+					+ (i == 0 ? 'active' : '') +
+					
+					`">
+						<img class="d-block w-100" src="\${address}\${data[i]}">
+					</div>
+					`
+				container.append(carouselHTML);
+			}
+			
+			
+		}
+		
+		
+		
+	});
+
+</script>
 </body>
 </html>

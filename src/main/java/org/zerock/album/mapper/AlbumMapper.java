@@ -18,4 +18,8 @@ public interface AlbumMapper {
 
 	List<AlbumVO> getList();
 
+
+
+	AlbumVO get(int ano);
+
 }

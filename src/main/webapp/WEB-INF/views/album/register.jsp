@@ -78,12 +78,49 @@
 	</div>
 </div>
 	
+	<div class="test">
+		<c:forEach  begin="0" end="10" var="i">
+			<img id="test-img1${i }" src="">
+		</c:forEach>
+	</div>
 </div>
 
 
 <script>
 /* 파일이 선택되고 나서 */
- 
+ $(function(){
+	 $("#album-input1").change(function(e){
+		 e.preventDefault();
+		 var inputVar = $("#album-input1").val();
+		 
+		 //files를 쓰려면 실제 element에서만 사용가능
+		 //jquery로는 사용불가
+		 //jquery객체는 배열처럼 생겼는데, 그것의 [0]를 가져오면 실제 element를 가져오게됨 
+		 var files = $("#album-input1")[0].files
+		 
+		 
+		 var filesLength = files.length;
+		 
+		 if(filesLength > 10){
+			 alert("사진의 최대 갯수는 10개입니다.");
+			 $("#album-input1").empty();
+		 }
+		 
+		 /*
+		 for (var file of files) {
+			 console.log(file.name);
+			 console.log(URL.createObjectURL(file));
+			 $(".test-img1").attr("src", URL.createObjectURL(file));
+		 }
+		 */
+		 
+		 for(var i = 0; i<files.length; i++ ){
+			 $("#test-img1" + i).attr("src", URL.createObjectURL(files[i]));
+			 console.log(files[i].name);
+			 console.log(URL.createObjectURL(files[i]));
+		 }
+	 });
+ });
 
 </script>
 </body>

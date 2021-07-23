@@ -42,6 +42,49 @@
 	<result property="ano" column="ano"/>
 	<result property="fileName" column="fileName"/>
 </resultMap>
+	
+	<!-- 
+	<select id="get" resultMap="album">
+	 SELECT a.ano, 
+	   a.title, 
+       a.comment, 
+       a.writer, 
+       a.regdate, 
+       a.updateDate, 
+       f.fileName 
+	FROM album a LEFT JOIN file f on a.ano = f.ano
+	WHERE a.ano = #{ano}
+	</select>
+	
+	<resultMap type="org.zerock.album.domain.AlbumVO" id="album">
+		<id property="ano" column="ano"></id>
+		<result property="title" column="title"></result>
+		<result property="comment" column="comment"></result>
+		<result property="regdate" column="regdate"></result>
+		<result property="updateDate" column="updateDate"></result>
+		<result property="writer" column="writer"/>
+		<collection property="fileName" resultMap="file"></collection>
+	</resultMap>
+	<resultMap type="org.zerock.album.domain.FileVO" id="file">
+		<result property="ano" column="ano"/>
+		<result property="fileName" column="fileName"/>
+	</resultMap>
+	 -->
+	 <select id="get" resultMap="album">
+	 	SELECT  a.ano,
+	 			f.fileName
+	 	FROM album a LEFT JOIN file f on a.ano = f.ano
+	 	WHERE a.ano = #{ano}
+	 </select>
+	 
+	 <resultMap type="org.zerock.album.domain.AlbumVO" id="album">
+	 	<id property="ano" column="ano"></id>
+	 	<collection property="fileName" resultMap="file"></collection>
+	 </resultMap>
+	 <resultMap type="org.zerock.album.domain.FileVO" id="file">
+	 	<result property="ano" column="ano"/>
+		<result property="fileName" column="fileName"/>
+	 </resultMap>
   
   
 </mapper>

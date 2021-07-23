@@ -11,4 +11,6 @@ public interface AlbumService {
 
 	List<AlbumVO> getList();
 
+	AlbumVO get(int ano);
+
 }
