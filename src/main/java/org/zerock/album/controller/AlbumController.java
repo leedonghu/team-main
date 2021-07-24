@@ -55,7 +55,7 @@ public class AlbumController {
 	
 	@PostMapping("/get/{ano}")
 	@ResponseBody
-	public List<String> getAlbum(@PathVariable("ano") int ano) {
+	public List<String> getFile(@PathVariable("ano") int ano) {
 		log.info("album get method");
 		
 		List<FileVO> lists = service.get(ano).getFileName();
@@ -67,6 +67,14 @@ public class AlbumController {
 		
 		return list;
 				
+	}
+	
+	@PostMapping("/getAlbum/{ano}")
+	@ResponseBody
+	public AlbumVO getAlbum(@PathVariable("ano") int ano) {
+		log.info("album get album method");
+		
+		return service.get(ano);
 	}
 	
 //	@PostMapping("/getFileName")

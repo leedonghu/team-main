@@ -76,7 +76,7 @@
 				<div class="col-6 border-right">
 					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
  						 <div class="carousel-inner">
-
+							<!-- 사진 들어가는 곳 -->
   						</div>
   						<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -89,10 +89,8 @@
 					</div>
 				</div>
 				
-				<div class="col-6">
-					<div>${list[0].writer }</div>
-					<br>
-					<div>${list[0].comment }</div>
+				<div class="col-6 content">
+					<!-- 내용 들어가는 곳 -->
 				</div>
 			</div>
 		</div>
@@ -136,7 +134,22 @@
 				}
 			});
 			
-			$(".carousel").carousel({interval: 2000});
+			$.ajax({
+				type: "post",
+				url: "${appRoot}/album/getAlbum/" + ano,
+				success: function(data){
+					console.log(data);
+					var title = data.title;
+					var comment = data.comment;
+					var writer = data.writer;
+					content(title, comment, writer);
+					
+				},
+				error: function(){
+					console.log("실패하였습니다.");
+					
+				}
+			});
 		}
 		
 		
@@ -164,10 +177,31 @@
 			
 		}
 		
+		function content(title, comment, writer){
+			var container = $(".col-6.content").empty();
+			
+			var contentHTML = `
+			<div class="form-group">
+				<input class="form-control" value="\${writer}">
+			</div>
+			<hr>
+			<div class="form-group">
+				<input class="form-control" value="\${title}">
+			</div>
+			<br>
+			<hr>
+			<div class="form-group">
+				<textarea class="form-control" row="5" width="203" height="291">\${comment}</textarea>
+			</div>`
+			
+			container.append(contentHTML);
+			
+		}
+		
 		
 		
 	});
-
+	
 </script>
 </body>
 </html>

@@ -43,7 +43,7 @@
 	<result property="fileName" column="fileName"/>
 </resultMap>
 	
-	<!-- 
+	
 	<select id="get" resultMap="album">
 	 SELECT a.ano, 
 	   a.title, 
@@ -69,7 +69,8 @@
 		<result property="ano" column="ano"/>
 		<result property="fileName" column="fileName"/>
 	</resultMap>
-	 -->
+	
+	<!-- 
 	 <select id="get" resultMap="album">
 	 	SELECT  a.ano,
 	 			f.fileName
@@ -85,6 +86,7 @@
 	 	<result property="ano" column="ano"/>
 		<result property="fileName" column="fileName"/>
 	 </resultMap>
+	 -->
   
   
 </mapper>
