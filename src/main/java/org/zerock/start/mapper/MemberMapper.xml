@@ -36,6 +36,8 @@
 	m.enabled enabled,
 	m.regdate regdate,
 	m.updateDate updateDate,
+	m.login login,
+	m.point point,
 	a.auth auth
 	FROM member m LEFT JOIN member_auth a ON m.userId = a.userId
 	WHERE m.userId = #{userId}
@@ -53,6 +55,8 @@
 	<result property="regdate" column="regdate"></result>
 	<result property="updateDate" column="updateDate"></result>
 	<result property="enabled" column="enabled"/>
+	<result property="point" column="point"/>
+	<result property="login" column="login"/>
 	<collection property="authList" resultMap="authMap"></collection>
 </resultMap>
 <resultMap type="org.zerock.start.domain.AuthVO" id="authMap">
@@ -76,4 +80,21 @@
 
 </update>
 
+<select id="getDate" resultType="org.zerock.start.domain.MemberVO">
+	SELECT login FROM member
+	WHERE userId = #{userId}
+</select>
+
+<update id="updateLoginPoint">
+	UPDATE member
+	SET point = #{point},
+		login = #{login}
+	WHERE userId = #{userId}	
+</update>
+
+<update id="updatePoint">
+	UPDATE member
+	SET point = #{point}
+	WHERE userId = #{userId}
+</update>
 </mapper>

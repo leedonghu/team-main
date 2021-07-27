@@ -23,6 +23,9 @@ public class MemberVO {
 	private Date regdate;
 	private Date updateDate;
 	private boolean enabled;
+	private double point;
+	
+	private String login;
 	
 	private List<AuthVO> authList;
 }

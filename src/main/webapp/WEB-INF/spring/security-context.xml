@@ -14,7 +14,8 @@
 	<!--  
 	<security:intercept-url pattern="/board/*" access="hasRole('ROLE_USER')" />
 	-->
-	<security:form-login login-page="/start/login" always-use-default-target="true" default-target-url="/start/main" authentication-failure-url="/start/fail"/>
+	<security:form-login login-page="/start/login" always-use-default-target="true" default-target-url="/start/main" authentication-failure-url="/start/fail" />
+	
 	<security:csrf disabled="true"/>
 	<security:logout/>
 	

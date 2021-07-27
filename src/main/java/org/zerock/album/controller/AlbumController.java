@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.zerock.album.domain.AlbumVO;
 import org.zerock.album.domain.FileVO;
 import org.zerock.album.service.AlbumService;
+import org.zerock.start.service.PointService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -28,6 +29,9 @@ public class AlbumController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private AlbumService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private PointService pointService;
 	
 	@GetMapping("/list")
 	public void getList(Model model) {
@@ -51,6 +55,10 @@ public class AlbumController {
 		for(MultipartFile file : files) {
 			log.info(file.getOriginalFilename());
 		}
+		
+		//album 등록시 10point
+		String id = vo.getWriter();
+		pointService.addTenPoint(id);
 	}
 	
 	@PostMapping("/get/{ano}")

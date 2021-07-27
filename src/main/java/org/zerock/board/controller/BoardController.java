@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,7 @@ import org.zerock.board.domain.BoardVO;
 import org.zerock.board.domain.Criteria;
 import org.zerock.board.domain.PageDTO;
 import org.zerock.board.service.BoardService;
+import org.zerock.start.service.PointService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -25,6 +27,9 @@ public class BoardController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private PointService pointService;
 	
 	@GetMapping("/list")
 	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
@@ -52,6 +57,10 @@ public class BoardController {
 		//글 작성 후 db에 저장
 		boolean ok = service.register(vo);
 		
+		//작성하면 10point증가시킴
+		String id = vo.getWriter();
+		pointService.addTenPoint(id);
+		
 		// redirect 목적지로 정보 전달
 		rttr.addFlashAttribute("result", vo.getBno());
 		rttr.addFlashAttribute("messageTitle", "등록성공");
@@ -76,6 +85,10 @@ public class BoardController {
 		vo.setCnt(cnt);
 		
 		service.updateCnt(vo);
+		
+		//조회수당 1점
+		String id = vo.getWriter();
+		pointService.addOnePoint(id);
 		
 		//가져온 vo를 넘김
 		model.addAttribute("board", vo);

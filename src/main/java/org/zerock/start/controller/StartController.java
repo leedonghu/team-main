@@ -1,10 +1,11 @@
 package org.zerock.start.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.codec.Encoder;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.WebAttributes;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.start.domain.MemberVO;
 import org.zerock.start.service.MemberService;
+import org.zerock.start.service.PointService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -28,6 +30,9 @@ public class StartController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private PointService pointService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder encoder;
@@ -56,8 +61,12 @@ public class StartController {
 	}
 	
 	@RequestMapping("/main")
-	public void main() {
-		log.info("main");
+	public void main(String username, Principal principal) {
+		//login form에서 id값 넘김
+		log.info(principal.getName());
+		String id = principal.getName();
+		
+		pointService.checkLogin(id);
 	}
 	
 	@RequestMapping("/fail")

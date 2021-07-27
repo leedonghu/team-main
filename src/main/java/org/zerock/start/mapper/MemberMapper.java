@@ -15,5 +15,11 @@ public interface MemberMapper {
 
 	public int updateInfo(MemberVO vo);
 
+	public MemberVO getDate(String id);
+
+	public void updateLoginPoint(MemberVO vo);
+
+	public void updatePoint(MemberVO vo);
+
 
 }

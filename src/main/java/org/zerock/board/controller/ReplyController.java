@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.RequestScope;
 import org.zerock.board.domain.ReplyVO;
 import org.zerock.board.domain.Reply_ReplyVO;
 import org.zerock.board.service.ReplyService;
+import org.zerock.start.service.PointService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -24,6 +24,9 @@ public class ReplyController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private ReplyService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private PointService pointService;
 	
 	@GetMapping("/list/{bno}")
 	public List<ReplyVO> getList(@PathVariable("bno") int bno) {
@@ -42,6 +45,9 @@ public class ReplyController {
 		log.info("reply register");
 		
 		service.register(vo);
+		//댓글 입력시
+		String id = vo.getReplyer();
+		pointService.addOnePoint(id);
 	}
 	
 	@PostMapping("/reply-register")
@@ -49,6 +55,10 @@ public class ReplyController {
 		log.info("reply reply-register");
 		
 		service.reply_register(vo);
+		
+		//대댓글 입력시 1point
+		String id = vo.getR_replyer();
+		pointService.addOnePoint(id);
 	}
 	
 	@PostMapping("/good/{rno}")
@@ -61,6 +71,10 @@ public class ReplyController {
 		vo.setGood(good);
 		
 		service.goodUpdate(vo);
+		
+		//좋아요 하나당 0.1point
+		String id = vo.getReplyer();
+		pointService.addPercentPoint(id);
 	}
 	
 	@PostMapping("/bad/{rno}")
@@ -73,5 +87,9 @@ public class ReplyController {
 		vo.setBad(good);
 		
 		service.badUpdate(vo);
+		
+		//싫어요 하나당 -0.1 point
+		String id = vo.getReplyer();
+		pointService.subPercentPoint(id);
 	}
 }
