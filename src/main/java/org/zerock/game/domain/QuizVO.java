@@ -10,6 +10,7 @@ public class QuizVO {
 	private String ans;
 	private String date;
 	
+	private int point;
 	private String userId;
 	private int enabled;
 }

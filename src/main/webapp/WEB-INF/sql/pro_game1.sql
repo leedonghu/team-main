@@ -6,7 +6,11 @@ ans VARCHAR(1024) not null,
 date VARCHAR(15) not null
 );
 
-SELECT * from quiz;
+SELECT * FROM member;
+
+SELECT * from quiz_check;
+DELETE FROM quiz_check
+where qid = 2 and userId = 'aaa';
 CREATE TABLE quiz_check
 (
 id int PRIMARY key AUTO_INCREMENT,
@@ -16,9 +20,23 @@ enabled TINYINT DEFAULT 1,
 FOREIGN KEY (qid) REFERENCES quiz (qid)
 );
 
+CREATE TABLE quiz_att
+(
+id int PRIMARY KEY AUTO_INCREMENT,
+qid int not null,
+userId VARCHAR(50) not null,
+point int NOT null,
+enabled TINYINT DEFAULT 1,
+FOREIGN KEY (qid) REFERENCES quiz (qid)
+);
+
+SELECT * FROM quiz_att;
+SELECT count(*) FROM quiz_att
+where qid = 2 and userId = 'aaa';
+
 use project;
-DELETE FROM quiz
-where qid=15;
+DELETE FROM quiz_att
+where qid=2;
 
 INSERT into quiz
 (que, ans, date)

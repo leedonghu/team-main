@@ -12,4 +12,6 @@ public interface PointService {
 
 	void subPercentPoint(String id);
 
+	void subFivePoint(String id);
+
 }

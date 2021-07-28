@@ -99,4 +99,15 @@ public class PointServiceImpl implements PointService {
 		mapper.updatePoint(vo);
 	}
 
+	@Override
+	public void subFivePoint(String id) {
+		MemberVO vo = mapper.read(id);
+		double point = vo.getPoint();
+		double downPoint = point - 5;
+		vo.setPoint(downPoint);
+		
+		mapper.updatePoint(vo);
+		
+	}
+
 }
