@@ -6,12 +6,14 @@ public interface QuizService {
 
 	QuizVO getQuiz();
 
-	void insertAtt(QuizVO vo);
 
-	QuizVO getQuizAtt(QuizVO vo);
 
-	void updateAtt(QuizVO vo);
+	void insertState(QuizVO vo);
 
-	void updateQuiz(QuizVO vo);
+	void updateClick(QuizVO vo);
+
+	QuizVO getQuizState(QuizVO vo);
+
+	void updateSolve(QuizVO vo);
 
 }

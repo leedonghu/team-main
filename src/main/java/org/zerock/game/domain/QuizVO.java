@@ -12,5 +12,12 @@ public class QuizVO {
 	
 	private int point;
 	private String userId;
-	private int enabled;
+	private int contact;
+	private int click;
+	private int solve;
+	
+	
+	public int getState() {
+		return this.contact + this.click + this.solve;
+	}
 }

@@ -45,38 +45,42 @@ public class QuizController {
 		
 		vo2.setUserId(userId);
 		vo2.setQid(qid);
-		vo2.setPoint(0);
+		
 		
 		//퀴즈풀기 창에만 있을때 상태 insert
-		service.insertAtt(vo2);
+		//contact를 1로 업데이트
+		service.insertState(vo2);
 		
-		//퀴즈를 시도한적이(문제풀기 버튼 눌름) 있는지 확인
-		QuizVO vo3 = service.getQuizAtt(vo2);
-		int quizAtt = vo3.getEnabled();
-		
-		
-		if(quizAtt == 1) {
-			//시도하지 않았으면 원래 jsp로 forward
+		QuizVO vo3 = service.getQuizState(vo2);
+		vo3.setAns(vo.getAns());
+		vo3.setDate(vo.getDate());
+		vo3.setQue(vo.getQue());
+		if(vo3.getState() == 1) {
+			
+			model.addAttribute("state", vo3);
 			model.addAttribute("quiz", vo);
 			return "quiz/get";
-		}else {
-			
-			//service.get
-			
+		}else if(vo3.getState() == 2) {
+			model.addAttribute("quiz", vo3);
 			return "quiz/get-1";
+		}else {
+			model.addAttribute("quiz", vo3);
+			return "quiz/get-2";
 		}
+		
 	}
 	
 	@PostMapping("/att")
 	@ResponseBody
 	public void attQuiz(@RequestBody QuizVO vo) {
 		//문제풀기를 도전했을때 enabled를 0으로 바꿈
-		vo.setEnabled(0);
+		vo.setClick(1);
 		//문제풀기 상태 업데이트
-		service.updateAtt(vo);
+		service.updateClick(vo);
 		
-		String id = vo.getUserId();
-		pointService.subFivePoint(id);
+		log.info("attQuiz--------------------------");
+		
+		
 	}
 	
 	@PostMapping("/checkAns")
@@ -99,7 +103,8 @@ public class QuizController {
 		
 		//실제 답과 입력받은 답을 비교
 		if(result.equals(userAns)) {
-			service.updateQuiz(vo);
+			vo.setSolve(1);
+			service.updateSolve(vo);
 			log.info("--------------------chekc------------");
 			return true;
 		}else {

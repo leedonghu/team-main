@@ -9,40 +9,43 @@
 		WHERE date = #{date}
 	</select>
 	
-	<insert id="insertAtt" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-		INSERT INTO quiz_att
-		(qid, userId, point)
-		VALUES
-		(#{qid}, #{userId}, #{point})
-	</insert>
 	
-	<select id="getQuizAtt" resultType="QuizVO">
-		SELECT * FROM quiz_att
+	
+	<select id="countQuizState" resultType="int">
+		SELECT count(*) FROM quiz_state
 		WHERE qid = #{qid} AND userId = #{userId}
 	</select>
 	
-	<update id="updateAtt">
-		UPDATE quiz_att
-		SET point = #{point},
-			enabled = #{enabled}
-		WHERE qid = #{qid} AND userId = #{userId}
-	</update>
-	
-	<select id="countQuizAtt" resultType="int">
-		SELECT count(*) FROM quiz_att
-		WHERE qid = #{qid} AND userId = #{userId}
-	</select>
-	
-	<insert id="insertQuizCheck" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-		INSERT INTO quiz_check
+	<insert id="insertState" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO quiz_state
 		(qid, userId)
 		VALUES
 		(#{qid}, #{userId})
 	</insert>
 	
-	<update id="updateQuizCheck">
-		UPDATE quiz_check
-		SET enabled = 0
+	<update id="updateContact">
+		UPDATE quiz_state
+		SET contact = #{contact},
+			point = #{point}
 		WHERE qid = #{qid} AND userId = #{userId}
 	</update>
+	
+	<update id="updateClick">
+		UPDATE quiz_state
+		SET click = #{click},
+			point = #{point}
+		WHERE qid = #{qid} AND userId = #{userId}
+	</update>
+	
+	<select id="getQuizState" resultType="org.zerock.game.domain.QuizVO">
+		SELECT * FROM quiz_state
+		WHERE qid = #{qid} AND userId = #{userId}
+	</select>
+	
+	<update id="updateSolve">
+		UPDATE quiz_state
+		SET solve = #{solve}
+		WHERE qid = #{qid} AND userId = #{userId}
+	</update>
+
 </mapper>

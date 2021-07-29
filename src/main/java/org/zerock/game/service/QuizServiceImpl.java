@@ -6,9 +6,9 @@ import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.zerock.game.domain.QuizVO;
 import org.zerock.game.mapper.QuizMapper;
+import org.zerock.start.service.PointService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -20,6 +20,10 @@ public class QuizServiceImpl implements QuizService {
 	@Setter(onMethod_ = @Autowired)
 	private QuizMapper mapper;
 	
+	@Setter(onMethod_ = @Autowired)
+	private PointService pointService;
+	
+
 	@Override
 	public QuizVO getQuiz() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -31,40 +35,46 @@ public class QuizServiceImpl implements QuizService {
 		return mapper.getQuiz(today);
 	}
 
+
 	@Override
-	public void insertAtt(@RequestBody QuizVO vo) {
-		
-		int cnt = mapper.countQuizAtt(vo);
+	@Transactional
+	public void insertState(QuizVO vo) {
+		int cnt = mapper.countQuizState(vo);
 		
 		if(cnt == 0) {
-			
-			mapper.insertAtt(vo);
+			vo.setContact(1);
+			mapper.insertState(vo);
+			mapper.updateContact(vo);
 		}
 		log.info("quiz insertAtt");
 		
 	}
 
 	@Override
-	public QuizVO getQuizAtt(QuizVO vo) {
+	@Transactional
+	public void updateClick(QuizVO vo) {
+		log.info("service attQuiz----------------");
+		mapper.updateClick(vo);
+		pointService.subFivePoint(vo.getUserId());
 		
-		return mapper.getQuizAtt(vo);
 	}
 
 	@Override
-	public void updateAtt(QuizVO vo) {
-		mapper.updateAtt(vo);
+	public QuizVO getQuizState(QuizVO vo) {
 		
+		return mapper.getQuizState(vo);
 	}
+
 
 	@Override
 	@Transactional
-	public void updateQuiz(QuizVO vo) {
-		//누가 몇번문제를 풀었는지 insert
-		mapper.insertQuizCheck(vo);
-		
-		//문제를 풀었다면 enabled를 0으로
-		mapper.updateQuizCheck(vo);
+	public void updateSolve(QuizVO vo) {
+		mapper.updateSolve(vo);
+		pointService.addQuizPoint(vo);
 		
 	}
+
+
+
 
 }

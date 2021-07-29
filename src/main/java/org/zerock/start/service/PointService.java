@@ -1,5 +1,8 @@
 package org.zerock.start.service;
 
+import org.zerock.game.domain.QuizVO;
+import org.zerock.start.domain.MemberVO;
+
 public interface PointService {
 
 	void checkLogin(String id);
@@ -13,5 +16,11 @@ public interface PointService {
 	void subPercentPoint(String id);
 
 	void subFivePoint(String id);
+
+	void addQuizPoint(QuizVO vo);
+
+	void subPoint(MemberVO vo);
+
+	void addPoint(MemberVO vo);
 
 }

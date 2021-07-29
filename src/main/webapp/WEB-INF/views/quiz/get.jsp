@@ -43,7 +43,7 @@ display: inline-block;
 	<div class="col-2">	
 		<nav class="nav flex-column">
   			<a class="nav-link active" href="${appRoot }/quiz/get">오늘의 quiz</a>
-  			<a class="nav-link" href="${appRoot }/album/register">문제내기</a>
+  			<a class="nav-link" href="${appRoot }/hat/get">공을 찾아라</a>
   			<a class="nav-link" href="#">Link</a>
   			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
 		</nav>
@@ -56,20 +56,23 @@ display: inline-block;
 	
 	<!-- 문제풀기 -->
 	<!-- 문제풀기 버튼을 누르면 5point 차감 -->
+	
 	<div class="justify-content-center mt-3" id="quiz-start">
 		<div>오늘의 문제!</div><br>
 		<div>5point</div><br>
 		<button class="btn btn-primary btn-lg" id="quiz-btn1">문제풀기</button>
 	</div>
 	
-	<div class="quiz-solution">
+	
+	
+	<div class="quiz-solution" >
 		<form>
-			<div class="form-group" hidden id="quiz-solution-form">
+			<div class="form-group" id="quiz-solution-form" hidden>
 				<label for="que" class="col-form-label">문제</label><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span id="que-point"></span><span>점</span>
 				<textarea class="form-control" id="que" readonly>${quiz.que }</textarea>
 				<br>
 				<label for="ans" class="col-form-label">답</label>
-				<input class="form-control" id="ans">
+				<input class="form-control" id="ans" type="text">
 				<input hidden id="quiz-solution" value="${quiz.ans }">
 				<input hidden id="quiz-id" value="${quiz.qid }">
 				<input hidden id="quiz-userId" value="${pinfo.member.userId }">
@@ -78,10 +81,13 @@ display: inline-block;
 		</form>
 	</div>
 	
+	
+	
 	<div class="quiz-end" hidden>
 		<div>오늘은 여기까지</div>
 		<div>내일 다시 도전해주세요!</div>
 	</div>
+	
 
 		
 	</div>
@@ -172,12 +178,14 @@ display: inline-block;
 		});
 		
 		function endQuiz(){
-			$("#quiz-solution-form").attr("hidden");
-			$("#quiz-end").removeAttr("hidden", "hidden");
+
+			alert("정답을 맞추셨습니다.");
+			location.reload();
 		}
 		
 		function keepQuiz(){
 			alert("다시 도전해주세요");
+			$("#ans").val("");
 		}
 	});
 </script>

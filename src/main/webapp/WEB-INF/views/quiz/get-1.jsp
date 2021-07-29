@@ -12,6 +12,28 @@
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
 
 <title>Insert title here</title>
+
+<style>
+#quiz-start {
+width : 100%;
+text-align : center;
+}
+
+#quiz-start > div,button{
+display: inline-block;
+}
+
+.col-10.border{
+width : 100%;
+text-align : center;
+}
+
+.col-10.border > h2{
+display: inline-block;
+}
+
+</style>
+
 </head>
 <body>
 <div class="container">
@@ -22,7 +44,7 @@
 	<div class="col-2">	
 		<nav class="nav flex-column">
   			<a class="nav-link active" href="${appRoot }/quiz/get">오늘의 quiz</a>
-  			<a class="nav-link" href="${appRoot }/album/register">문제내기</a>
+  			<a class="nav-link" href="${appRoot }/hat/get">공을 찾아라</a>
   			<a class="nav-link" href="#">Link</a>
   			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
 		</nav>
@@ -44,7 +66,7 @@
 	<div class="quiz-solution">
 		<form>
 			<div class="form-group" id="quiz-solution-form">
-				<label for="que" class="col-form-label">문제</label><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span id="que-point"></span><span>점</span>
+				<label for="que" class="col-form-label">문제</label><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span id="que-point">${quiz.point }</span><span>점</span>
 				<textarea class="form-control" id="que" readonly>${quiz.que }</textarea>
 				<br>
 				<label for="ans" class="col-form-label">답</label>
@@ -111,12 +133,14 @@ $("#quiz-solution-btn1").click(function(e){
 });
 
 function endQuiz(){
-	$("#quiz-solution-form").attr("hidden");
-	$("#quiz-end").removeAttr("hidden", "hidden");
+	alert("정답을 맞추셨습니다.");
+	//페이지 새로고침 
+	location.reload();
 }
 
 function keepQuiz(){
 	alert("다시 도전해주세요");
+	$("#ans").val("");
 }
 });
 
