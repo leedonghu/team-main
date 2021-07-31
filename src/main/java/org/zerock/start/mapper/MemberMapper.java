@@ -21,5 +21,7 @@ public interface MemberMapper {
 
 	public void updatePoint(MemberVO vo);
 
+	public MemberVO getProfile(String id);
+
 
 }

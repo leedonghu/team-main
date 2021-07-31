@@ -17,4 +17,8 @@ public interface MemberService {
 
 
 	public boolean updateInfo(MemberVO vo);
+
+
+
+	public MemberVO getProfile(String id);
 }

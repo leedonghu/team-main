@@ -27,5 +27,7 @@ public class MemberVO {
 	
 	private String login;
 	
+	private String fileName;
+	
 	private List<AuthVO> authList;
 }

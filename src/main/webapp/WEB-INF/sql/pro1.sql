@@ -30,11 +30,30 @@ CHANGE userPw userPw VARCHAR(100) NOT NULL;
 DROP TABLE member;
 use spr1;
 
-SELECT * FROM member;
+SELECT * FROM member_profile;
 DESC member; 
 
-SELECT * FROM member_auth;
+SELECT * FROM file;
 
 insert into member_auth
 (userId, auth)
 values ('bbb', 'ROLE_USER');
+
+create table member_profile
+(
+pfId int PRIMARY key AUTO_INCREMENT,
+userId VARCHAR(50) not null,
+fileName VARCHAR(100) not null
+);
+
+
+	SELECT m.userId userId,
+		   m.userName userName,
+		   m.userNickName userNickName,
+		   m.point point,
+		   f.fileName fileName
+	FROM member m left join member_profile f on m.userId = f.userId
+    WHERE m.userId = 'bbb';
+    
+DELETE FROM member_profile
+where pfId = 2;

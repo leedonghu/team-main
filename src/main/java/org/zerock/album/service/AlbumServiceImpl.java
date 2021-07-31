@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.zerock.album.domain.AlbumVO;
 import org.zerock.album.domain.FileVO;
 import org.zerock.album.mapper.AlbumMapper;
+import org.zerock.start.domain.MemberVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -110,5 +111,49 @@ public class AlbumServiceImpl implements AlbumService {
 	public AlbumVO get(int ano) {
 		
 		return mapper.get(ano);
+	}
+
+	@Override
+	@Transactional
+	public void registerProfile(MemberVO vo, MultipartFile file) {
+		//s3에 올라가는 이미지의 이름을 profile로 저장
+		//확장자부분을 잘라서 fileName에 붙여줌
+		String oriFileName = file.getOriginalFilename();
+		int index = oriFileName.lastIndexOf(".");
+		String extension = oriFileName.substring(index);
+		
+		String fileName = "profile" + extension;
+		vo.setFileName(fileName);
+		
+		int exist = mapper.existFile(vo);
+		
+		if(exist == 0) {
+			
+			mapper.registerProfile(vo);
+			profileUpload(vo, file);
+		}else {
+			mapper.updateProfile(vo);
+			profileUpload(vo, file);
+		}
+		
+	}
+	
+	private void profileUpload(MemberVO vo, MultipartFile file) {
+		
+		try(InputStream is = file.getInputStream()){
+			
+			PutObjectRequest objectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(vo.getUserId() + "/" + vo.getFileName())
+					.contentType(file.getContentType())
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			
+			s3.putObject(objectRequest, 
+					RequestBody.fromInputStream(is, file.getSize()));
+		
+		}catch(Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

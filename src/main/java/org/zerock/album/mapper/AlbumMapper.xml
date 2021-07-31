@@ -87,6 +87,22 @@
 		<result property="fileName" column="fileName"/>
 	 </resultMap>
 	 -->
+  <insert id="registerProfile">
+  	INSERT INTO member_profile
+  	(userId, fileName)
+  	VALUES
+  	(#{userId}, #{fileName})
+  </insert>
   
+  <select id="existFile" resultType="int">
+  SELECT count(*) FROM member_profile
+  WHERE userId = #{userId} 
+  </select>
+  
+  <update id="updateProfile">
+  	UPDATE member_profile
+  	SET fileName = #{fileName}
+  	WHERE userId = #{userId}
+  </update>
   
 </mapper>

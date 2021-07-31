@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.album.domain.AlbumVO;
+import org.zerock.start.domain.MemberVO;
 
 public interface AlbumService {
 
@@ -12,5 +13,7 @@ public interface AlbumService {
 	List<AlbumVO> getList();
 
 	AlbumVO get(int ano);
+
+	void registerProfile(MemberVO vo, MultipartFile file);
 
 }

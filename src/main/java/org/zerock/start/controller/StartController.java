@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.album.service.AlbumService;
 import org.zerock.start.domain.MemberVO;
 import org.zerock.start.service.MemberService;
 import org.zerock.start.service.PointService;
@@ -33,6 +35,9 @@ public class StartController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private PointService pointService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private AlbumService albumService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder encoder;
@@ -61,13 +66,25 @@ public class StartController {
 	}
 	
 	@RequestMapping("/main")
-	public void main(String username, Principal principal) {
+	public void main(String username, Principal principal, MemberVO vo, MultipartFile file, Model model) {
 		//login form에서 id값 넘김
 		log.info(principal.getName());
 		String id = principal.getName();
 		
 		pointService.checkLogin(id);
+		
+		if(file != null) {
+			//프로필 사진 변경
+			albumService.registerProfile(vo, file);
+			
+		}
+		
+		//저장된 프로필 사진 가져오기
+		MemberVO vo2 = service.getProfile(id);
+		model.addAttribute("profile", vo2);
 	}
+	
+	
 	
 	@RequestMapping("/fail")
 	public void fail(HttpServletRequest request, Model model) {

@@ -97,4 +97,14 @@
 	SET point = #{point}
 	WHERE userId = #{userId}
 </update>
+
+<select id="getProfile" resultType="org.zerock.start.domain.MemberVO">
+	SELECT m.userId userId,
+		   m.userName userName,
+		   m.userNickName userNickName,
+		   m.point point,
+		   f.fileName fileName
+	FROM member m LEFT JOIN member_profile f ON m.userId = f.userId
+	WHERE m.userId = #{userId}
+</select>
 </mapper>

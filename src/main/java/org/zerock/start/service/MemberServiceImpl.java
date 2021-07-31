@@ -59,6 +59,12 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.updateInfo(vo) == 1;
 	}
 
+	@Override
+	public MemberVO getProfile(String id) {
+		
+		return mapper.getProfile(id);
+	}
+
 
 
 }

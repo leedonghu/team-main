@@ -24,18 +24,39 @@
 <div class="row">
 	<!--       왼쪽 nav          -->
 	
-	<div class="col-2">	
-		<nav class="nav flex-column">
-  			<a class="nav-link active" href="#">Active</a>
-  			<a class="nav-link" href="#">Link</a>
-  			<a class="nav-link" href="#">Link</a>
-  			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-		</nav>
-	</div>
+<div class="card col-3" style="width: 18rem;">
+  <c:if test="${empty profile.fileName }">
+  	<img src="${appRoot }/resources/img/구름.png" class="card-img-top" alt="...">
+  </c:if>
+  <c:if test="${!empty profile.fileName }">
+  	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top" alt="...">
+  </c:if>
+  
+  <form action="${appRoot }/start/main" method="post" enctype="multipart/form-data">
+  	<label for="pro-file">프로필 사진 수정</label>
+  	<input type="file" id="pro-file" name="file" hidden accept="image/*"><br><br>
+  	<input hidden name="userId" value="${pinfo.member.userId }">
+  	<button class="btn btn-primary" type="submit" hidden id="pro-submit">수정</button>
+  </form>
+  
+  <div class="card-body">
+    <h5 class="card-title">${profile.userName }(${profile.userName })</h5>
+    <p class="card-text">${profile.userNickName }</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">${profile.point }</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
 	
 	<!--          본문 영역            -->
 	
-	<div class="col-10 border">
+	<div class="col-9 border">
 		<h1>본문</h1><br>
 		<h1>본문</h1><br>
 		<h1>본문</h1><br>
@@ -53,4 +74,12 @@
 <hr>
 	
 </body>
+
+<script>
+$(function(){
+	$("#pro-file").change(function(){
+		$("#pro-submit").removeAttr("hidden");
+	});
+});
+</script>
 </html>
