@@ -47,7 +47,7 @@ public class ReplyController {
 		service.register(vo);
 		//댓글 입력시
 		String id = vo.getReplyer();
-		pointService.addOnePoint(id);
+		pointService.addOnePoint(id, 5);
 	}
 	
 	@PostMapping("/reply-register")
@@ -58,7 +58,7 @@ public class ReplyController {
 		
 		//대댓글 입력시 1point
 		String id = vo.getR_replyer();
-		pointService.addOnePoint(id);
+		pointService.addOnePoint(id, 6);
 	}
 	
 	@PostMapping("/good/{rno}")

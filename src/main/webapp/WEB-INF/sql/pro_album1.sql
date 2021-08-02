@@ -31,4 +31,4 @@ FROM album a left JOIN file f on a.ano = f.ano;
 
 use spr1;
 SELECT * from tbl_member;
-SELECT * from tbl_member_auth;
+SELECT * from tbl_member_auth;point

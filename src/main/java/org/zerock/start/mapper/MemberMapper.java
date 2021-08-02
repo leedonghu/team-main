@@ -2,6 +2,7 @@ package org.zerock.start.mapper;
 
 import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
+import org.zerock.start.domain.PointVO;
 
 public interface MemberMapper {
 	
@@ -22,6 +23,10 @@ public interface MemberMapper {
 	public void updatePoint(MemberVO vo);
 
 	public MemberVO getProfile(String id);
+
+	public void registerPoint(MemberVO vo2);
+
+	public PointVO getPointInfo(String userId);
 
 
 }

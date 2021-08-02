@@ -1,5 +1,6 @@
 package org.zerock.album.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +59,12 @@ public class AlbumController {
 		
 		//album 등록시 10point
 		String id = vo.getWriter();
-		pointService.addTenPoint(id);
+		pointService.addTenPoint(id, 3);
 	}
 	
 	@PostMapping("/get/{ano}")
 	@ResponseBody
-	public List<String> getFile(@PathVariable("ano") int ano) {
+	public List<String> getFile(@PathVariable("ano") int ano, Principal pricipal) {
 		log.info("album get method");
 		
 		List<FileVO> lists = service.get(ano).getFileName();
@@ -72,6 +73,9 @@ public class AlbumController {
 		for(FileVO vo : lists) {
 			list.add(vo.getFileName());
 		}
+		
+		String id = pricipal.getName();
+		pointService.addOnePoint(id, 4);
 		
 		return list;
 				

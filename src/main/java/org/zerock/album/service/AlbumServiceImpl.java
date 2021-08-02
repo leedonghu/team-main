@@ -118,11 +118,13 @@ public class AlbumServiceImpl implements AlbumService {
 	public void registerProfile(MemberVO vo, MultipartFile file) {
 		//s3에 올라가는 이미지의 이름을 profile로 저장
 		//확장자부분을 잘라서 fileName에 붙여줌
-		String oriFileName = file.getOriginalFilename();
-		int index = oriFileName.lastIndexOf(".");
-		String extension = oriFileName.substring(index);
+//		String oriFileName = file.getOriginalFilename();
+//		int index = oriFileName.lastIndexOf(".");
+//		String extension = oriFileName.substring(index);
 		
-		String fileName = "profile" + extension;
+		log.info("registerprofile");
+		
+		String fileName = "profile"; // + extension;
 		vo.setFileName(fileName);
 		
 		int exist = mapper.existFile(vo);

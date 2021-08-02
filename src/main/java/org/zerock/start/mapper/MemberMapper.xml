@@ -107,4 +107,45 @@
 	FROM member m LEFT JOIN member_profile f ON m.userId = f.userId
 	WHERE m.userId = #{userId}
 </select>
+
+<insert id="registerPoint" useGeneratedKeys="true" keyProperty="pid" keyColumn="pid">
+	INSERT INTO point_inout
+	(userId, point, pointInOut)
+	VALUES
+	(#{userId}, #{point}, #{pointInOut})
+</insert>
+
+<select id="getPointInfo" resultMap="pointMap">
+	SELECT 
+		   userId,
+		   SUM(point) point,
+		   pointInOut,
+		   regdate
+		   
+	FROM point_inout
+	WHERE userId = #{userId}
+	GROUP BY pointInOut
+</select>
+<resultMap type="org.zerock.start.domain.PointVO" id="pointMap">
+	<id column="userId" property="userId"/>
+	
+	<result property="regdate" column="regdate"/>
+	<collection property="pointList" resultMap="pointList"></collection>
+	<collection property="pointInOut" resultMap="inOutList"></collection>
+	
+	<collection property="pointMap" resultMap="pointHashMap"></collection>
+</resultMap>
+
+<resultMap type="java.util.HashMap" id="pointHashMap">
+	<result property="key" column="pointInOut"/>
+	<result property="value" column="point" />
+</resultMap>
+
+<resultMap type="double" id="pointList">
+	<result property="pointList" column="point"/>
+</resultMap>
+<resultMap type="String" id="inOutList">
+	<result property="pointInOut" column="pointInOut"/>
+</resultMap>
+
 </mapper>

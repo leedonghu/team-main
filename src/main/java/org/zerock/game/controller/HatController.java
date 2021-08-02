@@ -49,7 +49,8 @@ public class HatController {
 				return false;
 			}else {
 				mvo.setPoint(betPoint);
-				pointService.subPoint(mvo);
+				mvo.setPointInOut("공찾기");
+				pointService.subPoint(mvo, 10);
 				return true;
 			
 			}
@@ -74,7 +75,8 @@ public class HatController {
 		
 		MemberVO mvo = memberService.getInfo(principal.getName());
 		mvo.setPoint(resultPoint);
-		pointService.addPoint(mvo);
+		mvo.setPointInOut("공찾기");
+		pointService.addPoint(mvo, 10);
 		
 		return resultPoint;
 	}

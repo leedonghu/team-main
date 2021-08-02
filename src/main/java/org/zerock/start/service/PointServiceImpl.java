@@ -5,8 +5,10 @@ import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.game.domain.QuizVO;
 import org.zerock.start.domain.MemberVO;
+import org.zerock.start.domain.PointVO;
 import org.zerock.start.mapper.MemberMapper;
 
 import lombok.Setter;
@@ -20,6 +22,7 @@ public class PointServiceImpl implements PointService {
 	private MemberMapper mapper;
 	
 	@Override
+	@Transactional
 	public void checkLogin(String id) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -34,7 +37,7 @@ public class PointServiceImpl implements PointService {
 		log.info(vo.getLogin());
 		log.info(today);
 		
-		
+		MemberVO vo2 = mapper.read(id);
 		
 		if(!today.equals(login)) {
 			//같지 않을때
@@ -45,6 +48,13 @@ public class PointServiceImpl implements PointService {
 			vo.setPoint(upPoint);
 			
 			mapper.updateLoginPoint(vo);
+			
+			//획득한 포인트를 point_inout db에 저장
+			double inoutPoint = vo2.getPoint();
+			inoutPoint = 10;
+			vo2.setPoint(inoutPoint);
+			vo2.setPointInOut("로그인");
+			mapper.registerPoint(vo2);
 			log.info("login point");
 		}else {
 			
@@ -55,7 +65,8 @@ public class PointServiceImpl implements PointService {
 	}
 
 	@Override
-	public void addTenPoint(String id) {
+	@Transactional
+	public void addTenPoint(String id, int pointCode) {
 		log.info("board add point");
 		MemberVO vo = mapper.read(id);
 		double point = vo.getPoint();
@@ -64,10 +75,24 @@ public class PointServiceImpl implements PointService {
 		
 		mapper.updatePoint(vo);
 		
+		//획득한 포인트를 point_inout db에 저장
+		MemberVO vo2 = mapper.read(id);
+		double inoutPoint = vo2.getPoint();
+		inoutPoint = 10;
+		vo2.setPoint(inoutPoint);
+		
+		if(pointCode == 2) {
+			vo2.setPointInOut("글쓰기 등록");
+		}else if(pointCode == 3) {
+			vo2.setPointInOut("엘범 등록");
+		}
+		
+		mapper.registerPoint(vo2);
 	}
 
 	@Override
-	public void addOnePoint(String id) {
+	@Transactional
+	public void addOnePoint(String id, int pointCode) {
 		log.info("reply add point");
 		MemberVO vo = mapper.read(id);
 		double point = vo.getPoint();
@@ -76,9 +101,26 @@ public class PointServiceImpl implements PointService {
 		
 		mapper.updatePoint(vo);
 		
+		//획득한 포인트를 point_inout db에 저장
+		MemberVO vo2 = mapper.read(id);
+		double inoutPoint = vo2.getPoint();
+		inoutPoint = 1;
+		vo2.setPoint(inoutPoint);
+		
+		if(pointCode == 4) {
+			vo2.setPointInOut("조회수");
+		}else if(pointCode == 5) {
+			vo2.setPointInOut("댓글 등록");
+		}else if(pointCode == 6) {
+			vo2.setPointInOut("대댓글 등록");
+		}
+		
+		mapper.registerPoint(vo2);
+		
 	}
 
 	@Override
+	@Transactional
 	public void addPercentPoint(String id) {
 		
 		MemberVO vo = mapper.read(id);
@@ -88,9 +130,18 @@ public class PointServiceImpl implements PointService {
 		
 		mapper.updatePoint(vo);
 		
+		//획득한 포인트를 point_inout db에 저장
+		MemberVO vo2 = mapper.read(id);
+		double inoutPoint = vo2.getPoint();
+		inoutPoint = 0.1;
+		vo2.setPoint(inoutPoint);
+		vo2.setPointInOut("추천");
+		mapper.registerPoint(vo2);
+		
 	}
 
 	@Override
+	@Transactional
 	public void subPercentPoint(String id) {
 		MemberVO vo = mapper.read(id);
 		double point = vo.getPoint();
@@ -98,9 +149,18 @@ public class PointServiceImpl implements PointService {
 		vo.setPoint(downPoint);
 		
 		mapper.updatePoint(vo);
+		
+		//획득한 포인트를 point_inout db에 저장
+		MemberVO vo2 = mapper.read(id);
+		double inoutPoint = vo2.getPoint();
+		inoutPoint = -0.1;
+		vo2.setPoint(inoutPoint);
+		vo2.setPointInOut("비추천");
+		mapper.registerPoint(vo2);
 	}
 
 	@Override
+	@Transactional
 	public void subFivePoint(String id) {
 		log.info("퀴즈풀려고 포인트 씀-------------");
 		MemberVO vo = mapper.read(id);
@@ -110,9 +170,18 @@ public class PointServiceImpl implements PointService {
 		
 		mapper.updatePoint(vo);
 		
+		//획득한 포인트를 point_inout db에 저장
+		MemberVO vo2 = mapper.read(id);
+		double inoutPoint = vo2.getPoint();
+		inoutPoint = -5;
+		vo2.setPointInOut("퀴즈");
+		vo2.setPoint(inoutPoint);
+		mapper.registerPoint(vo2);
+		
 	}
 
 	@Override
+	@Transactional
 	public void addQuizPoint(QuizVO vo) {
 		log.info("퀴즈풀어 포인트 얻음-------------------");
 		MemberVO mvo = mapper.read(vo.getUserId());
@@ -123,10 +192,19 @@ public class PointServiceImpl implements PointService {
 		
 		mapper.updatePoint(mvo);
 		
+		//획득한 포인트를 point_inout db에 저장
+		MemberVO vo2 = mapper.read(vo.getUserId());
+		double inoutPoint = vo2.getPoint();
+		inoutPoint = vo.getPoint();
+		vo2.setPointInOut("퀴즈");
+		vo2.setPoint(inoutPoint);
+		mapper.registerPoint(vo2);
+		
 	}
 
 	@Override
-	public void subPoint(MemberVO vo) {
+	@Transactional
+	public void subPoint(MemberVO vo, int pointCode) {
 		MemberVO mvo = mapper.read(vo.getUserId());
 		double mPoint = mvo.getPoint();
 		double betPoint = vo.getPoint();
@@ -137,10 +215,19 @@ public class PointServiceImpl implements PointService {
 		
 		mapper.updatePoint(mvo);
 		
+		MemberVO mvo2 = mapper.read(vo.getUserId());
+		mvo2.setPoint(-betPoint);
+		if(pointCode == 10) {
+			mvo2.setPointInOut("공찾기");
+		}
+		
+		mapper.registerPoint(mvo2);
+		
 	}
 
 	@Override
-	public void addPoint(MemberVO vo) {
+	@Transactional
+	public void addPoint(MemberVO vo, int pointCode) {
 		MemberVO mvo = mapper.read(vo.getUserId());
 		double mPoint = mvo.getPoint();
 		double addPoint = vo.getPoint();
@@ -151,6 +238,19 @@ public class PointServiceImpl implements PointService {
 		
 		mapper.updatePoint(mvo);
 		
+		
+		MemberVO mvo2 = mapper.read(vo.getUserId());
+		mvo2.setPoint(addPoint);
+		if(pointCode == 10) {
+			mvo2.setPointInOut("공찾기");
+		}
+		
+		mapper.registerPoint(mvo2);
+	}
+
+	@Override
+	public PointVO getPointInfo(String id) {
+		return mapper.getPointInfo(id);
 	}
 
 }

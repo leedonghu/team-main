@@ -59,7 +59,7 @@ public class BoardController {
 		
 		//작성하면 10point증가시킴
 		String id = vo.getWriter();
-		pointService.addTenPoint(id);
+		pointService.addTenPoint(id, 2);
 		
 		// redirect 목적지로 정보 전달
 		rttr.addFlashAttribute("result", vo.getBno());
@@ -88,7 +88,7 @@ public class BoardController {
 		
 		//조회수당 1점
 		String id = vo.getWriter();
-		pointService.addOnePoint(id);
+		pointService.addOnePoint(id, 4);
 		
 		//가져온 vo를 넘김
 		model.addAttribute("board", vo);

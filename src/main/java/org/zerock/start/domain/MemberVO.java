@@ -25,6 +25,10 @@ public class MemberVO {
 	private boolean enabled;
 	private double point;
 	
+	//포인트 사용처
+	private String pointInOut;
+	int pointCode;
+	
 	private String login;
 	
 	private String fileName;

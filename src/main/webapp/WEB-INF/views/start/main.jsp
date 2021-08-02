@@ -10,6 +10,13 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
+
+<style>
+.card-body{
+height: "50";
+}
+</style>
+
 <title>Insert title here</title>
 
 </head>
@@ -39,12 +46,12 @@
   	<button class="btn btn-primary" type="submit" hidden id="pro-submit">수정</button>
   </form>
   
-  <div class="card-body">
+  <div class="card-body" id="card-body">
     <h5 class="card-title">${profile.userName }(${profile.userName })</h5>
     <p class="card-text">${profile.userNickName }</p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">${profile.point }</li>
+    <li class="list-group-item"><i class="fas fa-coins"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${appRoot }/start/point">${profile.point }</a></li>
     <li class="list-group-item">A second item</li>
     <li class="list-group-item">A third item</li>
   </ul>
@@ -80,6 +87,8 @@ $(function(){
 	$("#pro-file").change(function(){
 		$("#pro-submit").removeAttr("hidden");
 	});
+	
+	$("#card-body").css("height", "50");
 });
 </script>
 </html>

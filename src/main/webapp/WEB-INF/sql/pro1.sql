@@ -28,7 +28,7 @@ ALTER TABLE member
 CHANGE userPw userPw VARCHAR(100) NOT NULL;
 
 DROP TABLE member;
-use spr1;
+use project;
 
 SELECT * FROM member_profile;
 DESC member; 
@@ -57,3 +57,30 @@ fileName VARCHAR(100) not null
     
 DELETE FROM member_profile
 where pfId = 2;
+
+CREATE TABLE point_inout
+(
+pid int PRIMARY key AUTO_INCREMENT,
+userId VARCHAR(50) not null,
+point DECIMAL(60, 15) NOT null,
+pointInOut VARCHAR(100) not null,
+regdate DATE DEFAULT now()
+);
+
+SELECT sum(point), pointInOut from point_inout
+WHERE userId = 'aaa' 
+GROUP BY pointInOut;
+
+SELECT * from member;
+
+
+DESC member;
+
+SELECT 
+		   userId,
+		   SUM(point) point,
+		   pointInOut
+		   
+	FROM point_inout
+	WHERE userId = 'ddd'
+	GROUP BY pointInOut;

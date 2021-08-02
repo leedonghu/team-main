@@ -7,6 +7,8 @@ date VARCHAR(15) not null
 );
 
 SELECT * FROM member;
+DESC member;
+
 
 SELECT * from quiz;
 DELETE FROM quiz_state

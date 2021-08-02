@@ -1,6 +1,7 @@
 package org.zerock.start.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.album.service.AlbumService;
 import org.zerock.start.domain.MemberVO;
+import org.zerock.start.domain.PointVO;
 import org.zerock.start.service.MemberService;
 import org.zerock.start.service.PointService;
 
@@ -41,6 +43,10 @@ public class StartController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder encoder;
+	
+	//포인트 코드
+	//1-로그인, 2-글쓰기, 3-album, 4-조회수, 5-댓글, 6-대댓글, 7-추천, 8-비추천, 9-퀴즈, 10-공찾기
+	
 	
 	@GetMapping("/login")
 	public void login() {
@@ -160,6 +166,23 @@ public class StartController {
 			
 			return "redirect:/start/info?userId=" + vo.getUserId();
 		}
+	}
+	
+	@GetMapping("/point")
+	public void getPoint(Principal principal, Model model) {
+		log.info("start get point");
+				
+		//point 정보 리스트
+		String id = principal.getName();
+		PointVO vo = pointService.getPointInfo(id);
+		List<String> inout = vo.getPointInOut();
+		log.info(inout);
+		model.addAttribute("point", vo);
+		model.addAttribute("inout", inout);
+		String text = "a";
+		model.addAttribute("a", text);
+		model.addAttribute("b", "b");
+		
 	}
 	
 //	@PostMapping("/acc")
