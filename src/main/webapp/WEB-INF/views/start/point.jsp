@@ -83,7 +83,7 @@ $(function(){
 	
 	
 	
-	
+	//총 포인트 차트
 	function holeChart(){
 		
 		var pointInOut = [];
@@ -117,6 +117,7 @@ $(function(){
 									borderWidth: 1 }] }, options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } });
 	}
 	
+	//얻은 포인트 차트
 	function earnChart(){
 		
 		var pointInOut = [];
@@ -149,6 +150,8 @@ $(function(){
 			}});
 	}
 	
+	
+	//잃은 포인트 차트
 	function loseChart(){
 		
 		var pointInOut = [];
