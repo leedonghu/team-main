@@ -28,5 +28,9 @@ public interface MemberMapper {
 
 	public PointVO getPointInfo(String userId);
 
+	public PointVO getEarnPoint(String id);
+
+	public PointVO getLosePoint(String id);
+
 
 }

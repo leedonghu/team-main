@@ -76,7 +76,7 @@ public class HatController {
 		MemberVO mvo = memberService.getInfo(principal.getName());
 		mvo.setPoint(resultPoint);
 		mvo.setPointInOut("공찾기");
-		pointService.addPoint(mvo, 10);
+		pointService.addPoint(mvo, 11);
 		
 		return resultPoint;
 	}

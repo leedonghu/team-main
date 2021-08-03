@@ -45,7 +45,7 @@ public class StartController {
 	private PasswordEncoder encoder;
 	
 	//포인트 코드
-	//1-로그인, 2-글쓰기, 3-album, 4-조회수, 5-댓글, 6-대댓글, 7-추천, 8-비추천, 9-퀴즈, 10-공찾기
+	//1-로그인+, 2-글쓰기+, 3-album+, 4-조회수+, 5-댓글+, 6-대댓글+, 7-추천+, 8-비추천-, 9-퀴즈도전-, 10-퀴즈정답+, 10-공찾기 베팅-,11-공찾기 성공+
 	
 	
 	@GetMapping("/login")
@@ -176,12 +176,22 @@ public class StartController {
 		String id = principal.getName();
 		PointVO vo = pointService.getPointInfo(id);
 		List<String> inout = vo.getPointInOut();
+		int size = inout.size();
 		log.info(inout);
 		model.addAttribute("point", vo);
-		model.addAttribute("inout", inout);
-		String text = "a";
-		model.addAttribute("a", text);
-		model.addAttribute("b", "b");
+		model.addAttribute("size", size);
+		
+		//얻은 point 정보
+		PointVO vo2 = pointService.getEarnPoint(id);
+		int size2 = vo2.getPointMap().size();
+		model.addAttribute("earn", vo2);
+		model.addAttribute("size2", size2);
+		
+		//잃은 point 정보
+		PointVO vo3 = pointService.getLosePoint(id);
+		int size3 = vo3.getPointMap().size();
+		model.addAttribute("lose", vo3);
+		model.addAttribute("size3", size3);
 		
 	}
 	

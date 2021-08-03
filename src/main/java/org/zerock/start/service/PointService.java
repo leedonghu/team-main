@@ -26,4 +26,8 @@ public interface PointService {
 
 	PointVO getPointInfo(String id);
 
+	PointVO getEarnPoint(String id);
+
+	PointVO getLosePoint(String id);
+
 }

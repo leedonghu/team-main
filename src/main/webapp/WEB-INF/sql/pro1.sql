@@ -74,8 +74,8 @@ GROUP BY pointInOut;
 SELECT * from member;
 
 
-DESC member;
-
+DESC point_inout;
+use project;
 SELECT 
 		   userId,
 		   SUM(point) point,
@@ -83,4 +83,26 @@ SELECT
 		   
 	FROM point_inout
 	WHERE userId = 'ddd'
-	GROUP BY pointInOut;
+  
+	GROUP BY pointInOut
+	ORDER BY point DESC;
+    
+    SELECT 
+		   userId,
+		   count(pointInOut) point,
+		   pointInOut
+		   
+	FROM point_inout
+	WHERE userId = 'ddd'
+  
+	GROUP BY pointInOut
+    HAVING point < 0;
+    
+     SELECT userId, pointInOut, count(1) from point_inout
+    where userId = 'eee' and point > 0
+   GROUP BY pointInOut;
+    
+    
+    SELECT userId, count(pointInOut), pointInOut from point_inout
+    where userId = 'ddd' and point < 0
+    ;

@@ -174,7 +174,7 @@ public class PointServiceImpl implements PointService {
 		MemberVO vo2 = mapper.read(id);
 		double inoutPoint = vo2.getPoint();
 		inoutPoint = -5;
-		vo2.setPointInOut("퀴즈");
+		vo2.setPointInOut("퀴즈도전");
 		vo2.setPoint(inoutPoint);
 		mapper.registerPoint(vo2);
 		
@@ -196,7 +196,7 @@ public class PointServiceImpl implements PointService {
 		MemberVO vo2 = mapper.read(vo.getUserId());
 		double inoutPoint = vo2.getPoint();
 		inoutPoint = vo.getPoint();
-		vo2.setPointInOut("퀴즈");
+		vo2.setPointInOut("퀴즈정답");
 		vo2.setPoint(inoutPoint);
 		mapper.registerPoint(vo2);
 		
@@ -218,7 +218,7 @@ public class PointServiceImpl implements PointService {
 		MemberVO mvo2 = mapper.read(vo.getUserId());
 		mvo2.setPoint(-betPoint);
 		if(pointCode == 10) {
-			mvo2.setPointInOut("공찾기");
+			mvo2.setPointInOut("공찾기 베팅");
 		}
 		
 		mapper.registerPoint(mvo2);
@@ -241,8 +241,8 @@ public class PointServiceImpl implements PointService {
 		
 		MemberVO mvo2 = mapper.read(vo.getUserId());
 		mvo2.setPoint(addPoint);
-		if(pointCode == 10) {
-			mvo2.setPointInOut("공찾기");
+		if(pointCode == 11) {
+			mvo2.setPointInOut("공찾기 성공");
 		}
 		
 		mapper.registerPoint(mvo2);
@@ -251,6 +251,18 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public PointVO getPointInfo(String id) {
 		return mapper.getPointInfo(id);
+	}
+
+	@Override
+	public PointVO getEarnPoint(String id) {
+		
+		return mapper.getEarnPoint(id);
+	}
+	
+	@Override
+	public PointVO getLosePoint(String id) {
+		
+		return mapper.getLosePoint(id);
 	}
 
 }

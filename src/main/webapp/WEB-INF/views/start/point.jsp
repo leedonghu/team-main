@@ -19,71 +19,170 @@
 <body>
 <div class="container">
 	<pr:navbar></pr:navbar>
-	<input id="input" value="${a }">
-	
-	<c:forEach items="${inout }" var="inout" varStatus="status">
-		<input  value="${inout }" id="${status.index }" >
-	</c:forEach>
-	
-	<c:forEach items="${point.pointList }" var="list">
-		<input value="${list }">
-	</c:forEach>
-	
-	<c:forEach items="${point.pointMap }" var="entry">
-		${entry.key } :${entry.value } <br>
-	</c:forEach>
 
-	
-	<div>${point.userId }</div>
-	<div>${point.regdate }</div>
-	<div id="point">${member.point }</div>
-	<div>
+	<button id="btn-1">1번차트</button>
+	<button id="btn-2">2번차트</button>
+	<button id="btn-3">3번차트</button>
+
+	<div id="div-1">
 	<canvas id="myChart"></canvas>
 	</div>
+	
+	<div id="div-2">
+	<canvas id="myPie1"></canvas>
+	</div>
+	
+	<div id="div-3">
+	<canvas id="myPie2"></canvas>
+	</div>
+	
+		<!-- 전체 포인트 정보 -->
+	<input hidden value="${size }" id="size">
+	<c:forEach items="${point.pointMap }" var="entry" varStatus="status">
+		<div hidden id="hole-key-${status.index }">${entry.key }</div> 
+		<div hidden id="hole-value-${status.index }">${entry.value }</div> <br>
+	</c:forEach>
+	
+	<!-- 얻은 포인트 정보 -->
+	<input hidden value="${size2 }" id="size2">
+	<c:forEach items="${earn.pointMap }" var="entry" varStatus="status">
+		<div hidden id="earn-key-${status.index }">${entry.key }</div> 
+		<div hidden id="earn-value-${status.index }">${entry.value }</div> <br>
+	</c:forEach>
+	
+		<!-- 잃은 포인트 정보 -->
+	<input hidden value="${size3 }" id="size3">
+	<c:forEach items="${lose.pointMap }" var="entry" varStatus="status">
+		<div hidden id="lose-key-${status.index }">${entry.key }</div> 
+		<div hidden id="lose-value-${status.index }">${entry.value }</div> <br>
+	</c:forEach>
 </div>
 </body>
 <script>
 
-var ctx = document.getElementById('myChart'); 
-var myChart = new Chart(ctx, { type: 'bar', 
-						data: { labels: ['Re', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'], 
-						datasets: [{ label: '# of Vote', 
-							data: [50, 19, 3, 5, 2, -3], 
-							backgroundColor: [ 'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)' ], 
-							borderColor: [ 'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)' ], 
-							borderWidth: 1 }] }, options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } });
 
 $(function(){
-	$("#point").click(function(){
-		console.log(point);
+
+	
+	
+	$("#btn-1").click(function(){
+		holeChart();
+
 	});
 	
-	var pointList = ${point.pointList};
-	console.log(pointList);
-	
-//	var pointInOut = ${point.pointInOut};
+	$("#btn-2").click(function(){
+		earnChart();
 
-	//console.log(pointInOut);
+	});
 	
-	var a = ${a};
-	console.log(a);
-	var b = '${b}';
-	console.log(b);
-	var point = [];
-	var inout = ${inout};
-	console.log(inout);
-	
+	$("#btn-3").click(function(){
+		loseChart();
 
+	});
 	
-	for(var i=0; i<pointList.length; i++){
-		point.push(pointList[i]);
-		console.log(pointList[i]);
-		inout.push($("#" + i).val());
+	
+	
+	
+	
+	function holeChart(){
+		
+		var pointInOut = [];
+		var pointList = [];
+		var size = $("#size").val();
+
+		var colorStore = ['rgba(252,12,12,0.2)', 'rgba(252,128,12, 0.2)','rgba(252,228,12,0.2)', 'rgba(88,252,12,0.2)','rgba(12,252,216,0.2)','rgba(12,80,252,0.2)', 'rgba(116,12,252,0.2)', 'rgba(252,12,240,0.2)', 'rgba(252,12,136,0.2)', 'rgba(232,127,7,0.2)', 'rgba(177,253,174,0.2)', 'rgba(85,247,250,0.2)']
+		var borderStore = ['rgba(252,12,12,1)', 'rgba(252,128,12, 1)','rgba(252,228,12,1)', 'rgba(88,252,12,1)','rgba(12,252,216,1)','rgba(12,80,252,1)', 'rgba(116,12,252,1)', 'rgba(252,12,240,1)', 'rgba(252,12,136,1)', 'rgba(232,127,7,1)', 'rgba(177,253,174,1)', 'rgba(85,247,250,1)']
+		var backgroundColor = [];
+		var borderColor= [];
+		
+		
+		
+		for(var i=0; i<size; i++){
+			pointInOut.push($("#hole-key-" + i).text());
+			pointList.push($("#hole-value-" + i).text());
+			backgroundColor.push(colorStore[i]);
+			borderColor.push(borderStore[i]);
+		}
+		console.log(pointInOut);
+		console.log(pointList);
+		
+	
+		var ctx = document.getElementById('myChart'); 
+		var myChart = new Chart(ctx, { type: 'bar', 
+								data: { labels: pointInOut, 
+								datasets: [{ label: '# 포인트', 
+									data: pointList, 
+									backgroundColor: backgroundColor, 
+									borderColor: borderColor, 
+									borderWidth: 1 }] }, options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } });
+	}
+	
+	function earnChart(){
+		
+		var pointInOut = [];
+		var pointList = [];
+
+		var size2 = $("#size2").val();
+
+		var colorStore = ['rgba(252,12,12,0.2)', 'rgba(252,128,12, 0.2)','rgba(252,228,12,0.2)', 'rgba(88,252,12,0.2)','rgba(12,252,216,0.2)','rgba(12,80,252,0.2)', 'rgba(116,12,252,0.2)', 'rgba(252,12,240,0.2)', 'rgba(252,12,136,0.2)', 'rgba(232,127,7,0.2)', 'rgba(177,253,174,0.2)', 'rgba(85,247,250,0.2)']
+		var borderStore = ['rgba(252,12,12,1)', 'rgba(252,128,12, 1)','rgba(252,228,12,1)', 'rgba(88,252,12,1)','rgba(12,252,216,1)','rgba(12,80,252,1)', 'rgba(116,12,252,1)', 'rgba(252,12,240,1)', 'rgba(252,12,136,1)', 'rgba(232,127,7,1)', 'rgba(177,253,174,1)', 'rgba(85,247,250,1)']
+		var backgroundColor = [];
+		var borderColor= [];
+		
+		
+		for(var i=0; i<size2; i++){
+			pointInOut.push($("#earn-key-" + i).text());
+			pointList.push($("#earn-value-" + i).text());
+			backgroundColor.push(colorStore[i]);
+			borderColor.push(borderStore[i]);
+		}
+	
+		var ctx1 = $("#myPie1");
+		var myPie = new Chart(ctx1, {type: 'pie',
+			data: {labels: pointInOut,
+			  datasets: [{
+			    label: 'My First Dataset',
+			    data: pointList,
+			    backgroundColor: borderColor,
+			    hoverOffset: 4
+			  }]
+			}});
+	}
+	
+	function loseChart(){
+		
+		var pointInOut = [];
+		var pointList = [];
+
+		var size3 = $("#size3").val();
+		var colorStore = ['rgba(252,12,12,0.2)', 'rgba(252,128,12, 0.2)','rgba(252,228,12,0.2)', 'rgba(88,252,12,0.2)','rgba(12,252,216,0.2)','rgba(12,80,252,0.2)', 'rgba(116,12,252,0.2)', 'rgba(252,12,240,0.2)', 'rgba(252,12,136,0.2)', 'rgba(232,127,7,0.2)', 'rgba(177,253,174,0.2)', 'rgba(85,247,250,0.2)']
+		var borderStore = ['rgba(252,12,12,1)', 'rgba(252,128,12, 1)','rgba(252,228,12,1)', 'rgba(88,252,12,1)','rgba(12,252,216,1)','rgba(12,80,252,1)', 'rgba(116,12,252,1)', 'rgba(252,12,240,1)', 'rgba(252,12,136,1)', 'rgba(232,127,7,1)', 'rgba(177,253,174,1)', 'rgba(85,247,250,1)']
+		var backgroundColor = [];
+		var borderColor= [];
+		
+		
+		
+		for(var i=0; i<size3; i++){
+			pointInOut.push($("#lose-key-" + i).text());
+			pointList.push($("#lose-value-" + i).text());
+			backgroundColor.push(colorStore[i]);
+			borderColor.push(borderStore[i]);
+		}
+		
+		var ctx2 = $("#myPie2");
+		var myPie = new Chart(ctx2, {type: 'pie',
+			data: {labels: pointInOut,
+			  datasets: [{
+			    label: 'My First Dataset',
+			    data: pointList,
+			    backgroundColor: borderColor,
+			    hoverOffset: 4
+			  }]
+			}});
 		
 	}
-	console.log(point);
-	console.log(inout);
-
+	
+	
 });
 
 
