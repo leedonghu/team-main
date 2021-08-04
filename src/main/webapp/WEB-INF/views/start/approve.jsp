@@ -1,24 +1,14 @@
 <%@ page  contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="pr" tagdir="/WEB-INF/tags" %>
-
 
 
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
-
-<style>
-.card-body{
-height: "50";
-}
-</style>
-
 <title>Insert title here</title>
-
 </head>
 <body>
 
@@ -69,86 +59,26 @@ height: "50";
 	<!--          본문 영역            -->
 	
 	<div class="col-9 border">
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		<h1>본문</h1><br>
-		
-		
+<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>승인요청 아이디</th>
+				<th>승인</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${appVo }" var="app">
+				<tr>
+					<td></td>
+					<td>${app.reqId }</td>
+					<td>button</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 	</div>
 </div>
 </div>
-<hr>
-
-<!-- 권한 확인 모달 -->
-<div class="modal" tabindex="-1" data-backdrop="static" id="auth-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">접근 불가</h5>
-
-      </div>
-      <div class="modal-body">
-        <p>구성원들의 동의를 얻어야 합니다.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"
-									onclick="location.href='${appRoot}/start/login'">돌아가기</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<input hidden value="${size }" id="size">
-<c:forEach items="${auth }" var="authName" varStatus="status">
-	<input hidden value="${authName }" id="auth-${status.index }">
-</c:forEach>
-
-
-
-	
 </body>
-
-
-
-
-
-<script>
-$(function(){
-	$("#pro-file").change(function(){
-		$("#pro-submit").removeAttr("hidden");
-	});
-	
-	//권한을 확인해서 member권한이 없으면 다시 로그인창으로 보내는 일을 함
-	var auth = [];
-	var size = $("#size").val();
-	var passAuth = "ROLE_MEMBER";
-	var authState = 1;
-	for(var i=0; i<size; i++){
-		auth.push($("#auth-" + i).val());
-	}
-	
-	console.log(auth);
-	
-	for(var i=0; i<auth.length; i++){
-		if(passAuth == auth[i]){
-			authState ++;
-		}
-	}
-	
-	if(authState == 1){
-		$("#auth-modal").modal("show");
-	}
-	
-
-	
-	
-	
-});
-</script>
 </html>

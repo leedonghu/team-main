@@ -1,6 +1,7 @@
 package org.zerock.start.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.album.service.AlbumService;
+import org.zerock.start.domain.ApproveVO;
+import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
 import org.zerock.start.domain.PointVO;
 import org.zerock.start.service.MemberService;
@@ -64,6 +67,7 @@ public class StartController {
 		
 		boolean ok = service.registerAcc(vo);
 		
+		
 		if(ok) {
 			return "redirect:/start/login";
 		}else {
@@ -88,6 +92,23 @@ public class StartController {
 		//저장된 프로필 사진 가져오기
 		MemberVO vo2 = service.getProfile(id);
 		model.addAttribute("profile", vo2);
+		
+		
+		//권한정보 보내줌
+		MemberVO vo3 = service.getInfo(id);
+		List<AuthVO> authVO = vo3.getAuthList();
+		List<String> authName = new ArrayList<>();
+		for(AuthVO auth : authVO) {
+			authName.add(auth.getAuth());
+		}
+		model.addAttribute("auth", authName);
+		model.addAttribute("size", authName.size());
+		
+		//user가 승인해줘야될 목록
+		List<ApproveVO> appVo = service.getApproveList(id);
+		int appSize = appVo.size();
+		model.addAttribute("appSize", appSize);
+		
 	}
 	
 	
@@ -192,6 +213,26 @@ public class StartController {
 		int size3 = vo3.getPointMap().size();
 		model.addAttribute("lose", vo3);
 		model.addAttribute("size3", size3);
+		
+	}
+	
+	@GetMapping("/approve")
+	public void approveAuth(Principal principal, Model model, MemberVO vo, MultipartFile file) {
+		String id = principal.getName();
+		List<ApproveVO> appVo = service.getApproveList(id);
+		model.addAttribute("appVo", appVo);
+		int appSize = appVo.size();
+		model.addAttribute("appSize", appSize);
+		
+		
+		if(file != null) {
+			//프로필 사진 변경
+			albumService.registerProfile(vo, file);
+			
+		}
+		//저장된 프로필 사진 가져오기
+		MemberVO vo2 = service.getProfile(id);
+		model.addAttribute("profile", vo2);
 		
 	}
 	

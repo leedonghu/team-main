@@ -1,5 +1,8 @@
 package org.zerock.start.mapper;
 
+import java.util.List;
+
+import org.zerock.start.domain.ApproveVO;
 import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
 import org.zerock.start.domain.PointVO;
@@ -31,6 +34,12 @@ public interface MemberMapper {
 	public PointVO getEarnPoint(String id);
 
 	public PointVO getLosePoint(String id);
+
+	public List<MemberVO> getAllMember();
+
+	public void insertApprove(MemberVO vo);
+
+	public List<ApproveVO> getApproveList(String appId);
 
 
 }

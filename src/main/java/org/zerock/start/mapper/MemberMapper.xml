@@ -185,4 +185,27 @@
 	<result property="value" column="point" />
 </resultMap>
 
+<!-- auth가 member인 모든 userId 검색 -->
+<select id="getAllMember" resultType="org.zerock.start.domain.MemberVO">
+	<![CDATA[
+	SELECT userId FROM member_auth
+	WHERE auth = 'ROLE_MEMBER'
+	]]>
+</select>
+
+<!-- auth가 member인 userId를 db에 저장 -->
+<insert id="insertApprove">
+	INSERT INTO approve_auth
+	(reqId, appId)
+	VALUES
+	(#{reqId}, #{appId})
+</insert>
+
+<!-- 승인해줘야하는 목록 -->
+<select id="getApproveList" resultType="org.zerock.start.domain.ApproveVO">
+	SELECT reqId, state 
+	FROM approve_auth
+	WHERE appId = #{appId} AND state = 1
+</select>
+
 </mapper>

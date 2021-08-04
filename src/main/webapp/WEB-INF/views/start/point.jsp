@@ -19,28 +19,77 @@
 <body>
 <div class="container">
 	<pr:navbar></pr:navbar>
-
-	<button id="btn-1">1번차트</button>
-	<button id="btn-2">2번차트</button>
-	<button id="btn-3">3번차트</button>
-
-	<div id="div-1">
-	<canvas id="myChart"></canvas>
+	
+	
+	<div class="row">
+	<!--       왼쪽 nav          -->
+	
+	<div class="col-2">	
+		<nav class="nav flex-column">
+  			<a class="nav-link active" href="${appRoot }/board/list">글 목록</a>
+  			<a class="nav-link" href="${appRoot }/board/register">글 쓰기</a>
+  			<a class="nav-link" href="#">Link</a>
+  			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+		</nav>
 	</div>
 	
-	<div id="div-2">
-	<canvas id="myPie1"></canvas>
-	</div>
+	<!--          본문 영역            -->
 	
-	<div id="div-3">
-	<canvas id="myPie2"></canvas>
+	<div class="col-10 border">
+	
+		<ul class="nav nav-pills" id="myTab" role="tablist">
+		  <li class="nav-item" role="presentation">
+		    <a class="nav-link active" id="total-point" data-toggle="tab" href="#total" role="tab" aria-controls="home" aria-selected="true">TOTAL POINT</a>
+		  </li>
+		  <li class="nav-item" role="presentation">
+		    <a class="nav-link" id="earn-point" data-toggle="tab" href="#earn" role="tab" aria-controls="profile" aria-selected="false">얻은 포인트[경향]</a>
+		  </li>
+		  <li class="nav-item" role="presentation">
+		    <a class="nav-link" id="lose-point" data-toggle="tab" href="#lose" role="tab" aria-controls="contact" aria-selected="false">잃은 포인트[경향]</a>
+		  </li>
+		</ul>
+		
+		<div class="tab-content" id="myTabContent">
+		
+		  <div class="tab-pane fade show active" id="total" role="tabpanel" aria-labelledby="home-tab">
+		  	<div id="div-1">
+				<canvas id="myChart"></canvas>
+			</div>
+			<div id="total-total">
+				
+			</div>
+		  </div>
+		
+		  <div class="tab-pane fade" id="earn" role="tabpanel" aria-labelledby="profile-tab">
+		  	<div id="div-2">
+				<canvas id="myPie1"></canvas>
+			</div>
+			<div id="plus-total">
+				
+			</div>
+		  </div>
+		  
+		  <div class="tab-pane fade" id="lose" role="tabpanel" aria-labelledby="contact-tab">
+		  	<div id="div-3">
+				<canvas id="myPie2"></canvas>
+			</div>
+			<div id="minus-total">
+				
+			</div>
+		  </div>
+		  
+		</div>
+		
 	</div>
+</div>
+
+	
 	
 		<!-- 전체 포인트 정보 -->
 	<input hidden value="${size }" id="size">
 	<c:forEach items="${point.pointMap }" var="entry" varStatus="status">
-		<div hidden id="hole-key-${status.index }">${entry.key }</div> 
-		<div hidden id="hole-value-${status.index }">${entry.value }</div> <br>
+		<div hidden id="total-key-${status.index }">${entry.key }</div> 
+		<div hidden id="total-value-${status.index }">${entry.value }</div> <br>
 	</c:forEach>
 	
 	<!-- 얻은 포인트 정보 -->
@@ -64,18 +113,45 @@
 $(function(){
 
 	
+	var showPoint = [];
+	var total = 0;
+	var plus = 0;
+	var minus = 0;
+	var arraySize = $("#size").val();
 	
-	$("#btn-1").click(function(){
-		holeChart();
+	
+	for(var i=0; i<arraySize; i++){
+		showPoint.push(parseFloat($("#total-value-" + i).text()));
+		
+	}
+	
+	for(var i=0; i<showPoint.length; i++){
+		total += showPoint[i];
+		if(showPoint[i] > 0){
+			plus += showPoint[i];
+		}else {
+			minus += showPoint[i];
+		}
+	}
+	
+	$("#total-total").text(total);
+	$("#plus-total").text(plus);
+	$("#minus-total").text(minus);
+	
+	totalChart();
+	
+	
+	$("#total-point").click(function(){
+		totalChart();
 
 	});
 	
-	$("#btn-2").click(function(){
+	$("#earn-point").click(function(){
 		earnChart();
 
 	});
 	
-	$("#btn-3").click(function(){
+	$("#lose-point").click(function(){
 		loseChart();
 
 	});
@@ -84,7 +160,7 @@ $(function(){
 	
 	
 	//총 포인트 차트
-	function holeChart(){
+	function totalChart(){
 		
 		var pointInOut = [];
 		var pointList = [];
@@ -98,8 +174,8 @@ $(function(){
 		
 		
 		for(var i=0; i<size; i++){
-			pointInOut.push($("#hole-key-" + i).text());
-			pointList.push($("#hole-value-" + i).text());
+			pointInOut.push($("#total-key-" + i).text());
+			pointList.push($("#total-value-" + i).text());
 			backgroundColor.push(colorStore[i]);
 			borderColor.push(borderStore[i]);
 		}

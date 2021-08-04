@@ -1,5 +1,8 @@
 package org.zerock.start.service;
 
+import java.util.List;
+
+import org.zerock.start.domain.ApproveVO;
 import org.zerock.start.domain.MemberVO;
 
 public interface MemberService {
@@ -21,4 +24,8 @@ public interface MemberService {
 
 
 	public MemberVO getProfile(String id);
+
+
+
+	public List<ApproveVO> getApproveList(String id);
 }

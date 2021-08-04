@@ -1,9 +1,12 @@
 package org.zerock.start.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zerock.start.domain.ApproveVO;
 import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
 import org.zerock.start.mapper.MemberMapper;
@@ -35,7 +38,19 @@ public class MemberServiceImpl implements MemberService {
 		
 		mapper.insertAuth(avo);
 		
+		//회원가입시 권한이 member인 모든 id 검색
+		List<MemberVO> allMember = mapper.getAllMember();
 		
+		
+		//받아온 vo의 id를 꺼내서 승인요청 table에 저장
+		for(MemberVO mvo : allMember) {
+			MemberVO app = new MemberVO();
+			app.setAppId(mvo.getUserId());
+			
+			//회원가입한 id
+			app.setReqId(vo.getUserId());
+			mapper.insertApprove(app);
+		}
 		
 		
 		return cnt == 1;
@@ -63,6 +78,12 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getProfile(String id) {
 		
 		return mapper.getProfile(id);
+	}
+
+	@Override
+	public List<ApproveVO> getApproveList(String userId) {
+		return mapper.getApproveList(userId);
+		
 	}
 
 
