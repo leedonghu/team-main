@@ -41,5 +41,11 @@ public interface MemberMapper {
 
 	public List<ApproveVO> getApproveList(String appId);
 
+	public void updateApp(ApproveVO vo);
+
+	public List<ApproveVO> getApproveState(String userId);
+
+	public void updateAuth(String userId);
+
 
 }

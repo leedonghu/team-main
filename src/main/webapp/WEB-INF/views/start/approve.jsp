@@ -32,7 +32,7 @@
   <form action="${appRoot }/start/main" method="post" enctype="multipart/form-data">
   	<label for="pro-file">프로필 사진 수정</label>
   	<input type="file" id="pro-file" name="file" hidden accept="image/*"><br><br>
-  	<input hidden name="userId" value="${pinfo.member.userId }">
+  	<input hidden name="userId" id="userId" value="${pinfo.member.userId }">
   	<button class="btn btn-primary" type="submit" hidden id="pro-submit">수정</button>
   </form>
   
@@ -71,8 +71,9 @@
 			<c:forEach items="${appVo }" var="app">
 				<tr>
 					<td></td>
-					<td>${app.reqId }</td>
-					<td>button</td>
+					<td class="req-id">${app.reqId }</td>
+					<td><button class="btn btn-primary"><i class="fas fa-check"></i></button></td>
+					
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -80,5 +81,39 @@
 	</div>
 </div>
 </div>
+
+<script>
+$(function(){
+	$("button").click(function(){
+		var reqId = $(this).closest("tr").find(".req-id").text();
+		console.log(reqId);
+		var appId = $("#userId").val();
+		
+		
+		var data = {reqId : reqId,
+					appId : appId
+					};
+		console.log(data);
+		
+		$.ajax({
+			type: "post",
+			data: JSON.stringify(data),
+			contentType: "application/json",
+			url: "${appRoot}/start/updateApp",
+			success: function(){
+				console.log("변경성공");
+				
+			},
+			error: function(){
+				console.log("변경실패")
+			}
+		});
+		
+		$
+	});
+});
+
+</script>
+
 </body>
 </html>

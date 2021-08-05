@@ -28,4 +28,12 @@ public interface MemberService {
 
 
 	public List<ApproveVO> getApproveList(String id);
+
+
+
+	public void updateApp(ApproveVO vo);
+
+
+
+	public ApproveVO getApproveState(String reqId);
 }

@@ -1,6 +1,8 @@
-SELECT * from member_auth;
-DESC member_auth;
-
+SELECT * from member_auth
+where auth = 'ROLE_MEMBER';
+SELECT * from member;
+DELETE from member
+WHERE userId = 'qqq';
 
 CREATE TABLE approve_auth
 (
@@ -23,8 +25,8 @@ SELECT * from approve_auth;
 SELECT state, reqId from approve_auth
 where appId = 'aaa' and state = 1;
 
-SELECT reqId from approve_auth
-where appId = 'aaa';
+SELECT * from approve_auth
+where reqId = 'qqq';
 
 
 

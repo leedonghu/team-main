@@ -36,7 +36,7 @@ public class MemberMapperTest {
 		vo.setBirth(Date.valueOf("2020-02-02"));
 		vo.setEmail("aa@aa.com");
 		
-		mapper.registerAcc(vo);
+		mapper.updateInfo(vo);
 	}
 
 }

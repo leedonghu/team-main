@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -108,6 +109,13 @@ public class StartController {
 		List<ApproveVO> appVo = service.getApproveList(id);
 		int appSize = appVo.size();
 		model.addAttribute("appSize", appSize);
+		
+		//승인받지 못한 user의 상황
+		ApproveVO appVo2 = service.getApproveState(id);
+		if(appVo2 != null) {
+			
+			model.addAttribute("appState", appVo2);
+		}
 		
 	}
 	
@@ -234,6 +242,15 @@ public class StartController {
 		MemberVO vo2 = service.getProfile(id);
 		model.addAttribute("profile", vo2);
 		
+	}
+	
+	@PostMapping("/updateApp")
+	@ResponseBody
+	public void updateApp(@RequestBody ApproveVO vo) {
+		//reqId 와 appId를 받은 vo를 가지고 승인요청 update
+		log.info("updateApp get----------");
+		
+		service.updateApp(vo);
 	}
 	
 //	@PostMapping("/acc")

@@ -86,6 +86,51 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	@Transactional
+	public void updateApp(ApproveVO vo) {
+		
+		//승인해준 id의 승인상태를 0으로 바꿈
+		mapper.updateApp(vo);
+		
+		//상태가 모두 0으로 바뀌었을때 member권한을 줌
+		String reqId = vo.getReqId();
+		List<ApproveVO> list = mapper.getApproveState(reqId);
+		
+		int state = 0;
+		
+		for(ApproveVO vo1 : list) {
+			state += vo1.getState();
+		}
+		
+		
+		if(state == 0) {
+			mapper.updateAuth(reqId);
+		}
+		
+		
+	}
+
+	@Override
+	public ApproveVO getApproveState(String reqId) {
+		List<ApproveVO> list =  mapper.getApproveState(reqId);
+		
+		
+		int state = 0;
+		for(ApproveVO vo : list) {
+			state += vo.getState();
+		}
+		
+
+			
+		ApproveVO appVo  = new ApproveVO();
+		appVo.setSize(list.size());
+		appVo.setState(state);
+		
+		return appVo;
+
+	}
+
 
 
 }

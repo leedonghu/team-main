@@ -203,9 +203,28 @@
 
 <!-- 승인해줘야하는 목록 -->
 <select id="getApproveList" resultType="org.zerock.start.domain.ApproveVO">
-	SELECT reqId, state 
+	SELECT reqId 
 	FROM approve_auth
 	WHERE appId = #{appId} AND state = 1
 </select>
+
+<!-- 승인요청 update -->
+<update id="updateApp">
+	UPDATE approve_auth
+	SET state = 0
+	WHERE appId = #{appId} AND reqId = #{reqId}
+</update>
+
+<select id="getApproveState" resultType="org.zerock.start.domain.ApproveVO">
+	SELECT * FROM approve_auth
+	WHERE reqId = #{reqId}
+</select>
+
+<insert id="updateAuth">
+	INSERT INTO member_auth
+	(userId, auth)
+	VALUES
+	(#{userId}, 'ROLE_MEMBER')
+</insert>
 
 </mapper>

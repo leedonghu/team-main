@@ -95,6 +95,7 @@ height: "50";
       </div>
       <div class="modal-body">
         <p>구성원들의 동의를 얻어야 합니다.</p>
+        <p>${appState.size - appState.state} / ${appState.size } 진행중</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary"
