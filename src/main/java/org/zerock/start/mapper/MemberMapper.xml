@@ -227,4 +227,10 @@
 	(#{userId}, 'ROLE_MEMBER')
 </insert>
 
+<update id="updateBirthday">
+	UPDATE member
+	SET birthday = #{birthday}
+	WHERE userId = #{userId}
+</update>
+
 </mapper>

@@ -72,7 +72,7 @@
 				<tr>
 					<td></td>
 					<td class="req-id">${app.reqId }</td>
-					<td><button class="btn btn-primary"><i class="fas fa-check"></i></button></td>
+					<td><button class="btn btn-primary approve-auth"><i class="fas fa-check"></i></button></td>
 					
 				</tr>
 			</c:forEach>
@@ -84,7 +84,7 @@
 
 <script>
 $(function(){
-	$("button").click(function(){
+	$(".approve-auth").click(function(){
 		var reqId = $(this).closest("tr").find(".req-id").text();
 		console.log(reqId);
 		var appId = $("#userId").val();
@@ -94,7 +94,7 @@ $(function(){
 					appId : appId
 					};
 		console.log(data);
-		
+		//get방식으로 보낼때는 쿼리스트링 형식으로 넘어가기떄문에 data를 json으로 보내면 안됨
 		$.ajax({
 			type: "post",
 			data: JSON.stringify(data),
@@ -109,7 +109,7 @@ $(function(){
 			}
 		});
 		
-		$
+		$(this).attr("disabled", "disabled");
 	});
 });
 

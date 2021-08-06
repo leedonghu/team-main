@@ -1,13 +1,16 @@
 package org.zerock.start.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.WebAttributes;
@@ -49,7 +52,7 @@ public class StartController {
 	private PasswordEncoder encoder;
 	
 	//포인트 코드
-	//1-로그인+, 2-글쓰기+, 3-album+, 4-조회수+, 5-댓글+, 6-대댓글+, 7-추천+, 8-비추천-, 9-퀴즈도전-, 10-퀴즈정답+, 10-공찾기 베팅-,11-공찾기 성공+
+	//1-로그인+, 2-글쓰기+, 3-album+, 4-조회수+, 5-댓글+, 6-대댓글+, 7-추천+, 8-비추천-, 9-퀴즈도전-, 10-퀴즈정답+, 10-공찾기 베팅-,11-공찾기 성공+, 12-생일+
 	
 	
 	@GetMapping("/login")
@@ -66,6 +69,7 @@ public class StartController {
 	public String register(MemberVO vo) {
 		log.info("post acc");
 		
+		//회원등록과 member권한을 가진 유저 목록 update
 		boolean ok = service.registerAcc(vo);
 		
 		
@@ -77,7 +81,11 @@ public class StartController {
 	}
 	
 	@RequestMapping("/main")
-	public void main(String username, Principal principal, MemberVO vo, MultipartFile file, Model model) {
+	public void main(String username, Principal principal, MemberVO vo, MultipartFile file, Model model, HttpSession session) {
+		
+		//session
+		session.setAttribute("out", "sessionOut");
+		
 		//login form에서 id값 넘김
 		log.info(principal.getName());
 		String id = principal.getName();
@@ -105,17 +113,54 @@ public class StartController {
 		model.addAttribute("auth", authName);
 		model.addAttribute("size", authName.size());
 		
-		//user가 승인해줘야될 목록
-		List<ApproveVO> appVo = service.getApproveList(id);
-		int appSize = appVo.size();
-		model.addAttribute("appSize", appSize);
+		//로그인한 유저의 권한들을 탐색한 후 member가 있으면 승인해줘야하는 목록을 보내주고
+		//member가 없다면 승인요청 상태를 보내줌
 		
-		//승인받지 못한 user의 상황
-		ApproveVO appVo2 = service.getApproveState(id);
-		if(appVo2 != null) {
-			
-			model.addAttribute("appState", appVo2);
+		boolean existMember = false;
+		
+		for(int i = 0; i<authName.size(); i++) {
+			if(authName.get(i).equals("ROLE_MEMBER")) {
+				existMember = true;
+			}
+				
 		}
+		
+		if(existMember) {
+			//user가 승인해줘야될 목록
+			List<ApproveVO> appVo = service.getApproveList(id);
+			int appSize = appVo.size();
+			model.addAttribute("appSize", appSize);
+		
+		}else {
+			
+			//승인받지 못한 user의 상황
+			ApproveVO appVo2 = service.getApproveState(id);
+			if(appVo2 != null) {
+				
+				model.addAttribute("appState", appVo2);
+			}
+		}
+		
+		
+		
+		//생일자에게 100포인트
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		//오늘 날짜를 String으로 변환
+		Calendar car = Calendar.getInstance();
+		String today = sdf.format(car.getTime());
+		String birth = sdf.format(vo3.getBirth());
+		//날짜만 비교
+		String subToday = today.substring(5);
+		String subBirth = birth.substring(5);
+		
+		//날짜만 같을때 service실행
+		if(subToday.equals(subBirth)) {
+			
+			service.birthdayPoint(id);
+			model.addAttribute("birth", "birthday");
+		}
+		
 		
 	}
 	
@@ -169,6 +214,7 @@ public class StartController {
 	}
 	
 	@GetMapping("/info")
+	@PreAuthorize("isAuthenticated()")
 	public void getInfo(String userId, Model model) {
 		MemberVO vo = service.getInfo(userId);
 		
@@ -176,6 +222,7 @@ public class StartController {
 	}
 	
 	@PostMapping("/info")
+	@PreAuthorize("isAuthenticated()")
 	public String modifyInfo(MemberVO vo, RedirectAttributes rttr) {
 		
 		vo.setUserPw(encoder.encode(vo.getUserPw()));
@@ -198,6 +245,7 @@ public class StartController {
 	}
 	
 	@GetMapping("/point")
+	@PreAuthorize("isAuthenticated()")
 	public void getPoint(Principal principal, Model model) {
 		log.info("start get point");
 				
@@ -225,6 +273,7 @@ public class StartController {
 	}
 	
 	@GetMapping("/approve")
+	@PreAuthorize("isAuthenticated()")
 	public void approveAuth(Principal principal, Model model, MemberVO vo, MultipartFile file) {
 		String id = principal.getName();
 		List<ApproveVO> appVo = service.getApproveList(id);

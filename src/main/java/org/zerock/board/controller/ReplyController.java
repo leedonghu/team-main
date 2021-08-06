@@ -3,6 +3,7 @@ package org.zerock.board.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import lombok.extern.log4j.Log4j;
 
 @RestController
 @RequestMapping("/reply")
+@PreAuthorize("isAuthenticated()")
 @Log4j
 public class ReplyController {
 	

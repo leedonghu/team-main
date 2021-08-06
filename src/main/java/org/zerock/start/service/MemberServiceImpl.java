@@ -1,5 +1,8 @@
 package org.zerock.start.service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper mapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private PointService pointService;
+	
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder encoder;
@@ -103,9 +110,25 @@ public class MemberServiceImpl implements MemberService {
 			state += vo1.getState();
 		}
 		
-		
 		if(state == 0) {
-			mapper.updateAuth(reqId);
+			MemberVO vo2 = getInfo(reqId);
+			List<AuthVO> authVO = vo2.getAuthList();
+			List<String> authName = new ArrayList<>();
+			for(AuthVO auth : authVO) {
+				authName.add(auth.getAuth());
+			}
+			boolean existMember = false;
+			
+			for(int i = 0; i<authName.size(); i++) {
+				if(authName.get(i).equals("ROLE_MEMBER")) {
+					existMember = true;
+				}
+					
+			}
+			if(!existMember) {
+				
+				mapper.updateAuth(reqId);
+			}
 		}
 		
 		
@@ -129,6 +152,34 @@ public class MemberServiceImpl implements MemberService {
 		
 		return appVo;
 
+	}
+
+	@Override
+	@Transactional
+	public void birthdayPoint(String id) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		//오늘 날짜를 String으로 변환
+		Calendar car = Calendar.getInstance();
+		String today = sdf.format(car.getTime());
+		
+		MemberVO vo = mapper.read(id);
+		String birthday = vo.getBirthday();
+		
+		String subYear = today.substring(0, 4);
+		String subBirthday = birthday.substring(0, 4);
+		
+		if(!subYear.equals(subBirthday)) {
+			//년도가 다를때
+			//년도를 업데이트 해주고
+			//100point 줌
+			vo.setBirthday(today);
+			vo.setPoint(100);
+			mapper.updateBirthday(vo);
+			
+			pointService.addPoint(vo, 12);
+		}
+		
 	}
 
 

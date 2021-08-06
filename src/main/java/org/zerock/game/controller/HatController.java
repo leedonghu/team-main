@@ -3,6 +3,7 @@ package org.zerock.game.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/hat")
+@PreAuthorize("isAuthenticated()")
 @Log4j
 public class HatController {
 	

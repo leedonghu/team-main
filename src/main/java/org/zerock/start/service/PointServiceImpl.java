@@ -243,6 +243,8 @@ public class PointServiceImpl implements PointService {
 		mvo2.setPoint(addPoint);
 		if(pointCode == 11) {
 			mvo2.setPointInOut("공찾기 성공");
+		}else if(pointCode == 12) {
+			mvo2.setPointInOut("생일 보너스");
 		}
 		
 		mapper.registerPoint(mvo2);

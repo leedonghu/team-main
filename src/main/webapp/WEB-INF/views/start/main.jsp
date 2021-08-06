@@ -33,10 +33,10 @@ height: "50";
 	
 <div class="card col-3" style="width: 18rem;">
   <c:if test="${empty profile.fileName }">
-  	<img src="${appRoot }/resources/img/구름.png" class="card-img-top" alt="...">
+  	<img class="src="${appRoot }/resources/img/구름.png" class="card-img-top img-profile rounded-circle" alt="...">
   </c:if>
   <c:if test="${!empty profile.fileName }">
-  	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top" alt="...">
+  	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top rounded-circle" alt="...">
   </c:if>
   
   <form action="${appRoot }/start/main" method="post" enctype="multipart/form-data">
@@ -105,12 +105,34 @@ height: "50";
   </div>
 </div>
 
+<div class="modal" tabindex="-1" id="birth-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">HAPPY BIRTHDAY</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>생일축하합니다!</p>
+        <p>100POINT를 얻으셨습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+									onclick="location.href='${appRoot}/start/login'">돌아가기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <input hidden value="${size }" id="size">
 <c:forEach items="${auth }" var="authName" varStatus="status">
 	<input hidden value="${authName }" id="auth-${status.index }">
 </c:forEach>
 
 
+<input hidden value="${birth }" id="birth">
 
 	
 </body>
@@ -130,6 +152,10 @@ $(function(){
 	var size = $("#size").val();
 	var passAuth = "ROLE_MEMBER";
 	var authState = 1;
+	var birth = $("#birth").val();
+	
+	
+	
 	for(var i=0; i<size; i++){
 		auth.push($("#auth-" + i).val());
 	}
@@ -144,6 +170,11 @@ $(function(){
 	
 	if(authState == 1){
 		$("#auth-modal").modal("show");
+	}else{
+		//member이면서 생일일때 modal 나옴
+		if(birth != ""){
+			$("#birth-modal").modal("show");
+		}
 	}
 	
 

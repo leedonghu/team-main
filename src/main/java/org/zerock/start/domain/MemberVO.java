@@ -24,6 +24,7 @@ public class MemberVO {
 	private Date updateDate;
 	private boolean enabled;
 	private double point;
+	private String birthday;
 	
 	private String reqId;
 	private String appId;

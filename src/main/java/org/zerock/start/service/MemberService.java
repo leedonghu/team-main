@@ -36,4 +36,8 @@ public interface MemberService {
 
 
 	public ApproveVO getApproveState(String reqId);
+
+
+
+	public void birthdayPoint(String id);
 }

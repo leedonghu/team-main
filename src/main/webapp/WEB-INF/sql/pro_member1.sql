@@ -1,8 +1,13 @@
-SELECT * from member_auth
+SELECT * from member_auth;
+SELECT * from approve_auth;
 where auth = 'ROLE_MEMBER';
 SELECT * from member;
+DELETE from approve_auth;
+WHERE id = 21;
+DELETE from member_auth
+WHERE userId = 'www';
 DELETE from member
-WHERE userId = 'qqq';
+WHERE userId = 'www';
 
 CREATE TABLE approve_auth
 (
@@ -27,6 +32,14 @@ where appId = 'aaa' and state = 1;
 
 SELECT * from approve_auth
 where reqId = 'qqq';
+
+SELECT count(*) from member_auth
+where (SELECT auth from member_auth where userId = 'aaa' and auth = 'ROLE_MEMBER');
+
+SELECT * from member;
+
+ALTER TABLE member
+ADD birthday VARCHAR(50) DEFAULT '0000-00-00';
 
 
 

@@ -36,6 +36,26 @@
 	<!--          본문 영역            -->
 	
 	<div class="col-10 border">
+		<!-- 전체 포인트 정보 -->
+			<input hidden value="${size }" id="size">
+	<c:forEach items="${point.pointMap }" var="entry" varStatus="status">
+		<div hidden id="total-key-${status.index }">${entry.key }</div> 
+		<div hidden id="total-value-${status.index }">${entry.value }</div>
+	</c:forEach>
+	
+	<!-- 얻은 포인트 정보 -->
+	<input hidden value="${size2 }" id="size2">
+	<c:forEach items="${earn.pointMap }" var="entry" varStatus="status">
+		<div hidden id="earn-key-${status.index }">${entry.key }</div> 
+		<div hidden id="earn-value-${status.index }">${entry.value }</div>
+	</c:forEach>
+	
+		<!-- 잃은 포인트 정보 -->
+	<input hidden value="${size3 }" id="size3">
+	<c:forEach items="${lose.pointMap }" var="entry" varStatus="status">
+		<div hidden id="lose-key-${status.index }">${entry.key }</div> 
+		<div hidden id="lose-value-${status.index }">${entry.value }</div>
+	</c:forEach>
 	
 		<ul class="nav nav-pills" id="myTab" role="tablist">
 		  <li class="nav-item" role="presentation">
@@ -83,28 +103,9 @@
 	</div>
 </div>
 
+
 	
 	
-		<!-- 전체 포인트 정보 -->
-	<input hidden value="${size }" id="size">
-	<c:forEach items="${point.pointMap }" var="entry" varStatus="status">
-		<div hidden id="total-key-${status.index }">${entry.key }</div> 
-		<div hidden id="total-value-${status.index }">${entry.value }</div> <br>
-	</c:forEach>
-	
-	<!-- 얻은 포인트 정보 -->
-	<input hidden value="${size2 }" id="size2">
-	<c:forEach items="${earn.pointMap }" var="entry" varStatus="status">
-		<div hidden id="earn-key-${status.index }">${entry.key }</div> 
-		<div hidden id="earn-value-${status.index }">${entry.value }</div> <br>
-	</c:forEach>
-	
-		<!-- 잃은 포인트 정보 -->
-	<input hidden value="${size3 }" id="size3">
-	<c:forEach items="${lose.pointMap }" var="entry" varStatus="status">
-		<div hidden id="lose-key-${status.index }">${entry.key }</div> 
-		<div hidden id="lose-value-${status.index }">${entry.value }</div> <br>
-	</c:forEach>
 </div>
 </body>
 <script>
