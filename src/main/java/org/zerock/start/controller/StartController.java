@@ -157,8 +157,11 @@ public class StartController {
 		//날짜만 같을때 service실행
 		if(subToday.equals(subBirth)) {
 			
-			service.birthdayPoint(id);
-			model.addAttribute("birth", "birthday");
+			int cnt = service.birthdayPoint(id);
+			if(cnt == 1) {
+				
+				model.addAttribute("birth", "birthday");
+			}
 		}
 		
 		
@@ -266,9 +269,12 @@ public class StartController {
 		
 		//잃은 point 정보
 		PointVO vo3 = pointService.getLosePoint(id);
-		int size3 = vo3.getPointMap().size();
-		model.addAttribute("lose", vo3);
-		model.addAttribute("size3", size3);
+		if(vo3 != null) {
+			
+			int size3 = vo3.getPointMap().size();
+			model.addAttribute("lose", vo3);
+			model.addAttribute("size3", size3);
+		}
 		
 	}
 	

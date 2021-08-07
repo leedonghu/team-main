@@ -38,6 +38,7 @@
 	m.updateDate updateDate,
 	m.login login,
 	m.point point,
+	m.birthday birthday,
 	a.auth auth
 	FROM member m LEFT JOIN member_auth a ON m.userId = a.userId
 	WHERE m.userId = #{userId}
@@ -57,6 +58,7 @@
 	<result property="enabled" column="enabled"/>
 	<result property="point" column="point"/>
 	<result property="login" column="login"/>
+	<result property="birthday" column="birthday"/>
 	<collection property="authList" resultMap="authMap"></collection>
 </resultMap>
 <resultMap type="org.zerock.start.domain.AuthVO" id="authMap">

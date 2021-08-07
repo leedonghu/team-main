@@ -17,6 +17,9 @@
 	<iframe src="https://coinone.co.kr/exchange/trade/btc/krw" width="450" height="350" scrolling="auto"></iframe>
 </div>
 
+<button id="numberbtn" type="button">버튼1</button>
+<input type="number" value="60" id="number">
+
 <script>
 	$(function(){
 		$("#btn1").click(function(){
@@ -28,7 +31,7 @@
 					console.log("성공");
 					console.log(data);
 					
-					$.ajax
+					
 					
 				},
 				error:function(){
@@ -36,6 +39,22 @@
 				}
 			});
 		});
+		
+		var num = $("#number").val();
+		$("#numberbtn").click(function(){
+			console.log("뺴1");
+			if(num != 0){
+				console.log("뺴2");
+			minusNum();
+			}
+		});
+		function minusNum(){
+			console.log("뺴");
+			num = num - 1;
+			setTimeout(function(){minusNum();}, 1000);
+
+		}
+		
 	})
 </script>
 </body>

@@ -156,7 +156,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	@Transactional
-	public void birthdayPoint(String id) {
+	public int birthdayPoint(String id) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		//오늘 날짜를 String으로 변환
@@ -169,17 +169,19 @@ public class MemberServiceImpl implements MemberService {
 		String subYear = today.substring(0, 4);
 		String subBirthday = birthday.substring(0, 4);
 		
+		int cnt = 0;
+		
 		if(!subYear.equals(subBirthday)) {
 			//년도가 다를때
 			//년도를 업데이트 해주고
 			//100point 줌
 			vo.setBirthday(today);
 			vo.setPoint(100);
-			mapper.updateBirthday(vo);
+			cnt = mapper.updateBirthday(vo);
 			
 			pointService.addPoint(vo, 12);
 		}
-		
+		return cnt;
 	}
 
 

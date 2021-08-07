@@ -47,7 +47,7 @@ public interface MemberMapper {
 
 	public void updateAuth(String userId);
 
-	public void updateBirthday(MemberVO vo);
+	public int updateBirthday(MemberVO vo);
 
 
 }

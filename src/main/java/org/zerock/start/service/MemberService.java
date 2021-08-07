@@ -39,5 +39,5 @@ public interface MemberService {
 
 
 
-	public void birthdayPoint(String id);
+	public int birthdayPoint(String id);
 }

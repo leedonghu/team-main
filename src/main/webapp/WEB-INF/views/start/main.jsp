@@ -119,8 +119,8 @@ height: "50";
         <p>100POINT를 얻으셨습니다.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"
-									onclick="location.href='${appRoot}/start/login'">돌아가기</button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+
       </div>
     </div>
   </div>
