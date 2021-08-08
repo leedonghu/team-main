@@ -18,7 +18,9 @@
 </div>
 
 <button id="numberbtn" type="button">버튼1</button>
-<input type="number" value="60" id="number">
+<input type="text" value="60" id="number">
+<input type="text" id="space">
+<input type="text" id="score">
 
 <script>
 	$(function(){
@@ -40,20 +42,26 @@
 			});
 		});
 		
-		var num = $("#number").val();
+		var num = parseInt($("#number").val());
 		$("#numberbtn").click(function(){
 			console.log("뺴1");
-			if(num != 0){
-				console.log("뺴2");
-			minusNum();
-			}
+			$("#spcae").focus();
+			
+			let score = 0;
+			$("#space").change(function(){
+				score = score + 1 ;
+				$("#score").val(score);
+			});
+			var countdown =	setInterval(function(){
+				num = num-1;
+				$("#number").val(num);
+				if(num == 0){
+					//setInterval 종료시킴
+					clearInterval(countdown);
+				}
+			}, 1000);
 		});
-		function minusNum(){
-			console.log("뺴");
-			num = num - 1;
-			setTimeout(function(){minusNum();}, 1000);
 
-		}
 		
 	})
 </script>
