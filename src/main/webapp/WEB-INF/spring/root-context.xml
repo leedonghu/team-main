@@ -43,6 +43,8 @@
 	
 	<mybatis-spring:scan base-package="org.zerock.game.mapper"/>
 	
+	<mybatis-spring:scan base-package="org.zerock.shopping.mapper"/>
+	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:component-scan base-package="org.zerock.sample"></context:component-scan>
 	
@@ -56,6 +58,8 @@
 	<context:component-scan base-package="org.zerock.album.service"></context:component-scan>
 	
 	<context:component-scan base-package="org.zerock.game.service"></context:component-scan>
+	
+	<context:component-scan base-package="org.zerock.shopping.service"></context:component-scan>
 	
 	<!-- transaction -->
 	<tx:annotation-driven/>

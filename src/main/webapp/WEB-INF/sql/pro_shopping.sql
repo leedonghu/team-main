@@ -28,13 +28,26 @@ FOREIGN KEY (productId) REFERENCES product (productId)
 
 );
 
-SELECT * from product;
+update product
+set productName = '3만원 교환권',
+productPicture = '3만원 교환권.png'
+WHERE productName = '교환권';
+
+
+SELECT *, GROUP_CONCAT(productKeyword) from product
+
+GROUP BY productName
+ORDER BY productId;
 -- insert
 -- https://linuxism.ustd.ip.or.kr/806
 -- 여러 로우를 하나의 칼럼에
 INSERT INTO product
 (productName, productDetail, productPoint, mainCategory, middleCategory, subCategory, productKeyword, productPicture)
 VALUES
-('빅막 세트', '버거+콜라+감자튀김', 55, 'A', 'b', '4', '버거', '빅막 세트.png' );
+('사파리 이용권', '사파리', 230, 'D', 'j', '3', '이용권', '사파리 이용권.png' );
+
+
+
+
 
 

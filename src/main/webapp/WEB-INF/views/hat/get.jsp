@@ -30,6 +30,16 @@ display: inline-block;
 	height: 38px;
 	width: 100px;
 }
+
+.justify-content-center.mt-3{
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+}
+
+.justify-content-center.mt-3 > img {
+	flex-grow: 1;
+}
 </style>
 
 
@@ -63,14 +73,11 @@ display: inline-block;
 			<button class="btn btn-light btn-outline-light" disabled><img id="img2" class="2" src="${appRoot }/resources/quiz/모자1.png" width="169.5" height="225.33"></button>
 			<button class="btn btn-light btn-outline-light" disabled><img id="img3" class="3" src="${appRoot }/resources/quiz/모자1.png" width="169.5" height="225.33"></button>
 			
-			<br>
-			<hr>
-			<br>
+		</div>
 			<div class="insert">
 				<input type="number" id="bet-input">
 				<button class="btn btn-outline-secondary" type="button" id="bet-button">Bet</button>
 			</div>
-		</div>
 		
 	</div>
 </div>

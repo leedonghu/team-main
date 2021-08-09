@@ -41,6 +41,8 @@
 	
 	<context:component-scan base-package="org.zerock.game.controller"></context:component-scan>
 	
+	<context:component-scan base-package="org.zerock.shopping.controller"></context:component-scan>
+	
 	<security:global-method-security pre-post-annotations="enabled"></security:global-method-security>
 	
 </beans:beans>

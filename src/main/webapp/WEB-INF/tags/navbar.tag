@@ -23,7 +23,10 @@
         <a class="nav-link" href="${appRoot }/board/list">게시판</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="${appRoot }/quiz/get">quiz</a>
+        <a class="nav-link" href="${appRoot }/quiz/get">게임</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="${appRoot }/shopping/list">쇼핑</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

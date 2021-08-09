@@ -13,17 +13,20 @@
 <body>
 
 <div class="container">
+<!-- 
 	<button id="btn1">버튼</button>
 	<iframe src="https://coinone.co.kr/exchange/trade/btc/krw" width="450" height="350" scrolling="auto"></iframe>
+ -->
 </div>
 
 <button id="numberbtn" type="button">버튼1</button>
 <input type="text" value="60" id="number">
 <input type="text" id="space">
-<input type="text" id="score">
+<input type="text" id="score" value="0">
 
 <script>
 	$(function(){
+		/*
 		$("#btn1").click(function(){
 			$.ajax({
 				type:"get",
@@ -41,14 +44,17 @@
 				}
 			});
 		});
+		*/
+		
 		
 		var num = parseInt($("#number").val());
+		
 		$("#numberbtn").click(function(){
 			console.log("뺴1");
 			$("#spcae").focus();
 			
-			let score = 0;
-			$("#space").change(function(){
+			var score = 0;
+			$("#space").keyup(function(){
 				score = score + 1 ;
 				$("#score").val(score);
 			});
