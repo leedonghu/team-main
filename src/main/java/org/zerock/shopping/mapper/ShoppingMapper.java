@@ -6,6 +6,6 @@ import org.zerock.shopping.domain.ShoppingVO;
 
 public interface ShoppingMapper {
 
-	List<ShoppingVO> shoppingList();
+	List<ShoppingVO> shoppingList(ShoppingVO vo);
 
 }

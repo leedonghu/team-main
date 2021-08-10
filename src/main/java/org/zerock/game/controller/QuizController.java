@@ -114,4 +114,12 @@ public class QuizController {
 			return false;
 		}
 	}
+	
+	@PostMapping("/prac")
+	@ResponseBody
+	public int prac(@RequestBody QuizVO vo) {
+		int point = vo.getPoint();
+		return point + 1;
+	}
+	
 }

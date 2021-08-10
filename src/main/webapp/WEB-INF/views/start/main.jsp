@@ -33,7 +33,7 @@ height: "50";
 	
 <div class="card col-3" style="width: 18rem;">
   <c:if test="${empty profile.fileName }">
-  	<img class="src="${appRoot }/resources/img/구름.png" class="card-img-top img-profile rounded-circle" alt="...">
+  	<img src="${appRoot }/resources/img/구름.png" class="card-img-top img-profile rounded-circle" alt="...">
   </c:if>
   <c:if test="${!empty profile.fileName }">
   	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top rounded-circle" alt="...">

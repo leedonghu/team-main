@@ -38,3 +38,22 @@ INSERT into quiz
 (que, ans, date)
 VALUES
 ('다리미가 좋아하는 음식은?', '피자', '2021-08-11');
+
+CREATE TABLE spacebar
+(
+id int PRIMARY key AUTO_INCREMENT,
+userId VARCHAR(50) not null,
+score int not null
+);
+
+
+
+SELECT count(*) from spacebar
+where score >8;
+
+SELECT s.userId, s.score, m.userName from spacebar s
+JOIN member m ON s.userId = m.userId
+ORDER BY s.score DESC
+LIMIT 5;
+
+

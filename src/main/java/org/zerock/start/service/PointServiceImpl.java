@@ -219,6 +219,8 @@ public class PointServiceImpl implements PointService {
 		mvo2.setPoint(-betPoint);
 		if(pointCode == 10) {
 			mvo2.setPointInOut("공찾기 베팅");
+		}else if(pointCode == 13) {
+			mvo2.setPointInOut("스페이스바");
 		}
 		
 		mapper.registerPoint(mvo2);
@@ -245,6 +247,8 @@ public class PointServiceImpl implements PointService {
 			mvo2.setPointInOut("공찾기 성공");
 		}else if(pointCode == 12) {
 			mvo2.setPointInOut("생일 보너스");
+		}else if(pointCode == 14) {
+			mvo2.setPointInOut("스페이스바 1등");
 		}
 		
 		mapper.registerPoint(mvo2);

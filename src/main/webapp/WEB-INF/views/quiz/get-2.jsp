@@ -35,7 +35,7 @@ display: inline-block;
 		<nav class="nav flex-column">
   			<a class="nav-link active" href="${appRoot }/quiz/get">오늘의 quiz</a>
   			<a class="nav-link" href="${appRoot }/hat/get">공을 찾아라</a>
-  			<a class="nav-link" href="#">Link</a>
+  			<a class="nav-link" href="${appRoot }/spacebar/get">스페이스바 부수기</a>
   			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
 		</nav>
 	</div>

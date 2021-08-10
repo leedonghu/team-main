@@ -10,6 +10,8 @@ subCategory VARCHAR(10) not null,
 productKeyword VARCHAR(100) not null,
 productPicture VARCHAR(150) not null
 );
+
+
 SELECT * from member;
 
 	SELECT userId, pointInOut, count(1) point
@@ -34,9 +36,8 @@ productPicture = '3만원 교환권.png'
 WHERE productName = '교환권';
 
 
-SELECT *, GROUP_CONCAT(productKeyword) from product
-
-GROUP BY productName
+SELECT * from product
+WHERE mainCategory = 'A'
 ORDER BY productId;
 -- insert
 -- https://linuxism.ustd.ip.or.kr/806
@@ -44,7 +45,7 @@ ORDER BY productId;
 INSERT INTO product
 (productName, productDetail, productPoint, mainCategory, middleCategory, subCategory, productKeyword, productPicture)
 VALUES
-('사파리 이용권', '사파리', 230, 'D', 'j', '3', '이용권', '사파리 이용권.png' );
+('사파리 이용권', '사파리', 230, 'D', 'j', '3', '사파리,동물원,이용권', '사파리 이용권.png');
 
 
 

@@ -9,6 +9,9 @@
 <head>
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
 <title>Insert title here</title>
+<style>
+
+</style>
 </head>
 <body>
 
@@ -20,8 +23,7 @@
 </div>
 
 <button id="numberbtn" type="button">버튼1</button>
-<input type="text" value="60" id="number">
-<input type="text" id="space">
+<input type="text" value="30" id="number">
 <input type="text" id="score" value="0">
 
 <script>
@@ -47,18 +49,21 @@
 		*/
 		
 		
-		var num = parseInt($("#number").val());
 		
 		$("#numberbtn").click(function(){
+			var num = parseInt($("#number").val());
+			$("#numberbtn").blur();
 			console.log("뺴1");
-			$("#spcae").focus();
+			$("#space").focus();
 			
 			var score = 0;
-			$("#space").keyup(function(){
+			$(document).keyup(function(){
+
 				score = score + 1 ;
 				$("#score").val(score);
 			});
 			var countdown =	setInterval(function(){
+				console.log("1초지남")
 				num = num-1;
 				$("#number").val(num);
 				if(num == 0){

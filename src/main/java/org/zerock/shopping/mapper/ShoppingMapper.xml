@@ -6,16 +6,21 @@
 <mapper namespace="org.zerock.shopping.mapper.ShoppingMapper">
 	
 	<select id="shoppingList" resultType="org.zerock.shopping.domain.ShoppingVO">
-		SELECT productName,
+		SELECT productId,
+			   productName,
 			   productDetail,
 			   productPoint,
 			   mainCategory,
 			   middleCategory,
 			   subCategory,
-			   GROUP_CONCAT(productKeyword),
+			   productKeyword,
 			   productPicture
 		FROM product
-		GROUP BY productName
+		<choose>
+			<when test="mainCategory != null">
+				WHERE mainCategory = #{mainCategory}
+			</when>
+		</choose>
 		ORDER BY productId
 	</select>
 	

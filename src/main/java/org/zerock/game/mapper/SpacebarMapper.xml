@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.game.mapper.SpacebarMapper">
+
+<insert id="insertScore" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+	INSERT INTO spacebar
+	(userId, score)
+	VALUES
+	(#{userId}, #{score})
+</insert>
+
+<select id="firstPride" resultType="int">
+	<![CDATA[
+	SELECT COUNT(*) FROM spacebar
+	WHERE score > #{score}
+	]]>
+</select>
+
+<select id="prideList" resultType="org.zerock.game.domain.QuizVO">
+	SELECT s.userId, s.score, m.userName
+	FROM spacebar s JOIN member m ON s.userId = m.userId
+	ORDER BY s.score DESC
+	LIMIT 5
+</select>
+
+</mapper>

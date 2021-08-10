@@ -16,8 +16,8 @@ public class ShoppingServiceImpl implements ShoppingService {
 	private ShoppingMapper mapper;
 	
 	@Override
-	public List<ShoppingVO> shoppingList() {
-		return mapper.shoppingList();
+	public List<ShoppingVO> shoppingList(ShoppingVO vo) {
+		return mapper.shoppingList(vo);
 		
 	}
 

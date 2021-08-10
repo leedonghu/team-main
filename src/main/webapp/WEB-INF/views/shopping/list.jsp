@@ -17,6 +17,26 @@
 <div class="container">
 <pr:navbar></pr:navbar>
 	<h1>쇼핑</h1>
+	
+	<!-- 쇼핑 nav -->
+<ul class="nav nav-pills" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="total-product" href="${appRoot }/shopping/list" role="tab" aria-controls="home" aria-selected="true">전체 상품</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="A-category" href="${appRoot }/shopping/list?mainCategory=A" role="tab" aria-controls="profile" aria-selected="false">버거/치킨/피자</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="B-category" href="${appRoot }/shopping/list?mainCategory=B" role="tab" aria-controls="profile" aria-selected="false">카페</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="C-category" href="${appRoot }/shopping/list?mainCategory=C" role="tab" aria-controls="profile" aria-selected="false">베이커리</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="D-category" href="${appRoot }/shopping/list?mainCategory=D" role="tab" aria-controls="profile" aria-selected="false">영화/전시</a>
+  </li>
+</ul>
+	
 <div class="row row-cols-1 row-cols-md-4" id="album-card-container1">
 	<c:forEach items="${list }" var="shopping">
 		<div class="col mb-4">
@@ -33,5 +53,23 @@
 	</c:forEach>	
 </div>
 </div>
+
+<script>
+$(function(){
+	
+	$("a").click(function(){
+		if(!$(this).hasClass("active")){
+			console.log("active 없음");
+			$(this).addClass("active");
+			$("a[class='active']").removeClass("active");
+		}
+		console.log("active 있음");
+	});
+
+	
+	
+});
+
+</script>
 </body>
 </html>
