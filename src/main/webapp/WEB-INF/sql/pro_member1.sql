@@ -41,6 +41,5 @@ SELECT * from member;
 ALTER TABLE member
 ADD birthday VARCHAR(50) DEFAULT '0000-00-00';
 
-
-
+ SELECT * FROM member_profile;
 	

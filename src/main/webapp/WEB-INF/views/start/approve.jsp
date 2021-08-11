@@ -21,15 +21,15 @@
 <div class="row">
 	<!--       왼쪽 nav          -->
 	
-<div class="card col-3" style="width: 18rem;">
+<div class="card col-2" style="width: 18rem;">
   <c:if test="${empty profile.fileName }">
   	<img src="${appRoot }/resources/img/구름.png" class="card-img-top" alt="...">
   </c:if>
   <c:if test="${!empty profile.fileName }">
-  	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top" alt="...">
+  	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top rounded-circle" alt="...">
   </c:if>
   
-  <form action="${appRoot }/start/main" method="post" enctype="multipart/form-data">
+  <form action="${appRoot }/start/approve" method="post" enctype="multipart/form-data" id="pro-form">
   	<label for="pro-file">프로필 사진 수정</label>
   	<input type="file" id="pro-file" name="file" hidden accept="image/*"><br><br>
   	<input hidden name="userId" id="userId" value="${pinfo.member.userId }">
@@ -37,7 +37,7 @@
   </form>
   
   <div class="card-body" id="card-body">
-    <h5 class="card-title">${profile.userName }(${profile.userName })</h5>
+    <h5 class="card-title">${profile.userId }(${profile.userName })</h5>
     <p class="card-text">${profile.userNickName }</p>
   </div>
   <ul class="list-group list-group-flush">
@@ -58,7 +58,7 @@
 	
 	<!--          본문 영역            -->
 	
-	<div class="col-9 border">
+	<div class="col-10 border">
 <table class="table table-striped">
 		<thead>
 			<tr>
@@ -84,6 +84,13 @@
 
 <script>
 $(function(){
+	
+	$("#pro-file").change(function(){
+		$("#pro-form").submit();
+		
+	});
+	
+	
 	$(".approve-auth").click(function(){
 		var reqId = $(this).closest("tr").find(".req-id").text();
 		console.log(reqId);

@@ -24,14 +24,44 @@
 	<div class="row">
 	<!--       왼쪽 nav          -->
 	
-	<div class="col-2">	
-		<nav class="nav flex-column">
-  			<a class="nav-link active" href="${appRoot }/board/list">글 목록</a>
-  			<a class="nav-link" href="${appRoot }/board/register">글 쓰기</a>
-  			<a class="nav-link" href="#">Link</a>
-  			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-		</nav>
-	</div>
+		<div class="card col-2" style="width: 18rem;">
+		  
+		  <!-- 프로필 사진 수정 전 -->
+		  <c:if test="${empty profile.fileName }">
+		  	<img src="${appRoot }/resources/img/구름.png" class="card-img-top img-profile rounded-circle" alt="...">
+		  </c:if>
+		  
+		  <!-- 프로필 사진 수정하면  -->
+		  <c:if test="${!empty profile.fileName }">
+		  	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top rounded-circle" alt="...">
+		  </c:if>
+		  
+		  <form action="${appRoot }/start/point" method="post" enctype="multipart/form-data" id="pro-form">
+		  	<label for="pro-file">프로필 사진 수정</label>
+		  	<input type="file" id="pro-file" name="file" hidden accept="image/*"><br><br>
+		  	<input hidden name="userId" value="${pinfo.member.userId }">
+		  	
+		  </form>
+		  
+		  <div class="card-body" id="card-body">
+		    <h5 class="card-title">${profile.userId }(${profile.userName })</h5>
+		    <p class="card-text">${profile.userNickName }</p>
+		  </div>
+		  <ul class="list-group list-group-flush">
+		    <li class="list-group-item"><i class="fas fa-coins"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${appRoot }/start/point">${profile.point }</a></li>
+		    <li class="list-group-item"><i class="fas fa-user-check"></i>
+		    	&nbsp;&nbsp;
+		    	<a href="${appRoot }/start/approve">승인요청&nbsp;&nbsp;<span>${appSize }건</span></a>
+		    	
+		    	
+		    </li>
+		    <li class="list-group-item">A third item</li>
+		  </ul>
+		  <div class="card-body">
+		    <a href="#" class="card-link">Card link</a>
+		    <a href="#" class="card-link">Another link</a>
+		  </div>
+		</div>
 	
 	<!--          본문 영역            -->
 	

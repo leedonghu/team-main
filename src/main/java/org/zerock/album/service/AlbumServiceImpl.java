@@ -122,7 +122,7 @@ public class AlbumServiceImpl implements AlbumService {
 //		int index = oriFileName.lastIndexOf(".");
 //		String extension = oriFileName.substring(index);
 		
-		log.info("registerprofile");
+		log.info("registerprofile!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		
 		String fileName = "profile"; // + extension;
 		vo.setFileName(fileName);
@@ -130,7 +130,7 @@ public class AlbumServiceImpl implements AlbumService {
 		int exist = mapper.existFile(vo);
 		
 		if(exist == 0) {
-			
+			log.info("사진없어!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			mapper.registerProfile(vo);
 			profileUpload(vo, file);
 		}else {
@@ -157,5 +157,11 @@ public class AlbumServiceImpl implements AlbumService {
 		}catch(Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public List<AlbumVO> getMainList() {
+		
+		return mapper.getMainList();
 	}
 }

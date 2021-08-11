@@ -22,7 +22,19 @@
 			</when>
 		</choose>
 		ORDER BY productId
+		<choose>
+			<when test="index == null">
+				LIMIT 0, 12
+			</when>
+			<when test="index != null">
+				LIMIT #{index}, 12
+			</when>
+		</choose>
 	</select>
 	
+	<select id="shoppingDetail" resultType="org.zerock.shopping.domain.ShoppingVO">
+		SELECT * FROM product
+		WHERE productId = #{productId}
+	</select>
 	
 </mapper>

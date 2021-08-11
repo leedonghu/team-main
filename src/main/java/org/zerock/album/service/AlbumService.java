@@ -16,4 +16,6 @@ public interface AlbumService {
 
 	void registerProfile(MemberVO vo, MultipartFile file);
 
+	List<AlbumVO> getMainList();
+
 }

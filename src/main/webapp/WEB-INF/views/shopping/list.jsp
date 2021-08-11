@@ -12,6 +12,13 @@
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
 
 <title>Insert title here</title>
+<style>
+.footer{
+	width: 100%; 
+	height: 250px;
+	background-color: black;
+}
+</style>
 </head>
 <body>
 <div class="container">
@@ -37,33 +44,78 @@
   </li>
 </ul>
 	
-<div class="row row-cols-1 row-cols-md-4" id="album-card-container1">
+<div class="row row-cols-1 row-cols-md-4" id="shopping-card-container1">
 	<c:forEach items="${list }" var="shopping">
 		<div class="col mb-4">
     		<div class="card">
-      			<img src="${appRoot }/resources/product/${shopping.productPicture}" class="card-img-top" alt="..." width="169.5" height="225.33">
-      
+      			<a href="${appRoot }/shopping/detail?productId=${shopping.productId}">
+      				<img src="${appRoot }/resources/product/${shopping.productPicture}" class="card-img-top" alt="..." width="169.5" height="225.33">
+      			</a>
       			<div class="card-body">
         			<h5 class="card-title">${shopping.productName }</h5>
         			<p class="card-text">${shopping.productPoint }</p>
       			</div>
-       
+       			<input hidden value="${shooping.productId }">
     		</div>
   		</div>
-	</c:forEach>	
+	</c:forEach>
+	
 </div>
+<button id="searchMoreProduct" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>
+	
+	<hr>
+	<br>
+	<div class="footer">
+	
+	</div>	
 </div>
 
 <script>
 $(function(){
-	
-	$("a").click(function(){
-		if(!$(this).hasClass("active")){
-			console.log("active 없음");
-			$(this).addClass("active");
-			$("a[class='active']").removeClass("active");
-		}
-		console.log("active 있음");
+	let index = [12, 24, 36];
+	let click = 0;
+	$("#searchMoreProduct").click(function(){
+		
+		let data = {index : index[click]};
+		
+		$.ajax({
+			 url:"${appRoot}/shopping/moreView",
+			 type:"post",
+			 data:JSON.stringify(data),
+			 contentType:"application/json",
+			 success:function(data){
+				 console.log(data);
+				 
+				 let container = $("#shopping-card-container1");
+				 let appRoot = "${appRoot}";
+				 for(let i=0; i<data.length; i++){
+					 let productHTML = `
+					 	<div class="col mb-4">
+				    		<div class="card">
+			      				<a href="\${appRoot}/shopping/detail?productId=\${data[i].productId}">
+			      					<img src="\${appRoot }/resources/product/\${data[i].productPicture}" class="card-img-top" alt="..." width="169.5" height="225.33">
+			      				</a>
+			      				<div class="card-body">
+			        				<h5 class="card-title">\${data[i].productName }</h5>
+			        				<p class="card-text">\${data[i].productPoint }</p>
+			      				</div>
+			       					<input hidden value="\${data[i].productId }">
+			    			</div>
+			  			</div>`;
+				 container.append(productHTML);
+				 }
+				 click ++;
+				 
+				 if(data.length < 12){
+					 $("#searchMoreProduct").attr("hidden", "hidden");
+				 }
+				 
+				 
+			 },
+			 error:function(){
+				 console.log("실패");
+			 }
+		 });
 	});
 
 	

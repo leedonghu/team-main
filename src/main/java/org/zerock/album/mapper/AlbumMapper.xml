@@ -105,4 +105,18 @@
   	WHERE userId = #{userId}
   </update>
   
+  <select id="getMainList" resultType="org.zerock.album.domain.AlbumVO">
+  	 SELECT a.ano, 
+	   a.title, 
+       a.comment, 
+       a.writer, 
+       a.regdate, 
+       a.updateDate, 
+       f.fileName firstFile
+	FROM album a LEFT JOIN file f on a.ano = f.ano;
+	GROUP BY a.ano
+	ORDER BY a.ano DESC
+	LIMIT 0, 3
+  </select>
+  
 </mapper>

@@ -15,5 +15,7 @@ public class ShoppingVO {
 	private String productKeyword;
 	private String productPicture;
 	
+	private int index;
+	
 	
 }

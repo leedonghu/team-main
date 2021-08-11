@@ -26,9 +26,10 @@ SELECT a.ano,
        a.writer, 
        a.regdate, 
        a.updateDate, 
-       f.fileName 
-FROM album a left JOIN file f on a.ano = f.ano;
+       f.fileName firstFile
+FROM album a left JOIN file f on a.ano = f.ano
+GROUP BY a.ano
+ORDER BY a.ano DESC
+LIMIT 0, 3;
 
 use spr1;
-SELECT * from tbl_member;
-SELECT * from tbl_member_auth;point

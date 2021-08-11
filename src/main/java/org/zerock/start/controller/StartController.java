@@ -15,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.album.domain.AlbumVO;
 import org.zerock.album.service.AlbumService;
+import org.zerock.board.domain.BoardVO;
 import org.zerock.start.domain.ApproveVO;
 import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
@@ -57,17 +60,17 @@ public class StartController {
 	
 	@GetMapping("/login")
 	public void login() {
-		log.info("loginpage");
+		
 	}
 	
 	@GetMapping("/acc")
 	public void acc() {
-		log.info("accpage");
+		
 	}
 	
 	@PostMapping("/acc")
 	public String register(MemberVO vo) {
-		log.info("post acc");
+		
 		
 		//회원등록과 member권한을 가진 유저 목록 update
 		boolean ok = service.registerAcc(vo);
@@ -81,11 +84,10 @@ public class StartController {
 	}
 	
 	@RequestMapping("/main")
+	@Transactional
 	public void main(String username, Principal principal, MemberVO vo, MultipartFile file, Model model, HttpSession session) {
 		
-		//session
-		session.setAttribute("out", "sessionOut");
-		
+
 		//login form에서 id값 넘김
 		log.info(principal.getName());
 		String id = principal.getName();
@@ -94,6 +96,7 @@ public class StartController {
 		
 		if(file != null) {
 			//프로필 사진 변경
+			log.info("사진변경!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			albumService.registerProfile(vo, file);
 			
 		}
@@ -163,6 +166,13 @@ public class StartController {
 				model.addAttribute("birth", "birthday");
 			}
 		}
+		
+		//최신 album 보냄
+
+		List<AlbumVO> albumList = albumService.getMainList();
+		model.addAttribute("album", albumList);
+		
+		BoardVO board = new BoardVO();
 		
 		
 	}
@@ -249,30 +259,47 @@ public class StartController {
 	
 	@GetMapping("/point")
 	@PreAuthorize("isAuthenticated()")
-	public void getPoint(Principal principal, Model model) {
-		log.info("start get point");
+	public void getPoint(Principal principal, Model model, MultipartFile file, MemberVO vo) {
+		
+		String id = principal.getName();
+		
+		List<ApproveVO> appVo = service.getApproveList(id);
+		model.addAttribute("appVo", appVo);
+		int appSize = appVo.size();
+		model.addAttribute("appSize", appSize);
+		
+		
+		if(file != null) {
+			//프로필 사진 변경
+			albumService.registerProfile(vo, file);
+			
+		}
+		//저장된 프로필 사진 가져오기
+		MemberVO vo2 = service.getProfile(id);
+		model.addAttribute("profile", vo2);
+		
 				
 		//point 정보 리스트
-		String id = principal.getName();
-		PointVO vo = pointService.getPointInfo(id);
-		List<String> inout = vo.getPointInOut();
+		
+		PointVO vo3 = pointService.getPointInfo(id);
+		List<String> inout = vo3.getPointInOut();
 		int size = inout.size();
-		log.info(inout);
-		model.addAttribute("point", vo);
+		
+		model.addAttribute("point", vo3);
 		model.addAttribute("size", size);
 		
 		//얻은 point 정보
-		PointVO vo2 = pointService.getEarnPoint(id);
-		int size2 = vo2.getPointMap().size();
-		model.addAttribute("earn", vo2);
+		PointVO vo4 = pointService.getEarnPoint(id);
+		int size2 = vo4.getPointMap().size();
+		model.addAttribute("earn", vo4);
 		model.addAttribute("size2", size2);
 		
 		//잃은 point 정보
-		PointVO vo3 = pointService.getLosePoint(id);
+		PointVO vo5 = pointService.getLosePoint(id);
 		if(vo3 != null) {
 			
-			int size3 = vo3.getPointMap().size();
-			model.addAttribute("lose", vo3);
+			int size3 = vo5.getPointMap().size();
+			model.addAttribute("lose", vo5);
 			model.addAttribute("size3", size3);
 		}
 		
@@ -303,7 +330,7 @@ public class StartController {
 	@ResponseBody
 	public void updateApp(@RequestBody ApproveVO vo) {
 		//reqId 와 appId를 받은 vo를 가지고 승인요청 update
-		log.info("updateApp get----------");
+		
 		
 		service.updateApp(vo);
 	}

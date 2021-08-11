@@ -35,5 +35,23 @@ public class ShoppingController {
 		model.addAttribute("list", list);
 	}
 	
+	@GetMapping("/detail")
+	public void shoppingDetail(ShoppingVO vo, Model model) {
+		log.info("shopping detail");
+		ShoppingVO detail = service.shoppingDetail(vo);
+		
+		model.addAttribute("detail", detail);
+	}
+	
+	@PostMapping("/moreView")
+	@ResponseBody
+	public List<ShoppingVO> moreView(@RequestBody ShoppingVO vo) {
+		log.info(vo.getIndex());
+		
+		List<ShoppingVO> list = service.shoppingList(vo);
+		
+		return list;
+	}
+	
 
 }

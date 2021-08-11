@@ -37,8 +37,9 @@ WHERE productName = '교환권';
 
 
 SELECT * from product
-WHERE mainCategory = 'A'
+
 ORDER BY productId;
+LIMIT 24, 12
 -- insert
 -- https://linuxism.ustd.ip.or.kr/806
 -- 여러 로우를 하나의 칼럼에

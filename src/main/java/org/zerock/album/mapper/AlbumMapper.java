@@ -35,4 +35,8 @@ public interface AlbumMapper {
 
 	void updateProfile(MemberVO vo);
 
+
+
+	List<AlbumVO> getMainList();
+
 }

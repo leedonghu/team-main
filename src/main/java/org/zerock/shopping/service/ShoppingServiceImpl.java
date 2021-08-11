@@ -21,4 +21,10 @@ public class ShoppingServiceImpl implements ShoppingService {
 		
 	}
 
+	@Override
+	public ShoppingVO shoppingDetail(ShoppingVO vo) {
+		
+		return mapper.shoppingDetail(vo);
+	}
+
 }

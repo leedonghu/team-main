@@ -8,4 +8,6 @@ public interface ShoppingService {
 
 	List<ShoppingVO> shoppingList(ShoppingVO vo);
 
+	ShoppingVO shoppingDetail(ShoppingVO vo);
+
 }

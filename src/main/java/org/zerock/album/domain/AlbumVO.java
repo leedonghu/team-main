@@ -16,4 +16,7 @@ public class AlbumVO {
 	private Date updateDate;
 	
 	private List<FileVO> fileName;
+	
+	private String firstFile;
+	private String main;
 }

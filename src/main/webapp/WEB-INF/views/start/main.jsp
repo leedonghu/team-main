@@ -31,23 +31,27 @@ height: "50";
 <div class="row">
 	<!--       왼쪽 nav          -->
 	
-<div class="card col-3" style="width: 18rem;">
+<div class="card col-2" style="width: 18rem;">
+  
+  <!-- 프로필 사진 수정 전 -->
   <c:if test="${empty profile.fileName }">
   	<img src="${appRoot }/resources/img/구름.png" class="card-img-top img-profile rounded-circle" alt="...">
   </c:if>
+  
+  <!-- 프로필 사진 수정하면  -->
   <c:if test="${!empty profile.fileName }">
   	<img src="${imgRoot}${profile.userId }/${profile.fileName}" class="card-img-top rounded-circle" alt="...">
   </c:if>
   
-  <form action="${appRoot }/start/main" method="post" enctype="multipart/form-data">
+  <form action="${appRoot }/start/main" method="post" enctype="multipart/form-data" id="pro-form">
   	<label for="pro-file">프로필 사진 수정</label>
   	<input type="file" id="pro-file" name="file" hidden accept="image/*"><br><br>
   	<input hidden name="userId" value="${pinfo.member.userId }">
-  	<button class="btn btn-primary" type="submit" hidden id="pro-submit">수정</button>
+  	
   </form>
   
   <div class="card-body" id="card-body">
-    <h5 class="card-title">${profile.userName }(${profile.userName })</h5>
+    <h5 class="card-title">${profile.userId }(${profile.userName })</h5>
     <p class="card-text">${profile.userNickName }</p>
   </div>
   <ul class="list-group list-group-flush">
@@ -68,7 +72,8 @@ height: "50";
 	
 	<!--          본문 영역            -->
 	
-	<div class="col-9 border">
+	<div class="col-10 border">
+		<!-- 
 		<h1>본문</h1><br>
 		<h1>본문</h1><br>
 		<h1>본문</h1><br>
@@ -78,6 +83,7 @@ height: "50";
 		<h1>본문</h1><br>
 		<h1>본문</h1><br>
 		<h1>본문</h1><br>
+		 -->
 		
 		
 	</div>
@@ -144,7 +150,8 @@ height: "50";
 <script>
 $(function(){
 	$("#pro-file").change(function(){
-		$("#pro-submit").removeAttr("hidden");
+		$("#pro-form").submit();
+		
 	});
 	
 	//권한을 확인해서 member권한이 없으면 다시 로그인창으로 보내는 일을 함
