@@ -113,7 +113,7 @@
        a.regdate, 
        a.updateDate, 
        f.fileName firstFile
-	FROM album a LEFT JOIN file f on a.ano = f.ano;
+	FROM album a LEFT JOIN file f on a.ano = f.ano
 	GROUP BY a.ano
 	ORDER BY a.ano DESC
 	LIMIT 0, 3

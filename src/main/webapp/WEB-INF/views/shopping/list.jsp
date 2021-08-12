@@ -28,39 +28,55 @@
 	<!-- 쇼핑 nav -->
 <ul class="nav nav-pills" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
-    <a class="nav-link active" id="total-product" href="${appRoot }/shopping/list" role="tab" aria-controls="home" aria-selected="true">전체 상품</a>
+    <a class="nav-link active" id="total-product" data-toggle="tab" href="#total-product" role="tab" aria-controls="home" aria-selected="true">전체 상품</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="A-category" href="${appRoot }/shopping/list?mainCategory=A" role="tab" aria-controls="profile" aria-selected="false">버거/치킨/피자</a>
+    <a class="nav-link" id="A-category" data-toggle="tab" href="#category-a" role="tab" aria-controls="a" aria-selected="false">버거/치킨/피자</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="B-category" href="${appRoot }/shopping/list?mainCategory=B" role="tab" aria-controls="profile" aria-selected="false">카페</a>
+    <a class="nav-link" id="B-category" data-toggle="tab" href="#category-b" role="tab" aria-controls="b" aria-selected="false">카페</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="C-category" href="${appRoot }/shopping/list?mainCategory=C" role="tab" aria-controls="profile" aria-selected="false">베이커리</a>
+    <a class="nav-link" id="C-category" data-toggle="tab" href="#category-c" role="tab" aria-controls="c" aria-selected="false">베이커리</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="D-category" href="${appRoot }/shopping/list?mainCategory=D" role="tab" aria-controls="profile" aria-selected="false">영화/전시</a>
+    <a class="nav-link" id="D-category" data-toggle="tab" href="#category-d" role="tab" aria-controls="d" aria-selected="false">영화/전시</a>
   </li>
 </ul>
+
+<div class="tab-content" id="myTabContent">
+	<div class="tab-pane fade show active" id="total-product" role="tabpanel" aria-labelledby="home-tab">
+		<div class="row row-cols-1 row-cols-md-4" id="shopping-card-container1">
+		
+			
+		</div>
+	</div>
 	
-<div class="row row-cols-1 row-cols-md-4" id="shopping-card-container1">
-	<c:forEach items="${list }" var="shopping">
-		<div class="col mb-4">
-    		<div class="card">
-      			<a href="${appRoot }/shopping/detail?productId=${shopping.productId}">
-      				<img src="${appRoot }/resources/product/${shopping.productPicture}" class="card-img-top" alt="..." width="169.5" height="225.33">
-      			</a>
-      			<div class="card-body">
-        			<h5 class="card-title">${shopping.productName }</h5>
-        			<p class="card-text">${shopping.productPoint }</p>
-      			</div>
-       			<input hidden value="${shooping.productId }">
-    		</div>
-  		</div>
-	</c:forEach>
+	<div class="tab-pane fade" id="category-a" role="tabpanel" aria-labelledby="a-tab">
+		<div class="row row-cols-1 row-cols-md-4" id="shopping-card-containerA">
+			a
+		</div>
+	</div>
 	
+	<div class="tab-pane fade" id="category-b" role="tabpanel" aria-labelledby="b-tab">
+		<div class="row row-cols-1 row-cols-md-4" id="shopping-card-containerB">
+			b
+		</div>
+	</div>
+	
+	<div class="tab-pane fade" id="category-c" role="tabpanel" aria-labelledby="c-tab">
+		<div class="row row-cols-1 row-cols-md-4" id="shopping-card-containerC">
+			c
+		</div>
+	</div>
+	
+	<div class="tab-pane fade" id="category-d" role="tabpanel" aria-labelledby="d-tab">
+		<div class="row row-cols-1 row-cols-md-4" id="shopping-card-containerD">
+			d
+		</div>
+	</div>
 </div>
+
 <button id="searchMoreProduct" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>
 	
 	<hr>
@@ -117,8 +133,47 @@ $(function(){
 			 }
 		 });
 	});
-
 	
+	function firstProduct(){
+		
+		$.ajax({
+			type:"get",
+			url:"${appRoot}/shopping/firstProduct",
+			success:function(data){
+				console.log("성공");
+				console.log(data);
+				 let container = $("#shopping-card-container1").empty();
+				 let appRoot = "${appRoot}";
+				 for(let i=0; i<data.length; i++){
+					 let productHTML = `
+					 	<div class="col mb-4">
+				    		<div class="card">
+			      				<a href="\${appRoot}/shopping/detail?productId=\${data[i].productId}">
+			      					<img src="\${appRoot }/resources/product/\${data[i].productPicture}" class="card-img-top" alt="..." width="169.5" height="225.33">
+			      				</a>
+			      				<div class="card-body">
+			        				<h5 class="card-title">\${data[i].productName }</h5>
+			        				<p class="card-text">\${data[i].productPoint }</p>
+			      				</div>
+			       					<input hidden value="\${data[i].productId }">
+			    			</div>
+			  			</div>`;
+				 container.append(productHTML);
+				 console.log(productHTML);
+				 }
+				
+				
+			},
+			error:function(){
+				console.log("실패");
+			}
+		});
+	}
+
+	firstProduct();
+	$("#total-product").click(function(){
+		firstProduct();
+	});
 	
 });
 

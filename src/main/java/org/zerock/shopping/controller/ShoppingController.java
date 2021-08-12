@@ -30,9 +30,9 @@ public class ShoppingController {
 		log.info("shopping get list");
 		log.info(vo.getMainCategory());
 		
-		List<ShoppingVO> list = service.shoppingList(vo);
-		log.info(list.size());
-		model.addAttribute("list", list);
+//		List<ShoppingVO> list = service.shoppingList(vo);
+//		log.info(list.size());
+//		model.addAttribute("list", list);
 	}
 	
 	@GetMapping("/detail")
@@ -48,6 +48,15 @@ public class ShoppingController {
 	public List<ShoppingVO> moreView(@RequestBody ShoppingVO vo) {
 		log.info(vo.getIndex());
 		
+		List<ShoppingVO> list = service.shoppingList(vo);
+		
+		return list;
+	}
+	
+	@GetMapping("/firstProduct")
+	@ResponseBody
+	public List<ShoppingVO> firstProduct() {
+		ShoppingVO vo = new ShoppingVO();
 		List<ShoppingVO> list = service.shoppingList(vo);
 		
 		return list;

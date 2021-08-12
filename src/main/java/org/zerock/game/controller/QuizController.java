@@ -40,6 +40,7 @@ public class QuizController {
 		
 		//db에서 저장되어있는 문제를 가져옴
 		QuizVO vo = service.getQuiz();
+		
 		int qid = vo.getQid();
 		
 		//새로운 vo를 만들고 userId와 qid를 넣어줌
