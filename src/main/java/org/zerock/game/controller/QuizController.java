@@ -41,34 +41,41 @@ public class QuizController {
 		//db에서 저장되어있는 문제를 가져옴
 		QuizVO vo = service.getQuiz();
 		
-		int qid = vo.getQid();
-		
-		//새로운 vo를 만들고 userId와 qid를 넣어줌
-		QuizVO vo2 = new QuizVO();
-		
-		vo2.setUserId(userId);
-		vo2.setQid(qid);
-		
-		
-		//퀴즈풀기 창에만 있을때 상태 insert
-		//contact를 1로 업데이트
-		service.insertState(vo2);
-		
-		QuizVO vo3 = service.getQuizState(vo2);
-		vo3.setAns(vo.getAns());
-		vo3.setDate(vo.getDate());
-		vo3.setQue(vo.getQue());
-		if(vo3.getState() == 1) {
+		if(vo != null) {
 			
-			model.addAttribute("state", vo3);
-			model.addAttribute("quiz", vo);
-			return "quiz/get";
-		}else if(vo3.getState() == 2) {
-			model.addAttribute("quiz", vo3);
-			return "quiz/get-1";
-		}else {
-			model.addAttribute("quiz", vo3);
-			return "quiz/get-2";
+			int qid = vo.getQid();
+
+			//새로운 vo를 만들고 userId와 qid를 넣어줌
+			QuizVO vo2 = new QuizVO();
+
+			vo2.setUserId(userId);
+			vo2.setQid(qid);
+
+
+			//퀴즈풀기 창에만 있을때 상태 insert
+			//contact를 1로 업데이트
+			service.insertState(vo2);
+
+			QuizVO vo3 = service.getQuizState(vo2);
+			vo3.setAns(vo.getAns());
+			vo3.setDate(vo.getDate());
+			vo3.setQue(vo.getQue());
+			if(vo3.getState() == 1) {
+
+				model.addAttribute("state", vo3);
+				model.addAttribute("quiz", vo);
+				return "quiz/get";
+			}else if(vo3.getState() == 2) {
+				model.addAttribute("quiz", vo3);
+				return "quiz/get-1";
+			}else {
+				model.addAttribute("quiz", vo3);
+				return "quiz/get-2";
+			}
+			
+		} else {
+			//문제가 없을때
+			return "quiz/get-3";
 		}
 		
 	}

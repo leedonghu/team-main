@@ -28,25 +28,25 @@
 	<!-- 쇼핑 nav -->
 <ul class="nav nav-pills" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
-    <a class="nav-link active" id="total-product" data-toggle="tab" href="#total-product" role="tab" aria-controls="home" aria-selected="true">전체 상품</a>
+    <a class="nav-link active" id="total" data-toggle="tab" href="#total-product" role="tab" aria-controls="home" aria-selected="true" data-category="">전체 상품</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="A-category" data-toggle="tab" href="#category-a" role="tab" aria-controls="a" aria-selected="false">버거/치킨/피자</a>
+    <a class="nav-link" id="A-category" data-toggle="tab" href="#category-a" role="tab" aria-controls="a" aria-selected="false" data-category="A">버거/치킨/피자</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="B-category" data-toggle="tab" href="#category-b" role="tab" aria-controls="b" aria-selected="false">카페</a>
+    <a class="nav-link" id="B-category" data-toggle="tab" href="#category-b" role="tab" aria-controls="b" aria-selected="false" data-category="B">카페</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="C-category" data-toggle="tab" href="#category-c" role="tab" aria-controls="c" aria-selected="false">베이커리</a>
+    <a class="nav-link" id="C-category" data-toggle="tab" href="#category-c" role="tab" aria-controls="c" aria-selected="false" data-category="C">베이커리</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="D-category" data-toggle="tab" href="#category-d" role="tab" aria-controls="d" aria-selected="false">영화/전시</a>
+    <a class="nav-link" id="D-category" data-toggle="tab" href="#category-d" role="tab" aria-controls="d" aria-selected="false" data-category="D">영화/전시</a>
   </li>
 </ul>
 
 <div class="tab-content" id="myTabContent">
 	<div class="tab-pane fade show active" id="total-product" role="tabpanel" aria-labelledby="home-tab">
-		<div class="row row-cols-1 row-cols-md-4" id="shopping-card-container1">
+		<div class="row row-cols-1 row-cols-md-4" id="shopping-card-container">
 		
 			
 		</div>
@@ -90,9 +90,13 @@
 $(function(){
 	let index = [12, 24, 36];
 	let click = 0;
+	let category = "";
+	
 	$("#searchMoreProduct").click(function(){
-		
-		let data = {index : index[click]};
+		let mainCategory = $("a[class='active']").attr("data-category");
+		console.log(mainCategory);
+		let data = {index : index[click],
+				mainCategory: category};
 		
 		$.ajax({
 			 url:"${appRoot}/shopping/moreView",
@@ -102,7 +106,7 @@ $(function(){
 			 success:function(data){
 				 console.log(data);
 				 
-				 let container = $("#shopping-card-container1");
+				 let container = $("#shopping-card-container" + category);
 				 let appRoot = "${appRoot}";
 				 for(let i=0; i<data.length; i++){
 					 let productHTML = `
@@ -134,15 +138,19 @@ $(function(){
 		 });
 	});
 	
-	function firstProduct(){
+	function firstProduct(category){
+		
+		let data = {mainCategory : category};
 		
 		$.ajax({
-			type:"get",
+			type:"post",
 			url:"${appRoot}/shopping/firstProduct",
+			data:JSON.stringify(data),
+			contentType:"application/json",
 			success:function(data){
 				console.log("성공");
 				console.log(data);
-				 let container = $("#shopping-card-container1").empty();
+				 let container = $("#shopping-card-container" + category).empty();
 				 let appRoot = "${appRoot}";
 				 for(let i=0; i<data.length; i++){
 					 let productHTML = `
@@ -159,9 +167,9 @@ $(function(){
 			    			</div>
 			  			</div>`;
 				 container.append(productHTML);
-				 console.log(productHTML);
+				 
 				 }
-				
+
 				
 			},
 			error:function(){
@@ -170,9 +178,14 @@ $(function(){
 		});
 	}
 
-	firstProduct();
-	$("#total-product").click(function(){
-		firstProduct();
+	firstProduct(category);
+
+	
+	$("a[class='nav-link']").click(function(){
+		console.log($(this).attr("data-category"));
+		
+		let mainCategory = $(this).attr("data-category");
+		firstProduct(mainCategory);
 	});
 	
 });

@@ -8,8 +8,10 @@ import org.zerock.shopping.domain.ShoppingVO;
 import org.zerock.shopping.mapper.ShoppingMapper;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Controller
+@Log4j
 public class ShoppingServiceImpl implements ShoppingService {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -17,6 +19,12 @@ public class ShoppingServiceImpl implements ShoppingService {
 	
 	@Override
 	public List<ShoppingVO> shoppingList(ShoppingVO vo) {
+		log.info(vo.getMainCategory());
+		
+		if(vo.getMainCategory().equals("")) {
+			vo.setMainCategory(null);
+		}
+		
 		return mapper.shoppingList(vo);
 		
 	}

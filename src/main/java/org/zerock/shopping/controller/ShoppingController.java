@@ -47,16 +47,16 @@ public class ShoppingController {
 	@ResponseBody
 	public List<ShoppingVO> moreView(@RequestBody ShoppingVO vo) {
 		log.info(vo.getIndex());
-		
+		log.info(vo.getMainCategory());
 		List<ShoppingVO> list = service.shoppingList(vo);
 		
 		return list;
 	}
 	
-	@GetMapping("/firstProduct")
+	@PostMapping("/firstProduct")
 	@ResponseBody
-	public List<ShoppingVO> firstProduct() {
-		ShoppingVO vo = new ShoppingVO();
+	public List<ShoppingVO> firstProduct(@RequestBody ShoppingVO vo) {
+		log.info(vo.getMainCategory());
 		List<ShoppingVO> list = service.shoppingList(vo);
 		
 		return list;
