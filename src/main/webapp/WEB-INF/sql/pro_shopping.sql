@@ -49,6 +49,21 @@ VALUES
 ('사파리 이용권', '사파리', 230, 'D', 'j', '3', '사파리,동물원,이용권', '사파리 이용권.png');
 
 
+SELECT productId,
+			   productName,
+			   productDetail,
+			   productPoint,
+			   mainCategory,
+			   middleCategory,
+			   subCategory,
+			   productKeyword,
+			   productPicture
+		FROM product
+		 
+				
+			 
+		ORDER BY productId;
+
 
 
 
