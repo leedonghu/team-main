@@ -76,8 +76,9 @@
 		</div>
 	</div>
 </div>
-
+<!-- 
 <button id="searchMoreProduct" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>
+ -->
 	
 	<hr>
 	<br>
@@ -92,7 +93,7 @@ $(function(){
 	let click = 0;
 	let category = "";
 	
-	$("#searchMoreProduct").click(function(){
+	$("#myTabContent").on("click", "#searchMoreProduct", function(){
 		let mainCategory = $("a[class='active']").attr("data-category");
 		console.log(mainCategory);
 		let data = {index : index[click],
@@ -130,7 +131,7 @@ $(function(){
 					 $("#searchMoreProduct").attr("hidden", "hidden");
 				 }
 				 
-				 s
+				 
 			 },
 			 error:function(){
 				 console.log("실패");
@@ -169,7 +170,10 @@ $(function(){
 				 container.append(productHTML);
 				 
 				 }
-
+				 if(data.length == 12){
+					 let moreProductButton = `<button id="searchMoreProduct" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>`;
+					 container.parent("div").append(moreProductButton);
+				 }
 				
 			},
 			error:function(){
