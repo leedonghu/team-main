@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.album.domain.AlbumVO;
 import org.zerock.album.service.AlbumService;
 import org.zerock.board.domain.BoardVO;
+import org.zerock.board.service.BoardService;
 import org.zerock.start.domain.ApproveVO;
 import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
@@ -50,6 +51,9 @@ public class StartController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private AlbumService albumService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private BoardService boardService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder encoder;
@@ -172,7 +176,12 @@ public class StartController {
 		List<AlbumVO> albumList = albumService.getMainList();
 		model.addAttribute("album", albumList);
 		
-		BoardVO board = new BoardVO();
+		//최신 board 보냄
+		List<BoardVO> boardList = boardService.mainList();
+		for(BoardVO bvo : boardList) {
+			log.info(bvo.getBno());
+		}
+		model.addAttribute("board", boardList);
 		
 		
 	}

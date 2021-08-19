@@ -152,6 +152,7 @@ $(function(){
 				console.log("성공");
 				console.log(data);
 				 let container = $("#shopping-card-container" + category).empty();
+				 
 				 let appRoot = "${appRoot}";
 				 for(let i=0; i<data.length; i++){
 					 let productHTML = `
@@ -172,6 +173,7 @@ $(function(){
 				 }
 				 if(data.length == 12){
 					 let moreProductButton = `<button id="searchMoreProduct" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>`;
+					 
 					 container.parent("div").append(moreProductButton);
 				 }
 				

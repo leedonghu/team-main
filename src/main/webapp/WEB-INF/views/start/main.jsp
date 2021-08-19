@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="pr" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 
@@ -58,11 +59,9 @@ height: "50";
     <li class="list-group-item"><i class="fas fa-coins"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${appRoot }/start/point">${profile.point }</a></li>
     <li class="list-group-item"><i class="fas fa-user-check"></i>
     	&nbsp;&nbsp;
-    	<a href="${appRoot }/start/approve">승인요청&nbsp;&nbsp;<span>${appSize }건</span></a>
-    	
-    	
+    	<a href="${appRoot }/start/approve">승인요청&nbsp;&nbsp;<span>${appSize }건</span></a>	
     </li>
-    <li class="list-group-item">A third item</li>
+    <li class="list-group-item"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;<a href="${appRoot }/start/info?userId=${pinfo.member.userId}">개인정보</a></li>
   </ul>
   <div class="card-body">
     <a href="#" class="card-link">Card link</a>
@@ -84,7 +83,33 @@ height: "50";
 		<h1>본문</h1><br>
 		<h1>본문</h1><br>
 		 -->
+		 <br>
+		<!-- 최신 글 목록 -->
 		
+		<h3><a href="${appRoot }/board/list">최신 글 <i class="fas fa-sign-in-alt"></i></a></h3>
+		<div id="board-list" class="row border">
+			<br>
+			<div class="col-4">제목</div>
+			<div class="col-4">작성자</div>
+			<div class="col-4">날짜</div>
+			<c:forEach items="${board }" var="boardList">
+				<div class="col-4"><a href="${appRoot }/board/get?bno=${boardList.bno}">${boardList.title }</a></div>
+				<div class="col-4">${boardList.writer }</div>
+				<div class="col-4"><fmt:formatDate value="${boardList.regdate }" pattern="yyyy-MM-dd"/></div>
+			</c:forEach>
+		</div>
+		<br>
+		
+		<!-- 최신 사진첩 목록 -->
+		<h3><a href="${appRoot }/album/list">최신 앨범 <i class="fas fa-sign-in-alt"></i></a></h3>
+		<div id="album-list" class="row border">
+			<br>
+			<c:forEach items="${album }" var="albumList">
+				<div class="col-4">${albumList.title }</div>
+				<div class="col-4">${albumList.writer }</div>
+				<div class="col-4"><fmt:formatDate value="${albumList.regdate }" pattern="yyyy-MM-dd"/></div>
+			</c:forEach>
+		</div>
 		
 	</div>
 </div>

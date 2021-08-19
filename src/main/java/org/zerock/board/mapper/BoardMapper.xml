@@ -34,8 +34,11 @@
 </insert>
 
 <select id="getList" resultType="org.zerock.board.domain.BoardVO">
+	<![CDATA[
 	SELECT * FROM board
 	WHERE bno > 0 ORDER BY bno DESC
+	LIMIT 0, 3
+	]]>
 </select>
 
   <select id="getTotal" resultType="int">

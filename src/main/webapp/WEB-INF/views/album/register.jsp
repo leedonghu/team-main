@@ -11,7 +11,11 @@
 
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
 <style>
-
+#img-container{
+ height: 250px;
+ width: 918px;
+ background-color: gray;
+}
 
 </style>
 
@@ -49,18 +53,12 @@
     <input type="file" class="form-control-file" id="album-input1" multiple files accept="image/*" name="files">
   </div>
 
-  <!-- 
-  <div class="form-group">
-    <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleFormControlSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-   -->
+  
+  	<div class="border" id="img-container">
+
+  	</div>
+  
+
   <div class="form-group">
     <label for="album-textarea1">comment</label>
     <textarea class="form-control" id="album-textarea1" rows="3" name="comment"></textarea>
@@ -78,11 +76,7 @@
 	</div>
 </div>
 	
-	<div class="test">
-		<c:forEach  begin="0" end="10" var="i">
-			<img id="test-img1${i }" src="">
-		</c:forEach>
-	</div>
+
 </div>
 
 
@@ -106,6 +100,7 @@
 			 $("#album-input1").empty();
 		 }
 		 
+		 $("#img-card").removeAttr("hidden");
 		 /*
 		 for (var file of files) {
 			 console.log(file.name);
@@ -116,8 +111,7 @@
 		 
 		 for(var i = 0; i<files.length; i++ ){
 			 $("#test-img1" + i).attr("src", URL.createObjectURL(files[i]));
-			 console.log(files[i].name);
-			 console.log(URL.createObjectURL(files[i]));
+			 let imgHTML = `<div class="col-"`;
 		 }
 	 });
  });

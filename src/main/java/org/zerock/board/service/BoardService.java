@@ -21,4 +21,6 @@ public interface BoardService {
 
 	public boolean remove(BoardVO vo);
 
+	public List<BoardVO> mainList();
+
 }

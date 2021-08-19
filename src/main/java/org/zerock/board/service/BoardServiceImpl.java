@@ -70,6 +70,12 @@ public class BoardServiceImpl implements BoardService{
 		
 		return cnt == 1;
 	}
+
+	@Override
+	public List<BoardVO> mainList() {
+		
+		return mapper.getList();
+	}
 	
 
 }
