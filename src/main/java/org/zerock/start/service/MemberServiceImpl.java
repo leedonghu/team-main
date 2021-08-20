@@ -184,6 +184,12 @@ public class MemberServiceImpl implements MemberService {
 		return cnt;
 	}
 
+	@Override
+	public List<MemberVO> memberList() {
+		
+		return mapper.memberList();
+	}
+
 
 
 }

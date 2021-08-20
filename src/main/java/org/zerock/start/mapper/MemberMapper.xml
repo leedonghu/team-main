@@ -235,4 +235,9 @@
 	WHERE userId = #{userId}
 </update>
 
+<select id="memberList" resultType="org.zerock.start.domain.MemberVO">
+	SELECT userId, userName
+	FROM member
+</select>
+
 </mapper>

@@ -10,4 +10,6 @@ public interface ShoppingMapper {
 
 	ShoppingVO shoppingDetail(ShoppingVO vo);
 
+	void pruchase(ShoppingVO vo);
+
 }

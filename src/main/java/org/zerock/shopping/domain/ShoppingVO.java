@@ -17,5 +17,6 @@ public class ShoppingVO {
 	
 	private int index;
 	
-	
+	private String userId;
+	private String receiverId;
 }

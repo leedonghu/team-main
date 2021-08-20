@@ -10,4 +10,6 @@ public interface ShoppingService {
 
 	ShoppingVO shoppingDetail(ShoppingVO vo);
 
+	void purchase(ShoppingVO vo);
+
 }

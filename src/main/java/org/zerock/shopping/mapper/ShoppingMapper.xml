@@ -37,4 +37,12 @@
 		WHERE productId = #{productId}
 	</select>
 	
+	<insert id="pruchase">
+		INSERT INTO product_purchase
+		(userId, receiverId, productId, mainCategory, middleCategory, subCategory)
+		VALUES
+		(#{userId}, #{receiverId}, #{productId}, #{mainCategory}, #{middleCategory}, #{subCategory})
+	
+	</insert>
+	
 </mapper>

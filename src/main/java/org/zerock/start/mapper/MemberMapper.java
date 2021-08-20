@@ -49,5 +49,7 @@ public interface MemberMapper {
 
 	public int updateBirthday(MemberVO vo);
 
+	public List<MemberVO> memberList();
+
 
 }

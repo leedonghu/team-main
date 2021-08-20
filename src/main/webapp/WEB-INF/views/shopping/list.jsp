@@ -76,9 +76,9 @@
 		</div>
 	</div>
 </div>
-<!-- 
+ 
 <button id="searchMoreProduct" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>
- -->
+ 
 	
 	<hr>
 	<br>
@@ -89,16 +89,22 @@
 
 <script>
 $(function(){
-	let index = [12, 24, 36];
-	let click = 0;
 	let category = "";
-	
-	$("#myTabContent").on("click", "#searchMoreProduct", function(){
-		let mainCategory = $("a[class='active']").attr("data-category");
+	$("#searchMoreProduct").attr("data-category", category);
+	//더보기 버튼 클릭 횟수
+	let click = 0;
+	//더보기 버튼을 눌렀을때 
+	$("#searchMoreProduct").click(function(){
+		//db에서 가져와야할 상품을 정하는 배열
+		let index = [12, 24, 36, 48, 60];
+		let mainCategory = $(this).attr("data-category");
 		console.log(mainCategory);
 		let data = {index : index[click],
-				mainCategory: category};
+				mainCategory: mainCategory};
+		console.log(index[click]);
+		console.log(data);
 		
+		//상품 가져오는 ajax
 		$.ajax({
 			 url:"${appRoot}/shopping/moreView",
 			 type:"post",
@@ -107,7 +113,7 @@ $(function(){
 			 success:function(data){
 				 console.log(data);
 				 
-				 let container = $("#shopping-card-container" + category);
+				 let container = $("#shopping-card-container" + mainCategory);
 				 let appRoot = "${appRoot}";
 				 for(let i=0; i<data.length; i++){
 					 let productHTML = `
@@ -125,8 +131,10 @@ $(function(){
 			  			</div>`;
 				 container.append(productHTML);
 				 }
+				 //더보기 버튼 눌렀을때 횟수 증가
 				 click ++;
 				 
+				 //가져온 데이터의 크기가 12보다 작으면 더이상 가져올 데이터가 없는것이기 때문에 버튼을 hidden처리
 				 if(data.length < 12){
 					 $("#searchMoreProduct").attr("hidden", "hidden");
 				 }
@@ -139,6 +147,7 @@ $(function(){
 		 });
 	});
 	
+	//nav를 클릭했을때 가져오는 처음의 12개의 상품
 	function firstProduct(category){
 		
 		let data = {mainCategory : category};
@@ -163,7 +172,7 @@ $(function(){
 			      				</a>
 			      				<div class="card-body">
 			        				<h5 class="card-title">\${data[i].productName }</h5>
-			        				<p class="card-text">\${data[i].productPoint }</p>
+			        				<p class="card-text">\${data[i].productPoint }포인트</p>
 			      				</div>
 			       					<input hidden value="\${data[i].productId }">
 			    			</div>
@@ -171,11 +180,14 @@ $(function(){
 				 container.append(productHTML);
 				 
 				 }
+				 
+				 //가져온 상품이 12개면 더보기 버튼이 있고 12개보다 적다면 더보기 버튼 hidden
 				 if(data.length == 12){
-					 let moreProductButton = `<button id="searchMoreProduct" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>`;
-					 
-					 container.parent("div").append(moreProductButton);
+					$("#searchMoreProduct").removeAttr("hidden")
+				 }else{
+					$("#searchMoreProduct").attr("hidden", "hidden");
 				 }
+				 
 				
 			},
 			error:function(){
@@ -187,11 +199,16 @@ $(function(){
 	firstProduct(category);
 
 	
-	$("a[class='nav-link']").click(function(){
+	$("a.nav-link").click(function(){
 		console.log($(this).attr("data-category"));
 		
 		let mainCategory = $(this).attr("data-category");
 		firstProduct(mainCategory);
+		
+		$("#searchMoreProduct").attr("data-category", mainCategory);
+		
+		//nav 눌렀을때 더보기버튼 클릭 횟수 초기화
+		click = 0;
 	});
 	
 });

@@ -40,4 +40,8 @@ public interface MemberService {
 
 
 	public int birthdayPoint(String id);
+
+
+
+	public List<MemberVO> memberList();
 }
