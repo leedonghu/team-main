@@ -64,10 +64,10 @@ $(document).ready(function(){
 	
 	<div class="col-2">	
 		<nav class="nav flex-column">
+		<br>
   			<a class="nav-link active" href="${appRoot }/board/list">글 목록</a>
   			<a class="nav-link" href="${appRoot }/board/register">글 쓰기</a>
-  			<a class="nav-link" href="#">Link</a>
-  			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+
 		</nav>
 	</div>
 	

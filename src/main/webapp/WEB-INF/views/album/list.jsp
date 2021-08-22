@@ -23,10 +23,10 @@
 	
 	<div class="col-2">	
 		<nav class="nav flex-column">
+		<br>
   			<a class="nav-link active" href="${appRoot }/album/list">사진첩</a>
   			<a class="nav-link" href="${appRoot }/album/register">사진첩 등록</a>
-  			<a class="nav-link" href="#">Link</a>
-  			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+
 		</nav>
 	</div>
 	

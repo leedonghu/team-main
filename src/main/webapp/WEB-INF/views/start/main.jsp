@@ -33,7 +33,7 @@ height: "50";
 	<!--       왼쪽 nav          -->
 	
 <div class="card col-2" style="width: 18rem;">
-  
+  <br>
   <!-- 프로필 사진 수정 전 -->
   <c:if test="${empty profile.fileName }">
   	<img src="${appRoot }/resources/img/구름.png" class="card-img-top img-profile rounded-circle" alt="...">

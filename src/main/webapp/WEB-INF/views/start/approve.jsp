@@ -22,6 +22,7 @@
 	<!--       왼쪽 nav          -->
 	
 <div class="card col-2" style="width: 18rem;">
+<br>
   <c:if test="${empty profile.fileName }">
   	<img src="${appRoot }/resources/img/구름.png" class="card-img-top" alt="...">
   </c:if>

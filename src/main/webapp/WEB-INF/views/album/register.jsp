@@ -12,7 +12,7 @@
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
 <style>
 #img-container{
- height: 250px;
+ height: 375px;
  width: 918px;
  background-color: gray;
 }
@@ -55,7 +55,10 @@
 
   
   	<div class="border" id="img-container">
-
+		<div class="row row-cols-1 row-cols-md-5" id="img-card-container">
+		
+			
+		</div>
   	</div>
   
 
@@ -108,10 +111,21 @@
 			 $(".test-img1").attr("src", URL.createObjectURL(file));
 		 }
 		 */
-		 
+		 let container = $("#img-card-container");
 		 for(var i = 0; i<files.length; i++ ){
-			 $("#test-img1" + i).attr("src", URL.createObjectURL(files[i]));
-			 let imgHTML = `<div class="col-"`;
+			 console.log(URL.createObjectURL(files[i]));
+			 let url = URL.createObjectURL(files[i]);
+			 let imgHTML = `<div class="col mb-5">
+		    		<div class="card">
+   				
+   					 <img src="\${url}" class="card-img-top" alt="..." width="169.5" height="137.33" id="test-img1"+i>
+   				
+					</div>
+			 		</div>`;
+			 		
+			 		
+			 container.append(imgHTML);
+			
 		 }
 	 });
  });
