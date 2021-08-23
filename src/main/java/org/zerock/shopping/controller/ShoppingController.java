@@ -53,6 +53,7 @@ public class ShoppingController {
 		model.addAttribute("detail", detail);
 		
 		List<MemberVO> mvo = memberService.memberList();
+		log.info(mvo);
 		model.addAttribute("memberList", mvo);
 	}
 	

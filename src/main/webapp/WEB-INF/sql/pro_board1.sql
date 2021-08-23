@@ -2,6 +2,9 @@ use spr1;
 DESC tbl_reply;
 SELECT * from tbl_reply;
 
+	SELECT * FROM board
+	WHERE bno > 0 ORDER BY bno DESC
+	LIMIT 0, 3;
 
 use project;
 CREATE TABLE reply
@@ -29,7 +32,9 @@ FOREIGN KEY (writer) REFERENCES member(userId)
 DESC member;
 SELECT * from member;
 SELECT * from board ORDER BY bno DESC;
-
-
+DELETE FROM point_inout where userId = 'fff';
+SELECT * from point_inout;
+ALTER TABLE quiz_state
+ADD FOREIGN KEY (userId) REFERENCES member (userId);
 
 

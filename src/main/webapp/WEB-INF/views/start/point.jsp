@@ -24,7 +24,7 @@
 	<div class="row">
 	<!--       왼쪽 nav          -->
 	
-		<div class="card col-2" style="width: 18rem;">
+		<div class="card col-3" style="width: 18rem;">
 		<br>
 		  
 		  <!-- 프로필 사진 수정 전 -->
@@ -49,24 +49,22 @@
 		    <p class="card-text">${profile.userNickName }</p>
 		  </div>
 		  <ul class="list-group list-group-flush">
-		    <li class="list-group-item"><i class="fas fa-coins"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${appRoot }/start/point">${profile.point }</a></li>
+		    <li class="list-group-item"><i class="fas fa-coins"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${appRoot }/start/point">${profile.point }포인트</a></li>
 		    <li class="list-group-item"><i class="fas fa-user-check"></i>
 		    	&nbsp;&nbsp;
 		    	<a href="${appRoot }/start/approve">승인요청&nbsp;&nbsp;<span>${appSize }건</span></a>
 		    	
 		    	
 		    </li>
-		    <li class="list-group-item">A third item</li>
+		    <li class="list-group-item"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;<a href="${appRoot }/start/info?userId=${pinfo.member.userId}">개인정보</a></li>
+		    <li class="list-group-item"><i class="fas fa-gift"></i>&nbsp;&nbsp;<a href="${appRoot }/start/present" class="card-link">선물함&nbsp;&nbsp;<span>${myPresent }개</span></a></li>
 		  </ul>
-		  <div class="card-body">
-		    <a href="#" class="card-link">Card link</a>
-		    <a href="#" class="card-link">Another link</a>
-		  </div>
+
 		</div>
 	
 	<!--          본문 영역            -->
 	
-	<div class="col-10 border">
+	<div class="col-9 border">
 		<!-- 전체 포인트 정보 -->
 			<input hidden value="${size }" id="size">
 	<c:forEach items="${point.pointMap }" var="entry" varStatus="status">
@@ -166,9 +164,9 @@ $(function(){
 		}
 	}
 	
-	$("#total-total").text(total);
-	$("#plus-total").text(plus);
-	$("#minus-total").text(minus);
+	$("#total-total").text("총 포인트:"+"  "+total);
+	$("#plus-total").text("얻은 포인트:"+"  "+plus);
+	$("#minus-total").text("잃은 포인트:"+"  "+minus);
 	
 	totalChart();
 	

@@ -28,6 +28,8 @@ import org.zerock.album.domain.AlbumVO;
 import org.zerock.album.service.AlbumService;
 import org.zerock.board.domain.BoardVO;
 import org.zerock.board.service.BoardService;
+import org.zerock.shopping.domain.ShoppingVO;
+import org.zerock.shopping.service.ShoppingService;
 import org.zerock.start.domain.ApproveVO;
 import org.zerock.start.domain.AuthVO;
 import org.zerock.start.domain.MemberVO;
@@ -54,6 +56,9 @@ public class StartController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardService boardService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ShoppingService shoppingService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder encoder;
@@ -184,6 +189,11 @@ public class StartController {
 		model.addAttribute("board", boardList);
 		
 		
+		
+		//선물함
+		int myPresent = shoppingService.myPresent(id);
+		model.addAttribute("myPresent", myPresent);
+		
 	}
 	
 	
@@ -312,6 +322,10 @@ public class StartController {
 			model.addAttribute("size3", size3);
 		}
 		
+		//선물함
+		int myPresent = shoppingService.myPresent(id);
+		model.addAttribute("myPresent", myPresent);
+		
 	}
 	
 	@GetMapping("/approve")
@@ -333,6 +347,10 @@ public class StartController {
 		MemberVO vo2 = service.getProfile(id);
 		model.addAttribute("profile", vo2);
 		
+		//선물함
+		int myPresent = shoppingService.myPresent(id);
+		model.addAttribute("myPresent", myPresent);
+		
 	}
 	
 	@PostMapping("/updateApp")
@@ -342,6 +360,33 @@ public class StartController {
 		
 		
 		service.updateApp(vo);
+	}
+	
+	@GetMapping("/present")
+	public void present(Principal principal, Model model, MemberVO vo, MultipartFile file) {
+		String id = principal.getName();
+		List<ApproveVO> appVo = service.getApproveList(id);
+		model.addAttribute("appVo", appVo);
+		int appSize = appVo.size();
+		model.addAttribute("appSize", appSize);
+		
+		
+		if(file != null) {
+			//프로필 사진 변경
+			albumService.registerProfile(vo, file);
+			
+		}
+		//저장된 프로필 사진 가져오기
+		MemberVO vo2 = service.getProfile(id);
+		model.addAttribute("profile", vo2);
+		
+		//선물함 갯수
+		int myPresent = shoppingService.myPresent(id);
+		model.addAttribute("myPresent", myPresent);
+		
+		//선물목록
+		List<ShoppingVO> presentList = shoppingService.presentList(id);
+		model.addAttribute("presentList", presentList);
 	}
 	
 //	@PostMapping("/acc")

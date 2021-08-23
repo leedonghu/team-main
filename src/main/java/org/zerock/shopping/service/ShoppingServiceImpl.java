@@ -41,4 +41,16 @@ public class ShoppingServiceImpl implements ShoppingService {
 		
 	}
 
+	@Override
+	public int myPresent(String receiverId) {
+		
+		return mapper.myPresent(receiverId);
+	}
+
+	@Override
+	public List<ShoppingVO> presentList(String receiverId) {
+		
+		return mapper.presentList(receiverId);
+	}
+
 }

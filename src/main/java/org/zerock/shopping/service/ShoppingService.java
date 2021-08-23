@@ -12,4 +12,8 @@ public interface ShoppingService {
 
 	void purchase(ShoppingVO vo);
 
+	int myPresent(String receiverId);
+
+	List<ShoppingVO> presentList(String receiverId);
+
 }

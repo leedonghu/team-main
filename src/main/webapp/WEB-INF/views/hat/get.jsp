@@ -54,9 +54,9 @@ display: inline-block;
 	<div class="col-2">	
 		<nav class="nav flex-column">
 		<br>
-  			<a class="nav-link active" href="${appRoot }/quiz/get">오늘의 quiz</a>
+  			<a class="nav-link active" href="${appRoot }/quiz/get">오늘의 퀴즈</a>
   			<a class="nav-link" href="${appRoot }/hat/get">공을 찾아라</a>
-  			<a class="nav-link" href="${appRoot }/spacebar/get">스페이스바 부수기</a>
+  			<a class="nav-link" href="${appRoot }/spacebar/get">스페이스바 어택</a>
 
 		</nav>
 	</div>

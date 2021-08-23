@@ -45,4 +45,15 @@
 	
 	</insert>
 	
+	<select id="myPresent" resultType="int">
+		SELECT COUNT(*)
+		FROM product_purchase
+		WHERE receiverId = #{receiverId}
+	</select>
+	
+	<select id="presentList" resultType="org.zerock.shopping.domain.ShoppingVO">
+		SELECT * FROM product_purchase p JOIN product t ON p.productId = t.productId
+		WHERE  receiverId = #{receiverId}
+	</select>
+	
 </mapper>

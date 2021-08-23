@@ -1,24 +1,22 @@
-<%@ page  contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="pr" tagdir="/WEB-INF/tags" %>
 
+<% request.setCharacterEncoding("utf-8"); %>
 
 <!DOCTYPE html>
 <html>
 <head>
+
 <%@ include file="/WEB-INF/subModules/bootstrapHeader.jsp" %>
+
 <title>Insert title here</title>
 </head>
 <body>
-
 <div class="container">
 <pr:navbar></pr:navbar>
-
-
-
-
-<div class="row">
+	<div class="row">
 	<!--       왼쪽 nav          -->
 	
 <div class="card col-3" style="width: 18rem;">
@@ -58,20 +56,23 @@
 	<!--          본문 영역            -->
 	
 	<div class="col-9 border">
+	<h1>선물함</h1>
 <table class="table table-striped">
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>승인요청 아이디</th>
-				<th>승인</th>
+				<th>보낸사람</th>
+				<th>상품</th>
+				<th>상품이름</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${appVo }" var="app">
+			<c:forEach items="${presentList }" var="list">
 				<tr>
 					<td></td>
-					<td class="req-id">${app.reqId }</td>
-					<td><button class="btn btn-primary approve-auth"><i class="fas fa-check"></i></button></td>
+					<td class="req-id">${list.userId }</td>
+					<td><img src="${appRoot }/resources/product/${list.productPicture}" height="63"></td>
+					<td>${list.productName }</td>
 					
 				</tr>
 			</c:forEach>
@@ -80,46 +81,5 @@
 	</div>
 </div>
 </div>
-
-<script>
-$(function(){
-	
-	$("#pro-file").change(function(){
-		$("#pro-form").submit();
-		
-	});
-	
-	
-	$(".approve-auth").click(function(){
-		var reqId = $(this).closest("tr").find(".req-id").text();
-		console.log(reqId);
-		var appId = $("#userId").val();
-		
-		
-		var data = {reqId : reqId,
-					appId : appId
-					};
-		console.log(data);
-		//get방식으로 보낼때는 쿼리스트링 형식으로 넘어가기떄문에 data를 json으로 보내면 안됨
-		$.ajax({
-			type: "post",
-			data: JSON.stringify(data),
-			contentType: "application/json",
-			url: "${appRoot}/start/updateApp",
-			success: function(){
-				console.log("변경성공");
-				
-			},
-			error: function(){
-				console.log("변경실패")
-			}
-		});
-		
-		$(this).attr("disabled", "disabled");
-	});
-});
-
-</script>
-
 </body>
 </html>

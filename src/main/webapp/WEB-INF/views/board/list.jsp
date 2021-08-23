@@ -39,7 +39,8 @@ $(document).ready(function(){
 	
 	<div class="row">
 		<div class="col-4"></div>
-		<div class="col-8">
+		<div class="col-2"></div>
+		<div class="col-6">
  		 	<form action="${listUrl }" method="get" class="form-inline">
     			<select name="type" class="form-control mr-sm-2">
        				<option value="">--</option>
@@ -120,28 +121,34 @@ $(document).ready(function(){
 </div>
 
 <!-- PAGENATION -->
-<nav aria-label="Page navigation example">
-  <ul id="list-pagenation1" class="pagination justify-content-center">
-    
-    <c:if test="${pageMaker.prev }">
-      <li class="page-item">
-        <a class="page-link" href="${pageMaker.startPage -1 }" tabindex="-1">Previous</a>
-      </li>
-    </c:if>
-    
-    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-    <%-- href="${appRoot }/board/list?pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}" --%>
-       <li class="page-item ${num == cri.pageNum ? 'active' : '' }"><a class="page-link" href="${num }">${num }</a></li>
-    </c:forEach>
-    
-    <c:if test="${pageMaker.next }">
-       <li class="page-item">
-         <a class="page-link" href="${pageMaker.endPage + 1 }">Next</a>
-       </li>
-    </c:if>
-    
-  </ul>
-</nav>
+<div class="row">
+	<div class="col-2"></div>
+	<div class="col-8">
+		<nav aria-label="Page navigation example">
+		  <ul id="list-pagenation1" class="pagination justify-content-center">
+		    
+		    <c:if test="${pageMaker.prev }">
+		      <li class="page-item">
+		        <a class="page-link" href="${pageMaker.startPage -1 }" tabindex="-1">Previous</a>
+		      </li>
+		    </c:if>
+		    
+		    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+		    <%-- href="${appRoot }/board/list?pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}" --%>
+		       <li class="page-item ${num == cri.pageNum ? 'active' : '' }"><a class="page-link" href="${num }">${num }</a></li>
+		    </c:forEach>
+		    
+		    <c:if test="${pageMaker.next }">
+		       <li class="page-item">
+		         <a class="page-link" href="${pageMaker.endPage + 1 }">Next</a>
+		       </li>
+		    </c:if>
+		    
+		  </ul>
+		</nav>
+	</div>
+	<div class="col-2"></div>
+</div>
 
 
 <!-- 페이지 링크용 form -->

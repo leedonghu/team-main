@@ -12,4 +12,8 @@ public interface ShoppingMapper {
 
 	void pruchase(ShoppingVO vo);
 
+	int myPresent(String receiverId);
+
+	List<ShoppingVO> presentList(String receiverId);
+
 }
