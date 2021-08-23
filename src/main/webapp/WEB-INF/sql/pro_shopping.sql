@@ -64,7 +64,8 @@ SELECT productId,
 			 
 		ORDER BY productId;
 
-
+SELECT *  from product_purchase p JOIN product t on p.productId = t.productId
+where receiverId = 'aaa';
 
 
 

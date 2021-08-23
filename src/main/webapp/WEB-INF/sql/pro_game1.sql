@@ -37,7 +37,7 @@ use project;
 INSERT into quiz
 (que, ans, date)
 VALUES
-('다리미가 좋아하는 음식은?', '피자', '2021-08-11');
+('다리미가 좋아하는 음식은?', '피자', '2021-08-24');
 
 CREATE TABLE spacebar
 (
