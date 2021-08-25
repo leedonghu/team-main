@@ -59,9 +59,10 @@ public class ShoppingController {
 	
 	@PostMapping("/moreView")
 	@ResponseBody
-	public List<ShoppingVO> moreView(@RequestBody ShoppingVO vo) {
+	public List<ShoppingVO> moreView(@RequestBody ShoppingVO vo, Principal principal) {
 		log.info(vo.getIndex());
 		log.info(vo.getMainCategory());
+		vo.setUserId(principal.getName());
 		List<ShoppingVO> list = service.shoppingList(vo);
 		
 		return list;
@@ -69,8 +70,9 @@ public class ShoppingController {
 	
 	@PostMapping("/firstProduct")
 	@ResponseBody
-	public List<ShoppingVO> firstProduct(@RequestBody ShoppingVO vo) {
+	public List<ShoppingVO> firstProduct(@RequestBody ShoppingVO vo, Principal principal) {
 		log.info(vo.getMainCategory());
+		vo.setUserId(principal.getName());
 		List<ShoppingVO> list = service.shoppingList(vo);
 		
 		return list;

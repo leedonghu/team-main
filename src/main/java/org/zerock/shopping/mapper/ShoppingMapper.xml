@@ -6,22 +6,35 @@
 <mapper namespace="org.zerock.shopping.mapper.ShoppingMapper">
 	
 	<select id="shoppingList" resultType="org.zerock.shopping.domain.ShoppingVO">
-		SELECT productId,
-			   productName,
-			   productDetail,
-			   productPoint,
-			   mainCategory,
-			   middleCategory,
-			   subCategory,
-			   productKeyword,
-			   productPicture
-		FROM product
+		SELECT b.productId,
+			   b.productName,
+			   b.productDetail,
+			   b.productPoint,
+			   b.mainCategory,
+			   b.middleCategory,
+			   b.subCategory,
+			   b.productKeyword,
+			   b.productPicture
+		FROM product b
+	    
+	    LEFT JOIN
+        (SELECT mainCategory mc, count(*) cnt FROM product_purchase WHERE userId = #{userId}
+        GROUP BY mainCategory
+        ORDER BY cnt DESC) a
+        ON a.mc = b.mainCategory
+        
+        LEFT JOIN 
+		(SELECT productId id, count(1) pcnt
+		FROM product_purchase WHERE userId = #{userId}
+		GROUP BY productId 
+		ORDER BY pcnt DESC) c
+		ON b.productId =  c.id
 		<choose>
 			<when test="mainCategory != null">
-				WHERE mainCategory = #{mainCategory}
+				WHERE b.mainCategory = #{mainCategory}
 			</when>
 		</choose>
-		ORDER BY productId
+		ORDER BY a.cnt DESC, b.mainCategory ASC, c.pcnt DESC, b.productId
 		<choose>
 			<when test="index == null">
 				LIMIT 0, 12
