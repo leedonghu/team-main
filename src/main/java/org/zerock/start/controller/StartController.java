@@ -194,6 +194,10 @@ public class StartController {
 		int myPresent = shoppingService.myPresent(id);
 		model.addAttribute("myPresent", myPresent);
 		
+		//hot 아이템
+		List<ShoppingVO> shoppingList = shoppingService.hotItem();
+		model.addAttribute("hotItem", shoppingList);
+		
 	}
 	
 	

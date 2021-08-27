@@ -60,7 +60,7 @@ height: "50";
     <p class="card-text">${profile.userNickName }</p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><i class="fas fa-coins"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${appRoot }/start/point">${profile.point }포인트</a></li>
+    <li class="list-group-item"><i class="fas fa-coins"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${appRoot }/start/point">${profile.detailPoint }포인트</a></li>
     <li class="list-group-item"><i class="fas fa-user-check"></i>
     	&nbsp;&nbsp;
     	<a href="${appRoot }/start/approve">승인요청&nbsp;&nbsp;<span>${appSize }건</span></a>	
@@ -91,29 +91,58 @@ height: "50";
 		<!-- 최신 글 목록 -->
 		
 		<h3><a href="${appRoot }/board/list">최신 글 <i class="fas fa-sign-in-alt"></i></a></h3>
-		<div id="board-list" class="row border">
-			<br>
-			<div class="col-4">제목</div>
-			<div class="col-4">작성자</div>
-			<div class="col-4">날짜</div>
-			<c:forEach items="${board }" var="boardList">
-				<div class="col-4"><a href="${appRoot }/board/get?bno=${boardList.bno}">${boardList.title }</a></div>
-				<div class="col-4">${boardList.writer }</div>
-				<div class="col-4"><fmt:formatDate value="${boardList.regdate }" pattern="yyyy-MM-dd"/></div>
-			</c:forEach>
-		</div>
+		
+			
+			<div class="row border">
+				<div class="col-4">제목</div>
+				<div class="col-4">작성자</div>
+				<div class="col-4">날짜</div>
+			</div>
+			<div class="row border">
+				<c:forEach items="${board }" var="boardList">
+					<div class="col-4"><a href="${appRoot }/board/get?bno=${boardList.bno}">${boardList.title }</a></div>
+					<div class="col-4">${boardList.writer }</div>
+					<div class="col-4"><fmt:formatDate value="${boardList.regdate }" pattern="yyyy-MM-dd"/></div>
+				</c:forEach>
+			</div>
+		
 		<br>
 		
 		<!-- 최신 사진첩 목록 -->
 		<h3><a href="${appRoot }/album/list">최신 앨범 <i class="fas fa-sign-in-alt"></i></a></h3>
-		<div id="album-list" class="row border">
-			<br>
+		
+			<div class="row border">
+				<div class="col-4">제목</div>
+				<div class="col-4">작성자</div>
+				<div class="col-4">날짜</div>
+			</div>
+			<div class="row border">
 			<c:forEach items="${album }" var="albumList">
 				<div class="col-4">${albumList.title }</div>
 				<div class="col-4">${albumList.writer }</div>
 				<div class="col-4"><fmt:formatDate value="${albumList.regdate }" pattern="yyyy-MM-dd"/></div>
 			</c:forEach>
+			</div>
+		
+		<br>
+		
+		<h3><a href="${appRoot }/shopping/list">HOT 아이템 <i class="fas fa-sign-in-alt"></i></a></h3>
+		<div id="board-list" class="row border">
+			
+			<div class="col-3">#</div>
+			<div class="col-3">상품</div>
+			<div class="col-3">상품이름</div>
+			<div class="col-3">가격</div>
 		</div>
+		<div class="row border">	
+			<c:forEach items="${hotItem }" var="shoppingList" varStatus="status">
+				<div class="col-3">${status.index+1 }등</div>
+				<div class="col-3"><a href="${appRoot }/shopping/detail?productId=${shoppingList.productId}"><img src="${appRoot }/resources/product/${shoppingList.productPicture}" width="100" height="63"></a></div>
+				<div class="col-3">${shoppingList.productName }</div>
+				<div class="col-3">${shoppingList.productPoint }포인트</div>
+			</c:forEach>
+		</div>
+		<br>
 		
 	</div>
 </div>

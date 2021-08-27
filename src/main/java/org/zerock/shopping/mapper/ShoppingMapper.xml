@@ -69,4 +69,29 @@
 		WHERE  receiverId = #{receiverId}
 	</select>
 	
+	<select id="hotItem" resultType="org.zerock.shopping.domain.ShoppingVO">
+		SELECT a.productId,
+			   a.productName,
+			   a.productDetail,
+			   a.productPoint,
+			   a.mainCategory,
+			   a.middleCategory,
+			   a.subCategory,
+			   a.productKeyword,
+			   a.productPicture 
+		FROM 
+		(SELECT * FROM product) a
+
+		JOIN
+		
+		(SELECT productId, count(1) pcnt 
+		FROM product_purchase 
+		GROUP BY productId
+		ORDER BY pcnt DESC) b
+		on a.productId = b.productId
+		ORDER BY b.pcnt DESC, a.productId
+		LIMIT 0, 3
+ 
+	</select>
+	
 </mapper>

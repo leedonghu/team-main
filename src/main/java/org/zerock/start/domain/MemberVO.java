@@ -37,4 +37,12 @@ public class MemberVO {
 	private String fileName;
 	
 	private List<AuthVO> authList;
+	
+	public String getDetailPoint() {
+		double point = this.point;
+		String strPoint = Double.toString(point);
+		int index = strPoint.indexOf(".");
+		
+		return strPoint.substring(0, index + 2);
+	}
 }

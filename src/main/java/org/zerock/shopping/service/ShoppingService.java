@@ -16,4 +16,6 @@ public interface ShoppingService {
 
 	List<ShoppingVO> presentList(String receiverId);
 
+	List<ShoppingVO> hotItem();
+
 }

@@ -16,4 +16,6 @@ public interface ShoppingMapper {
 
 	List<ShoppingVO> presentList(String receiverId);
 
+	List<ShoppingVO> hotItem();
+
 }
