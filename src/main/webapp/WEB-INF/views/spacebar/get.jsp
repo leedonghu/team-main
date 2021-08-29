@@ -30,43 +30,64 @@
 	border: solid;
 }
 #bar1{
-	
+	height: 10px;
+	margin-top: 20px;
 	border: solid #d50000;
 }
 #bar2{
+	height: 12px;
+	margin-top: 18px;
 	border: solid #c51162;
 }
 #bar3{
+	height: 14px;
+	margin-top: 16px;
 	border: solid #aa00ff;
 }
 #bar4{
+	height: 16px;
+	margin-top: 14px;
 	border: solid #6200ea;
 }
 #bar5{
+	height: 18px;
+	margin-top: 12px;
 	border: solid #304ffe;
 }
 #bar6{
+	height: 20px;
+	margin-top: 10px;
 	border: solid #2962ff;
 }
 #bar7{
+	height: 22px;
+	margin-top: 8px;
 	border: solid #0091ea;
 }
 #bar8{
+	height: 24px;
+	margin-top: 6px;
 	border: solid #00b8d4;
 }
 #bar9{
+	height: 26px;
+	margin-top: 4px;
 	border: solid #00bfa5;
 }
 #bar10{
+	height: 28px;
+	margin-top: 2px;
 	border: solid #00c853;
 }
 #bar11{
 	border: solid #64dd17;
 }
 #bar12{
+
 	border: solid #aeea00;
 }
 #bar13{
+
 	border: solid #ffd600;
 }
 #score{

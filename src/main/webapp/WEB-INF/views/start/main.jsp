@@ -109,7 +109,7 @@ height: "50";
 		<br>
 		
 		<!-- 최신 사진첩 목록 -->
-		<h3><a href="${appRoot }/album/list">최신 앨범 <i class="fas fa-sign-in-alt"></i></a></h3>
+		<h3><a href="${appRoot }/album/list">최신 사진첩 <i class="fas fa-sign-in-alt"></i></a></h3>
 		
 			<div class="row border">
 				<div class="col-4">제목</div>
