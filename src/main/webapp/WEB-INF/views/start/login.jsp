@@ -27,6 +27,11 @@
 			<button type="button" class="btn btn-primary btn-lg"
 				data-toggle="modal" data-target="#exampleModal">로그인</button>
 		</div>
+		<div>아이디/비밀번호</div>
+		<div>aaa/111</div>
+		<div>bbb/222</div>
+		<div>ccc/333</div>
+		<div>qqq/111 (멤버권한 없는 아이디)</div>
 
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
